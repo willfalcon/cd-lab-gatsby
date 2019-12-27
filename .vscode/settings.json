@@ -1,0 +1,11 @@
+{
+  "workbench.colorCustomizations": {
+    "titleBar.activeForeground": "#fff",
+    "titleBar.inactiveForeground": "#ffffffcc",
+    "titleBar.activeBackground": "#45d303",
+    "titleBar.inactiveBackground": "#018501"
+  },
+  "cSpell.words": [
+    "viewheight"
+  ]
+}

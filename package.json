@@ -1,0 +1,29 @@
+{
+  "name": "cd-lab-gatsby",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "gatsby build",
+    "dev": "gatsby develop"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-plugin-styled-components": "^1.10.6",
+    "gatsby": "^2.18.11",
+    "gatsby-image": "^2.2.36",
+    "gatsby-plugin-manifest": "^2.2.33",
+    "gatsby-plugin-react-helmet": "^3.1.18",
+    "gatsby-plugin-sharp": "^2.3.7",
+    "gatsby-plugin-styled-components": "^3.1.16",
+    "gatsby-source-filesystem": "^2.1.42",
+    "gatsby-source-sanity": "^5.0.4",
+    "gatsby-transformer-sharp": "^2.3.9",
+    "polished": "^3.4.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-helmet": "^5.2.1",
+    "styled-components": "^4.4.1"
+  }
+}
