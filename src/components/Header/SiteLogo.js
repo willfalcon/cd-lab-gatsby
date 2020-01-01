@@ -4,82 +4,54 @@ import { Link, useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
 import { media } from '../theme';
+import Square from '../../images/cd-new-square.png';
+import Logo from '../../images/cd-logo-h.png';
 
 const SiteLogo = ({ home }) => {
   const images = useStaticQuery(graphql`
     {
-      file(relativePath: { eq: "cd-type-padded.png" }) {
+      homeLogo: file(relativePath: { eq: "cd-type-padded.png" }) {
         id
         childImageSharp {
           fixed(width: 387) {
             base64
-            tracedSVG
-            aspectRatio
             width
             height
             src
             srcSet
             srcWebp
             srcSetWebp
-            originalName
           }
         }
       }
     }
   `);
 
-  console.log(images);
-
   return (
     <>
       {home && (
-        <Link href="/">
-          <HomeLogoWrap className="home-wrap">
-            {/* <img
-              className="home-logo"
-              src="/cd-type-padded.png"
-              alt="Creative Distillery"
-            /> */}
-            <Img
-              fixed={images.file.childImageSharp.fixed}
-              alt="Creative Distillery"
-            />
-          </HomeLogoWrap>
-        </Link>
-      )}
-      <Link href="/">
-        <StyledLogoLink className="site-logo">
-          <SquareLogo
-            className="square"
-            src="/cd-new-square.png"
-            alt="Creative Distillery Icon"
-          />
-          <FullLogo
-            className="full"
-            src="/cd-logo-h.png"
+        <HomeLogoWrap to="/" className="home-wrap">
+          <Img
+            fixed={images.homeLogo.childImageSharp.fixed}
             alt="Creative Distillery"
+            className="home-logo"
+            fadeIn={false}
           />
-        </StyledLogoLink>
-      </Link>
+        </HomeLogoWrap>
+      )}
+      <StyledLogoLink to="/" className="site-logo">
+        <SquareLogo
+          className="square"
+          src={Square}
+          alt="Creative Distillery Icon"
+        />
+        <FullLogo className="full" src={Logo} alt="Creative Distillery" />
+      </StyledLogoLink>
     </>
   );
 };
 
-const StyledLogoLink = styled.a`
-  flex-grow: 1;
-  cursor: pointer;
-  ${media.break`
-    position: fixed;
-    top: 25px;
-    width: 75px;
-    height: 75px;
-    left: 0;
-    z-index: 1;
-  `}
-  line-height: 1;
-`;
-
-const HomeLogoWrap = styled.a`
+const HomeLogoWrap = styled(Link)`
   background: white;
   display: none;
   cursor: pointer;
@@ -95,6 +67,20 @@ const HomeLogoWrap = styled.a`
     left: ${75 + 10}px;
     background: transparent;
   `}
+`;
+
+const StyledLogoLink = styled(Link)`
+  flex-grow: 1;
+  cursor: pointer;
+  ${media.break`
+    position: fixed;
+    top: 25px;
+    width: 75px;
+    height: 75px;
+    left: 0;
+    z-index: 1;
+  `}
+  line-height: 1;
 `;
 
 const SquareLogo = styled.img`

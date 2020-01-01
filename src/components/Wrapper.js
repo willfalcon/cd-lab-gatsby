@@ -1,5 +1,12 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+  faArrowRight,
+  faAngleRight,
+  faAngleDoubleLeft
+} from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 
 import theme, { media } from './theme';
 import GlobalStyle from './GlobalStyle';
@@ -7,6 +14,8 @@ import { SiteContextProvider } from './SiteContext';
 import { getViewport } from './utils';
 
 import Header from './Header/Header';
+
+library.add(fab, faArrowRight, faAngleRight, faAngleDoubleLeft);
 
 const Wrapper = ({ children, home = false }) => {
   const viewport = getViewport();

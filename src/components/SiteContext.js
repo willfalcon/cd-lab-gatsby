@@ -2,17 +2,19 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 
 import { getViewport } from './utils';
+import theme from './theme';
 
 const SiteContext = React.createContext();
 
 const SiteContextProvider = ({ children, home }) => {
   const [ready, makeReady] = useState(false);
-  const [viewport, setViewport] = useState(getViewport);
+  const [viewport, setViewport] = useState({ width: 0, height: 0 });
 
   const isClient = typeof window === 'object';
 
   useEffect(() => {
     if (!isClient) {
+      makeReady(false);
       return false;
     }
     function updateViewport() {
@@ -43,7 +45,6 @@ const SiteContextProvider = ({ children, home }) => {
   } = useStaticQuery(graphql`
     query {
       sanitySiteSettings(_id: { eq: "cdSiteSettings" }) {
-        id
         collectionsCount
         customCSS {
           code
@@ -66,7 +67,6 @@ const SiteContextProvider = ({ children, home }) => {
         title
       }
       sanityWhatWeDo(_id: { eq: "whatWeDo" }) {
-        id
         topics {
           _key
           textContent
@@ -112,12 +112,6 @@ const SiteContextProvider = ({ children, home }) => {
     }
   `);
 
-  console.log({
-    sanitySiteSettings,
-    sanityWhatWeDo,
-    allSanityProject
-  });
-
   return (
     <SiteContext.Provider
       value={{
@@ -125,7 +119,10 @@ const SiteContextProvider = ({ children, home }) => {
         ready,
         toggleMenu,
         menuOpen,
-        home
+        home,
+        ...sanitySiteSettings,
+        ...sanityWhatWeDo,
+        mobile: ready ? viewport.width < theme.sizes.break : false
       }}
     >
       {children}

@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import MenuToggle from './MenuToggle';
+import SocialList from '../SocialList';
+import Nav from './Nav';
 import useSiteContext from '../SiteContext';
 import { media } from '../theme';
 
@@ -12,6 +15,9 @@ const Header = () => {
   return (
     <StyledHeader topicsOpen={openTopic} menuOpen={menuOpen} className="header">
       <SiteLogo home={home} />
+      <MenuToggle />
+      <SocialList />
+      <Nav />
     </StyledHeader>
   );
 };

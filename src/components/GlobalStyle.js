@@ -1,4 +1,10 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, css } from 'styled-components';
+
+const imgStyle = css`
+  display: block;
+  max-width: 100%;
+  height: auto;
+`;
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -29,9 +35,7 @@ const GlobalStyle = createGlobalStyle`
     } */
   }
   img {
-    display: block;
-    max-width: 100%;
-    height: auto;
+    ${imgStyle}
   }
   h2 {
     font-family: granville, serif;
@@ -80,4 +84,5 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+export { imgStyle };
 export default GlobalStyle;
