@@ -11,13 +11,13 @@ const getViewport = () => {
     }
     return {
       width: e[a + 'Width'],
-      height: e[a + 'Height']
+      height: e[a + 'Height'],
     };
   }
   return {
     width: undefined,
     height: undefined,
-  }
+  };
 };
 
 const getCurrentBreakpoint = (width = getViewport().width) => {
@@ -40,9 +40,10 @@ const unique = (value, index, self) => {
 // leading edge, instead of the trailing.
 function debounce(func, wait = 250, immediate) {
   var timeout;
-  return function () {
-    var context = this, args = arguments;
-    var later = function () {
+  return function() {
+    var context = this,
+      args = arguments;
+    var later = function() {
       timeout = null;
       if (!immediate) func.apply(context, args);
     };
@@ -51,7 +52,34 @@ function debounce(func, wait = 250, immediate) {
     timeout = setTimeout(later, wait);
     if (callNow) func.apply(context, args);
   };
-};
+}
 
+function useWindowSize() {
+  const isClient = typeof window === 'object';
 
-export { getViewport, getCurrentBreakpoint, unique, debounce };
+  function getSize() {
+    return {
+      width: isClient ? window.innerWidth : undefined,
+      height: isClient ? window.innerHeight : undefined,
+    };
+  }
+
+  const [windowSize, setWindowSize] = useState(getSize);
+
+  useEffect(() => {
+    if (!isClient) {
+      return false;
+    }
+
+    function handleResize() {
+      setWindowSize(getSize());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []); // Empty array ensures that effect is only run on mount and unmount
+
+  return windowSize;
+}
+
+export { getViewport, getCurrentBreakpoint, unique, debounce, useWindowSize };

@@ -1,32 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 
-import { getViewport } from './utils';
+import { useWindowSize } from './utils';
 import theme from './theme';
 
 const SiteContext = React.createContext();
 
 const SiteContextProvider = ({ children, home }) => {
   const [ready, makeReady] = useState(false);
-  const [viewport, setViewport] = useState({ width: 0, height: 0 });
-
-  const isClient = typeof window === 'object';
-
-  useEffect(() => {
-    if (!isClient) {
-      makeReady(false);
-      return false;
-    }
-    function updateViewport() {
-      makeReady(false);
-      setViewport(getViewport());
-      makeReady(true);
-    }
-    window.addEventListener('resize', updateViewport);
-    return () => window.removeEventListener('resize', updateViewport);
-  });
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const viewport = useWindowSize();
 
   function toggleMenu(open) {
     if (open === undefined) {
@@ -41,7 +25,7 @@ const SiteContextProvider = ({ children, home }) => {
   const {
     sanitySiteSettings,
     sanityWhatWeDo,
-    allSanityProject
+    allSanityProject,
   } = useStaticQuery(graphql`
     query {
       sanitySiteSettings(_id: { eq: "cdSiteSettings" }) {
@@ -122,9 +106,8 @@ const SiteContextProvider = ({ children, home }) => {
         home,
         ...sanitySiteSettings,
         ...sanityWhatWeDo,
-        mobile: ready ? viewport.width < theme.sizes.break : false
-      }}
-    >
+        mobile: ready ? viewport.width < theme.sizes.break : false,
+      }}>
       {children}
     </SiteContext.Provider>
   );
