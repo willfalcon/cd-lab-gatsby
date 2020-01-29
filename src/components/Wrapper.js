@@ -4,7 +4,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faArrowRight,
   faAngleRight,
-  faAngleDoubleLeft
+  faAngleDoubleLeft,
 } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 
@@ -14,6 +14,7 @@ import { SiteContextProvider } from './SiteContext';
 import { getViewport } from './utils';
 
 import Header from './Header/Header';
+import Head from './Head';
 
 library.add(fab, faArrowRight, faAngleRight, faAngleDoubleLeft);
 
@@ -22,6 +23,7 @@ const Wrapper = ({ children, home = false }) => {
   return (
     <ThemeProvider theme={theme}>
       <SiteContextProvider home={home}>
+        <Head />
         <Header />
         <PageWrapper className="page-wrapper" viewheight={viewport.height}>
           {children}

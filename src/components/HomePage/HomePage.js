@@ -2,20 +2,24 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 
 import Content from '../Content';
+import HomeTopics from './HomeTopics';
 
 import theme, { media } from '../theme';
 import useSiteContext from '../SiteContext';
 
-const HomePage = ({ _rawBody }) => {
+const HomePage = ({ _rawBody, mainImage }) => {
   const mainRef = useRef(null);
-
   const { viewport } = useSiteContext();
 
   return (
     <StyledHomePage className="container homepage" viewport={viewport}>
-      <HomeMain viewport={viewport}>
+      <HomeMain
+        className="homepage-main"
+        viewport={viewport}
+        bg={mainImage.asset.url}>
         <Content>{_rawBody}</Content>
       </HomeMain>
+      <HomeTopics />
       <HomeAside></HomeAside>
     </StyledHomePage>
   );

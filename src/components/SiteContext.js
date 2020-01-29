@@ -50,35 +50,6 @@ const SiteContextProvider = ({ children, home }) => {
         }
         title
       }
-      sanityWhatWeDo(_id: { eq: "whatWeDo" }) {
-        topics {
-          _key
-          textContent
-          slug {
-            current
-          }
-          seoSettings {
-            title
-            metaDescription
-            canonicalUrl
-          }
-          image {
-            asset {
-              fixed(width: 175) {
-                ...GatsbySanityImageFixed
-              }
-            }
-          }
-          categories {
-            _id
-            title
-            _rawDescription
-            slug {
-              current
-            }
-          }
-        }
-      }
       allSanityProject {
         group(field: categories___title) {
           fieldValue
