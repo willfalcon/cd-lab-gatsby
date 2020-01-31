@@ -4,19 +4,13 @@ import { rgba } from 'polished';
 import { Link } from 'gatsby';
 
 const CatList = ({ categories }) => {
-  const catsWith = categories.filter(cat => cat.count || cat.description);
-  const catsWithout = categories.filter(cat => !cat.count && !cat.description);
+  // const catsWith = categories.filter(cat => cat.description);
 
   return (
     <StyledCatList className="cats">
-      {catsWith.map(({ _id, title, slug }) => (
+      {categories.map(({ _id, title, slug }) => (
         <StyledCategory key={_id} className="link">
           <Link to={`/service/${slug.current}`}>{title}</Link>
-        </StyledCategory>
-      ))}
-      {catsWithout.map(({ _id, title, slug }) => (
-        <StyledCategory key={_id} className="link">
-          {title}
         </StyledCategory>
       ))}
     </StyledCatList>

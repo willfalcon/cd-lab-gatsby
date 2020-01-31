@@ -7,7 +7,7 @@ import Topic from '../Topic';
 import Heading from '../Heading';
 import Content from '../Content';
 import CatList from './CatList';
-// import CloseButton from './CloseButton';
+import CloseButton from '../CloseButton';
 
 const HomeTopics = () => {
   const topicsQueryRes = useStaticQuery(graphql`
@@ -43,19 +43,23 @@ const HomeTopics = () => {
   `);
 
   const topics = topicsQueryRes.allSanityTopic.edges;
-  // console.log(topics);
 
   const [expandedTopic, setExpandedTopic] = useState(null);
-  console.log(expandedTopic);
+
   const expandedTopicTransition = useTransition(expandedTopic, item => item, {
     from: {
       opacity: 0,
+      position: 'absolute',
+      zIndex: 1,
     },
     enter: {
       opacity: 1,
+      position: 'relative',
     },
     leave: {
       opacity: 0,
+      zIndex: 0,
+      position: 'relative',
     },
   });
 
@@ -69,17 +73,16 @@ const HomeTopics = () => {
         const topic = item
           ? topics.filter(topic => topic.node.id === expandedTopic)[0]
           : false;
-        console.log(topic);
-        const { title, _rawContent, categories } = topic.node;
         return (
           topic && (
             <ExpandedTopic key={key} style={props}>
+              <CloseButton handleClick={() => setExpandedTopic(null)} />
               <Heading h2>{topic.node.title}</Heading>
               <Content>{topic.node._rawContent}</Content>
-              {categories && (
+              {topic.node.categories && (
                 <>
                   <h2 className="list-heading">What We Do</h2>
-                  <CatList categories={categories} />
+                  <CatList categories={topic.node.categories} />
                 </>
               )}
             </ExpandedTopic>
@@ -93,6 +96,11 @@ const HomeTopics = () => {
 const ExpandedTopic = styled(animated.div)`
   padding: 3.5rem 2.8rem;
   background: ${({ theme }) => theme.offWhite};
+  .list-heading {
+    color: ${({ theme }) => theme.orange};
+    text-align: center;
+    font-size: 3.6rem;
+  }
 `;
 
 export default HomeTopics;

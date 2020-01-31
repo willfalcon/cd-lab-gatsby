@@ -4,10 +4,10 @@ import { graphql } from 'gatsby';
 import Wrapper from '../components/Wrapper';
 import HomePage from '../components/HomePage/HomePage';
 
-const index = ({ data }) => {
+const index = ({ data, pageContext }) => {
   return (
     <Wrapper home>
-      <HomePage {...data.sanityHomePage} />
+      <HomePage {...data.sanityHomePage} thumbnail={pageContext.thumbnail} />
     </Wrapper>
   );
 };
@@ -21,7 +21,9 @@ export const HomeQuery = graphql`
         _key
         _type
         asset {
-          url
+          fluid(maxWidth: 800) {
+            ...GatsbySanityImageFluid
+          }
         }
       }
       _rawBody
@@ -30,8 +32,7 @@ export const HomeQuery = graphql`
           url
         }
       }
-      homeVideo
-      homeVideoThumb
+      homeVideoId
       featuredProjects {
         _key
         project {
@@ -39,6 +40,13 @@ export const HomeQuery = graphql`
           title
           slug {
             current
+          }
+          images {
+            asset {
+              fluid(maxWidth: 800) {
+                ...GatsbySanityImageFluid
+              }
+            }
           }
           _id
         }

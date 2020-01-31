@@ -3,24 +3,38 @@ import styled from 'styled-components';
 
 import Content from '../Content';
 import HomeTopics from './HomeTopics';
+import HomeVideo from './HomeVideo';
+import FeaturedProjects from './FeaturedProjects';
+import AboutLink from './AboutLink';
 
 import theme, { media } from '../theme';
 import useSiteContext from '../SiteContext';
 
-const HomePage = ({ _rawBody, mainImage }) => {
+const HomePage = ({
+  _rawBody,
+  mainImage,
+  homeVideoId,
+  thumbnail,
+  featuredProjects,
+  aboutUsImage,
+}) => {
   const mainRef = useRef(null);
   const { viewport } = useSiteContext();
-
   return (
     <StyledHomePage className="container homepage" viewport={viewport}>
       <HomeMain
         className="homepage-main"
         viewport={viewport}
-        bg={mainImage.asset.url}>
+        bg={mainImage.asset.url}
+      >
         <Content>{_rawBody}</Content>
       </HomeMain>
       <HomeTopics />
-      <HomeAside></HomeAside>
+      <HomeAside>
+        <HomeVideo thumbnail={thumbnail} homeVideoId={homeVideoId} />
+        <FeaturedProjects projects={featuredProjects} />
+        <AboutLink image={aboutUsImage} />
+      </HomeAside>
     </StyledHomePage>
   );
 };
