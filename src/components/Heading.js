@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import classNames from 'classnames';
 
 import { media } from './theme';
 
@@ -8,11 +9,12 @@ const Heading = ({
   children,
   h2 = false,
   color = 'orange',
-  inheritColor = false
+  inheritColor = false,
+  className,
 }) => {
   return h2 ? (
     <StyledH2
-      className="heading heading--h2"
+      className={classNames('heading heading--h2', className)}
       color={color}
       inheritColor={inheritColor}
     >
@@ -21,7 +23,7 @@ const Heading = ({
     </StyledH2>
   ) : (
     <StyledHeading
-      className="heading heading--h1"
+      className={classNames('heading heading--h1', className)}
       color={color}
       inheritColor={inheritColor}
     >

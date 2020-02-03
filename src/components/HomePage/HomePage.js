@@ -7,7 +7,7 @@ import HomeVideo from './HomeVideo';
 import FeaturedProjects from './FeaturedProjects';
 import AboutLink from './AboutLink';
 
-import theme, { media } from '../theme';
+import { media } from '../theme';
 import useSiteContext from '../SiteContext';
 
 const HomePage = ({
@@ -28,6 +28,7 @@ const HomePage = ({
         bg={mainImage.asset.url}
       >
         <Content>{_rawBody}</Content>
+        {/* TODO: ContactFormButton */}
       </HomeMain>
       <HomeTopics />
       <HomeAside>

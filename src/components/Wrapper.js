@@ -15,6 +15,7 @@ import { getViewport } from './utils';
 
 import Header from './Header/Header';
 import Head from './Head';
+import MobileFooter from './MobileFooter';
 
 library.add(fab, faArrowRight, faAngleRight, faAngleDoubleLeft);
 
@@ -28,6 +29,7 @@ const Wrapper = ({ children, home = false }) => {
         <PageWrapper className="page-wrapper" viewheight={viewport.height}>
           {children}
         </PageWrapper>
+        {viewport.width < theme.sizes.break && <MobileFooter />}
         <GlobalStyle />
       </SiteContextProvider>
     </ThemeProvider>
