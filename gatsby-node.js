@@ -98,4 +98,37 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     });
     console.log(`Created single Collection page for ${collection.node.title}`);
   });
+
+  /**
+   * Get Blog posts and create pages
+   */
+
+  const {
+    data: {
+      allSanityPost: { edges: posts },
+    },
+  } = await graphql(`
+    {
+      allSanityPost {
+        edges {
+          node {
+            id
+            slug {
+              current
+            }
+            title
+          }
+        }
+      }
+    }
+  `);
+
+  posts.forEach(post => {
+    createPage({
+      path: `/post/${post.node.slug.current}`,
+      component: require.resolve('./src/templates/post.js'),
+      context: { slug: post.node.slug.current },
+    });
+    console.log(`Created Post page for ${post.node.title}`);
+  });
 };
