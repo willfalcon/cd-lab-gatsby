@@ -11,7 +11,7 @@ const ProjectCarousel = ({ projects }) => {
 
   const [index, setIndex] = useState(0);
 
-  const filteredProjects = projects.filter(project => project.images);
+  const filteredProjects = projects.filter(project => project.images.length);
   const len = filteredProjects.length;
   const prevSlide = () => setIndex((index + len - 1) % len);
   const nextSlide = () => setIndex((index + 1) % len);
@@ -26,7 +26,7 @@ const ProjectCarousel = ({ projects }) => {
         {filteredProjects.map(project => {
           return (
             <StyledProjectCell key={project.id}>
-              <Img fixed={project.images[0].asset.fixed} />
+              <Img fluid={project.images[0].asset.fluid} />
               <h2 className="project-cell__link">{project.title}</h2>
             </StyledProjectCell>
           );

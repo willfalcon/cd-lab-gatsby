@@ -9,7 +9,7 @@ import Project from './Project';
 import useSiteContext from '../SiteContext';
 
 const ProjectMasonry = ({ projects }) => {
-  console.log(projects);
+  // console.log(projects);
 
   const masonryOptions = {
     transitionDuration: 100,

@@ -66,4 +66,36 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     });
     console.log(`Created single service page for ${service.node.title}`);
   });
+
+  /**
+   * Get Collections and create pages
+   */
+
+  const {
+    data: {
+      allSanityCollection: { edges: collections },
+    },
+  } = await graphql(`
+    {
+      allSanityCollection {
+        edges {
+          node {
+            title
+            slug {
+              current
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  collections.forEach(collection => {
+    createPage({
+      path: `/collection/${collection.node.slug.current}`,
+      component: require.resolve('./src/templates/singleCollection.js'),
+      context: { slug: collection.node.slug.current },
+    });
+    console.log(`Created single Collection page for ${collection.node.title}`);
+  });
 };
