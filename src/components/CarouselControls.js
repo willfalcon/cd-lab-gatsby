@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import classNames from 'classnames';
 
 import { media } from './theme';
 
-const CarouselControls = ({ prev, next, index, length }) => {
+const CarouselControls = ({ prev, next, index, length, className }) => {
   return (
-    <StyledControls className="carousel-controls">
+    <StyledControls className={classNames('carousel-controls', className)}>
       <button
         className="controls__button previous"
         onClick={prev}

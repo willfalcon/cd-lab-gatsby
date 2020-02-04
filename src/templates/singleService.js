@@ -10,6 +10,7 @@ const singleService = ({ data }) => {
       <SingleService
         {...data.sanityCategory}
         projects={data.allSanityProject.edges.map(edge => ({ ...edge.node }))}
+        services={data.allSanityCategory.edges.map(edge => ({ ...edge.node }))}
       />
     </Wrapper>
   );
@@ -39,6 +40,35 @@ export const SingleServiceQuery = graphql`
           id
           title
           publishedAt
+          images {
+            _key
+            asset {
+              fluid(maxWidth: 500) {
+                ...GatsbySanityImageFluid
+              }
+            }
+          }
+          noCover
+          categories {
+            title
+            slug {
+              current
+            }
+            id
+          }
+          _rawDescription
+          videoID
+        }
+      }
+    }
+    allSanityCategory {
+      edges {
+        node {
+          slug {
+            current
+          }
+          id
+          title
         }
       }
     }

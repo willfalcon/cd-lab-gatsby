@@ -3,24 +3,36 @@ import Loadable from '@loadable/component';
 
 import PageLayout from '../PageLayout';
 import Heading from '../Heading';
+import Content from '../Content';
+import ServicePagination from './ServicePagination';
 
 import useSiteContext from '../SiteContext';
 import theme from '../theme';
 
-const ProjectCarousel = Loadable(() => import('../ProjectCarousel'));
-const ProjectMasonry = Loadable(() => import('../ProjectMasonry'));
+const ProjectCarousel = Loadable(() => import('../Projects/ProjectCarousel'));
+const ProjectMasonry = Loadable(() => import('../Projects/ProjectMasonry'));
 
-const SingleService = ({ title }) => {
+const SingleService = ({ title, _rawDescription, services, id, projects }) => {
   const { viewport } = useSiteContext();
-
   const mobile = viewport.width < theme.sizes.break;
+
+  const index = services.findIndex(service => service.id === id);
+  const len = services.length;
+  const next = (index + len - 1) % len;
+  const prev = (index + 1) % len;
 
   return (
     <PageLayout className="single-service">
       <div className="main">
         <Heading>{title}</Heading>
-        {mobile ? <ProjectCarousel /> : <ProjectMasonry />}
+        {mobile && <ProjectCarousel projects={projects} />}
+        <div className="content">
+          {_rawDescription && <Content>{_rawDescription}</Content>}
+          {/* TODO: ContactFormButton */}
+          <ServicePagination prev={services[prev]} next={services[next]} />
+        </div>
       </div>
+      {!mobile && <ProjectMasonry projects={projects} />}
     </PageLayout>
   );
 };
