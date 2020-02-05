@@ -131,4 +131,34 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     });
     console.log(`Created Post page for ${post.node.title}`);
   });
+
+  /**
+   * Create Blog archive pages
+   */
+
+  const {
+    data: {
+      sanityBlogPage: { perPage },
+    },
+  } = await graphql(`
+    {
+      sanityBlogPage(_id: { eq: "blogPage" }) {
+        perPage
+      }
+    }
+  `);
+
+  const numPages = Math.ceil(posts.length / perPage);
+  Array.from({ length: numPages }).forEach((_, i) => {
+    createPage({
+      path: i === 0 ? `/blog/` : `/blog/${i + 1}`,
+      component: require.resolve('./src/templates/blog.js'),
+      context: {
+        limit: perPage,
+        skip: i * perPage,
+        numPages,
+        currentPage: i + 1,
+      },
+    });
+  });
 };
