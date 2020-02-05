@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 
 import Wrapper from '../components/Wrapper';
-import BlogPage from '../components/BlogPage';
+import BlogPage from '../components/BlogPage/BlogPage';
 
 const blog = ({ data, pageContext }) => {
   console.log(data.allSanityPost.edges.map(edge => ({ ...edge.node })));
@@ -11,7 +11,7 @@ const blog = ({ data, pageContext }) => {
       <BlogPage
         posts={data.allSanityPost.edges.map(edge => ({ ...edge.node }))}
         {...data.sanityBlogPage}
-        pageContext={pageContext}
+        {...pageContext}
       />
     </Wrapper>
   );

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'gatsby';
 import Img from 'gatsby-image/withIEPolyfill';
 
-import { media } from './theme';
+import { media } from '../theme';
 
 const PostsList = ({ posts }) => {
   return (

@@ -1,18 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Heading from './Heading';
-import Content from './Content';
+import Heading from '../Heading';
+import Content from '../Content';
 import PostsList from './PostsList';
+import Pagination from './Pagination';
 
-import { media } from './theme';
+import { media } from '../theme';
 
-const BlogPage = ({ posts, title, _rawBody, perPage, pageContext }) => {
+const BlogPage = ({
+  posts,
+  title,
+  _rawBody,
+  perPage,
+  numPages,
+  currentPage,
+}) => {
   return (
     <StyledBlogPage className="blog-page">
       <Heading>{title}</Heading>
       {_rawBody && <Content>{_rawBody}</Content>}
       <PostsList posts={posts} />
+      <Pagination numPages={numPages} currentPage={currentPage} />
     </StyledBlogPage>
   );
 };
