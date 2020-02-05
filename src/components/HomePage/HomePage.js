@@ -1,14 +1,16 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
+import Loadable from '@loadable/component';
 
 import Content from '../Content';
 import HomeTopics from './HomeTopics';
 import HomeVideo from './HomeVideo';
-import FeaturedProjects from './FeaturedProjects';
 import AboutLink from './AboutLink';
 
 import { media } from '../theme';
 import useSiteContext from '../SiteContext';
+
+const FeaturedProjects = Loadable(() => import('./FeaturedProjects'));
 
 const HomePage = ({
   _rawBody,
