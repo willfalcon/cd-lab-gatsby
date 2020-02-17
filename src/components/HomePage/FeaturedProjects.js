@@ -49,6 +49,7 @@ const StyledFeaturedProjects = styled.div`
       max-height: 100%;
       .slider-list {
         max-height: 100%;
+        height: 100%;
       }
       .slider-slide {
         max-height: 100%;

@@ -15,7 +15,7 @@ const theme = {
   bookWeight: '300',
   regularWeight: '400',
   boldWeight: '700',
-  grid: true,
+  // grid: true,
   timeout: 400,
   grid: {
     enabled: true,

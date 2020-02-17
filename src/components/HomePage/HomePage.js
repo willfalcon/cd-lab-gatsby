@@ -6,6 +6,7 @@ import Content from '../Content';
 import HomeTopics from './HomeTopics';
 import HomeVideo from './HomeVideo';
 import AboutLink from './AboutLink';
+import ContactFormButton from '../ContactForm/ContactFormButton';
 
 import { media } from '../theme';
 import useSiteContext from '../SiteContext';
@@ -30,7 +31,7 @@ const HomePage = ({
         bg={mainImage.asset.url}
       >
         <Content>{_rawBody}</Content>
-        {/* TODO: ContactFormButton */}
+        <ContactFormButton>Let's Talk</ContactFormButton>
       </HomeMain>
       <HomeTopics />
       <HomeAside>

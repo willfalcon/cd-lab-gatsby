@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Heading from '../Heading';
 import Content from '../Content';
+import ContactFormButton from '../ContactForm/ContactFormButton';
 
 import People from './People';
 
@@ -17,7 +18,7 @@ const AboutPage = ({ title, _rawBody, people }) => {
       <AboutMain className="about-main">
         <Heading className="about__heading">{title}</Heading>
         <Content className="about__content">{_rawBody}</Content>
-        {/* TODO: ContactFormButton */}
+        <ContactFormButton>Contact Us</ContactFormButton>
       </AboutMain>
       <AboutAside className="about-aside" viewport={viewport}>
         <People people={people} />

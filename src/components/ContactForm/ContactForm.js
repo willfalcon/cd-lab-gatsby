@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyledForm } from './ContactFormStyles';
+import classNames from 'classnames';
 
 import Button from '../Button';
 import Heading from '../Heading';
@@ -10,27 +11,27 @@ class ContactForm extends React.Component {
   state = {
     org: {
       value: '',
-      input: false
+      input: false,
     },
     name: {
       value: '',
-      input: false
+      input: false,
     },
     email: {
       value: '',
-      input: false
+      input: false,
     },
     phone: {
       value: '',
-      input: false
+      input: false,
     },
     message: {
       value: '',
-      input: false
+      input: false,
     },
     submitting: false,
     success: false,
-    error: false
+    error: false,
   };
 
   handleChange = e => {
@@ -40,8 +41,8 @@ class ContactForm extends React.Component {
     this.setState({
       [name]: {
         value: val,
-        input: true
-      }
+        input: true,
+      },
     });
   };
 
@@ -69,15 +70,15 @@ class ContactForm extends React.Component {
         method: 'POST',
         mode: 'cors',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           org: org.value,
           name: name.value,
           email: email.value,
           phone: phone.value,
-          message: message.value
-        })
+          message: message.value,
+        }),
       }
     );
 
@@ -87,7 +88,7 @@ class ContactForm extends React.Component {
       this.setState({
         error: entryJSON.error,
         success: false,
-        submitting: false
+        submitting: false,
       });
     } else {
       this.setState({ success: true });
@@ -102,14 +103,14 @@ class ContactForm extends React.Component {
   };
 
   render() {
-    const { formOpen, toggleForm, modal = false } = this.props;
+    const { formOpen, toggleForm, modal = false, className } = this.props;
     const { success, submitting, error } = this.state;
 
     return (
       <SiteContext.Consumer>
-        {({ formOptions: { errorMessage, successMessage } }) => (
+        {({ formOptions: { errorMessage, successMessage }, mobile }) => (
           <StyledForm
-            className="contact-form"
+            className={classNames('contact-form', className)}
             formOpen={formOpen}
             onSubmit={this.handleSubmit}
             modal={modal}
@@ -214,11 +215,13 @@ class ContactForm extends React.Component {
                 </label>
                 <div className="buttons">
                   <Button type="submit" title="Send" />
-                  <Button
-                    title="Cancel"
-                    handleClick={() => toggleForm(!formOpen)}
-                    classes="cancel"
-                  />
+                  {(!this.props.inNav || mobile) && (
+                    <Button
+                      title="Cancel"
+                      handleClick={() => toggleForm(!formOpen)}
+                      className="cancel"
+                    />
+                  )}
                   {submitting && <Loader />}
                 </div>
               </fieldset>
@@ -229,5 +232,9 @@ class ContactForm extends React.Component {
     );
   }
 }
+
+ContactForm.defaultProps = {
+  inNav: false,
+};
 
 export default ContactForm;
