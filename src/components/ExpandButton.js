@@ -5,12 +5,14 @@ import classNames from 'classnames';
 
 import { media } from './theme';
 
-const ExpandButton = ({ handleClick, label = 'Expand', className }) => {
+const ExpandButton = ({ handleClick, label = 'Expand', className, style }) => {
   return (
     <StyledExpandButton
       className={classNames('expand-button', className)}
       onClick={handleClick}
-      aria-label={label}>
+      aria-label={label}
+      style={style}
+    >
       <div>
         <span />
         <span />

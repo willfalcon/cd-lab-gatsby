@@ -31,7 +31,6 @@ const ContactFormButton = ({ children }) => {
   const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
 
   const { viewport, mobile } = useSiteContext();
-  console.log({ viewport });
 
   // const mobile = viewport.width >= theme.sizes.break;
 

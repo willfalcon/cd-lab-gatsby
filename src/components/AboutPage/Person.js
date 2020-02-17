@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Img from 'gatsby-image';
 import styled from 'styled-components';
+import { animated, useSpring, useTransition } from 'react-spring';
 
 import ExpandButton from '../ExpandButton';
+import Heading from '../Heading';
+import Content from '../Content';
+import CloseButton from '../CloseButton';
 
 import useSiteContext from '../SiteContext';
 import { media } from '../theme';
@@ -16,37 +20,206 @@ const Person = ({
   image,
   expanded,
   index,
+  accumulatedIndex,
   className,
   handleExpand,
 }) => {
   const { viewport } = useSiteContext();
 
+  const personRef = useRef(null);
+
+  console.log(personRef);
+
+  const size = viewport.width / 2;
+
+  // const [top, setTop] = useState(0);
+  // const [left, setLeft] = useState(0);
+
+  const { current: ref } = personRef;
+
+  const top =
+    accumulatedIndex % 2 === 0
+      ? (accumulatedIndex / 2) * size
+      : ((accumulatedIndex - 1) / 2) * size;
+  const left = accumulatedIndex % 2 === 0 ? 0 : size;
+
+  const expandButtonTransition = useTransition(expanded, null, {
+    from: {
+      opacity: 0,
+    },
+    enter: {
+      opacity: 1,
+    },
+    leave: {
+      opacity: 0,
+    },
+  });
+
+  const imageSpring = useSpring(
+    expanded
+      ? {
+          transform: `translateX(${viewport.width / 2 -
+            size / 2}) translateY(10px)`,
+          left: `${viewport.width / 2 - (viewport.width * 0.75) / 2}px`,
+          top: `${top + 20}px`,
+          width: `${viewport.width * 0.75}px`,
+          height: `${viewport.width * 0.75}px`,
+        }
+      : {
+          transform: 'translateX(0) translateY(0)',
+          left: `${left}px`,
+          top: `${top}px`,
+          width: `${size}px`,
+          height: `${size}px`,
+        }
+  );
+
+  const bioTransition = useTransition(expanded, null, {
+    from: {
+      width: `${size}px`,
+      maxHeight: `0px`,
+      left: `${left}px`,
+      top: `${top}px`,
+      zIndex: 2,
+      opacity: 0,
+    },
+    enter: {
+      width: `${viewport.width}px`,
+      maxHeight: `1000px`,
+      left: `0px`,
+      top: `${top}px`,
+      zIndex: 2,
+      opacity: 1,
+    },
+    leave: {
+      width: `${size}px`,
+      maxHeight: `0px`,
+      left: `${left}px`,
+      top: `${top}px`,
+      zIndex: 1,
+      opacity: 0,
+    },
+  });
+
   return (
-    <StyledPerson
-      className={`person ${
-        primary ? `primary-${index + 1}` : `normal-${index + 1}`
-      }`}
-      personHeight={viewport.width / 2}
-      expanded={expanded}
-    >
-      <Img fixed={image.asset.fixed} alt={name} />
-      <ExpandButton handleClick={() => handleExpand(id)} cover />
-    </StyledPerson>
+    <>
+      <StyledPerson
+        className={`person ${
+          primary ? `primary-${index + 1}` : `normal-${index + 1}`
+        }`}
+        expanded={expanded}
+        ref={personRef}
+        style={imageSpring}
+        top={top}
+        left={left}
+        size={size}
+      >
+        <PersonImg fixed={image.asset.fixed} alt={name} viewport={viewport} />
+        {expandButtonTransition.map(
+          ({ item, key, props }) =>
+            !item && (
+              <AnimatedExpandButton
+                key={key}
+                style={props}
+                handleClick={() => handleExpand(id)}
+                cover
+              />
+            )
+        )}
+      </StyledPerson>
+      {bioTransition.map(
+        ({ item, key, props }) =>
+          item && (
+            <ExpandedPerson
+              key={key}
+              style={props}
+              size={size}
+              viewport={viewport}
+            >
+              <h4 className="position">{position}</h4>
+              <Heading h2 className="name">
+                {name}
+              </Heading>
+              <Content>{_rawBio}</Content>
+              <CloseButton handleClick={() => handleExpand(null)} />
+            </ExpandedPerson>
+          )
+      )}
+    </>
   );
 };
 
-const StyledPerson = styled.li`
-  flex: 0 0 50%;
-  max-width: 50%;
-  position: relative;
-  left: 0;
+const AnimatedExpandButton = animated(ExpandButton);
+
+const PersonImg = styled(Img)`
+  /* z-index: 2; */
+  width: 100% !important;
+  height: 100% !important;
+`;
+
+const ExpandedPerson = styled(animated.div)`
+  overflow: hidden;
+  background: ${({ theme }) => theme.dark};
+  z-index: 1;
+  position: absolute;
+  padding-top: ${({ viewport }) => viewport.width * 0.75 + 20}px;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  .block-content,
+  * {
+    color: ${({ theme }) => theme.offWhite};
+    line-height: 2;
+    ${media.break`
+      color: ${({ theme }) => theme.dark};
+    `}
+  }
+  .position {
+    color: ${({ theme }) => theme.orange};
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+    ${media.break`
+      color: ${({ theme }) => theme.dark};
+    `}
+  }
+  .name {
+    font-size: 2.4rem;
+    line-height: 1.3;
+    color: ${({ theme }) => theme.offWhite};
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    font-weight: ${({ theme }) => theme.boldWeight};
+    font-family: ${({ theme }) => theme.fontFamily};
+    letter-spacing: 3px;
+    ${media.break`
+      color: ${({ theme }) => theme.orange};
+    `}
+
+    ::after {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 5px;
+      background: ${({ theme }) => theme.orange};
+      margin-top: 1rem;
+    }
+  }
+`;
+
+const StyledPerson = styled(animated.li)`
+  /* flex: 0 0 50%;
+  max-width: 50%; */
+  position: absolute;
+  left: ${({ left }) => left}px;
+  top: ${({ top }) => top}px;
+  height: ${({ size }) => size}px;
+  width: ${({ size }) => size}px;
+  z-index: ${({ expanded }) => (expanded ? 3 : 0)};
   line-height: 1;
   display: block;
-  background: ${({ expanded, theme }) =>
-    expanded ? theme.dark : 'transparent'};
-  transition: all 0.25s;
-  padding: ${({ expanded }) => (expanded ? '1rem 1.5rem' : '0')};
-  height: ${({ personHeight }) => personHeight}px;
+  /* background: ${({ expanded, theme }) =>
+    expanded ? theme.dark : 'transparent'}; */
+  /* transition: all 0.25s;
+  padding: ${({ expanded }) => (expanded ? '1rem 1.5rem' : '0')}; */
   .person-image {
     width: 100%;
     height: 100%;
@@ -112,8 +285,8 @@ const StyledPerson = styled.li`
     padding: 0;
     margin: 0;
     display: block !important;
-    width: 100% !important;
-    height: 100% !important;
+    /* width: 100% !important;
+    height: 100% !important; */
     cursor: pointer;
     &:focus {
       outline: none;
@@ -121,42 +294,6 @@ const StyledPerson = styled.li`
   }
 
   .expanded-person {
-    transition: 0.25s;
-    max-height: ${({ expanded }) => (expanded ? '1000px' : '0px')};
-    overflow: hidden;
-    .block-content,
-    * {
-      color: ${({ theme }) => theme.offWhite};
-      line-height: 2;
-      ${media.break`
-        color: ${({ theme }) => theme.dark};
-      `}
-    }
-    .position {
-      color: ${({ theme }) => theme.orange};
-      line-height: 1.3;
-      ${media.break`
-        color: ${({ theme }) => theme.dark};
-      `}
-    }
-    .name {
-      font-size: 2.4rem;
-      line-height: 1.3;
-      color: ${({ theme }) => theme.offWhite};
-      margin-bottom: 1rem;
-      ${media.break`
-        color: ${({ theme }) => theme.orange};
-      `}
-
-      &::after {
-        content: '';
-        display: block;
-        width: 75px;
-        height: 5px;
-        background: ${({ theme }) => theme.orange};
-        margin-top: 1.6rem;
-      }
-    }
   }
 `;
 
