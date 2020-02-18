@@ -26,7 +26,7 @@ const Wrapper = ({ children, home = false }) => {
       <SiteContextProvider home={home}>
         <Head />
         <Header />
-        <PageWrapper className="page-wrapper" viewheight={viewport.height}>
+        <PageWrapper className="page-wrapper" viewport={viewport} home={home}>
           {children}
         </PageWrapper>
         {viewport.width < theme.sizes.break && <MobileFooter />}
@@ -37,19 +37,24 @@ const Wrapper = ({ children, home = false }) => {
 };
 
 const PageWrapper = styled.div`
-  min-height: ${({ viewheight }) =>
-    viewheight ? `${viewheight - 65 - 42}px` : `calc(100vh - 107px)`};
+  min-height: ${({ viewport }) =>
+    viewport.width ? `${viewport.height - 65 - 42}px` : `calc(100vh - 107px)`};
   ${media.break`
-    min-height: ${({ viewheight }) =>
-      viewheight ? `${viewheight}px` : `100vh`};
+    min-height: ${({ viewport }) =>
+      viewport.height ? `${viewport.height}px` : `100vh`};
+    ${({ home, viewport }) =>
+      home &&
+      `
+      height: ${viewport.height ? `${viewport.height}px` : `100vh`};
+    `}
     main {
       padding-left:90px;
-      min-height: ${({ viewheight }) =>
-        viewheight ? `${viewheight}px` : `100vh`};
+      min-height: ${({ viewport }) =>
+        viewport.height ? `${viewport.height}px` : `100vh`};
     }
     .container {
-      min-height: ${({ viewheight }) =>
-        viewheight ? `${viewheight}px` : `100vh`};
+      min-height: ${({ viewport }) =>
+        viewport.height ? `${viewport.height}px` : `100vh`};
     }
   `}
 `;
