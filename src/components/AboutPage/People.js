@@ -123,7 +123,7 @@ const StyledPeople = styled.ul`
 
       background: transparent;
     
-      &::after {
+      &::before {
         display: block;
         content: '';
         height: 100%;

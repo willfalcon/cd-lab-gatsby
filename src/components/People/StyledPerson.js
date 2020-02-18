@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { animated } from 'react-spring';
 
-import { media } from '../theme';
+import { media, grid } from '../theme';
 
 const StyledPerson = styled(animated.li)`
   /* flex: 0 0 50%;
@@ -31,11 +31,11 @@ const StyledPerson = styled(animated.li)`
     top: 0;
     left: 0;
     background: ${({ theme }) => theme.offWhite};
-    z-index: ${({ expanded }) => (expanded ? 5 : 1)};
+    z-index: ${({ expanded }) => expanded && `3 !important`};
+    /* z-index: 1; */
 
-    ${({ theme }) =>
-      theme.grid &&
-      `
+
+    ${grid.enabled`
       width: 100%;
       height: 100%;
       max-width: 100%;
@@ -67,17 +67,42 @@ const StyledPerson = styled(animated.li)`
           grid-area: person8;
         }
       }
+      ${({ pos }) =>
+        pos &&
+        `
+          position: absolute;
+          top: ${pos.top}px;
+          left: ${pos.left}px;
+          width: ${pos.width}px;
+          height: ${pos.height}px;
+        `}
+      `}
     `}
-  `}
+
+  
 
   ${media.large`
-    ${({ theme }) =>
-      theme.grid &&
-      `
+
+    ${grid.enabled`
       grid-row-end: span 2;
       grid-column-end: span 2;
     `}
+
+
+    ${({ pos }) =>
+      pos &&
+      `
+      position: absolute;
+      top: ${pos.top}px;
+      left: ${pos.left}px;
+      width: ${pos.width}px;
+      height: ${pos.height}px;
+    `}
+
   `}
+
+
+
 
   .gatsby-image-wrapper {
     background: transparent;
@@ -93,8 +118,6 @@ const StyledPerson = styled(animated.li)`
     }
   }
 
-  .expanded-person {
-  }
 `;
 
 export default StyledPerson;
