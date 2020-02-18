@@ -55,7 +55,6 @@ const Person = ({
   const expandButtonTransition = useExpandButtonTransition(expanded);
 
   const imageSpring = useImageSpring(
-    mobile,
     expanded,
     viewport,
     top,
@@ -65,7 +64,6 @@ const Person = ({
   );
 
   const bioTransition = useBioTransition(
-    mobile,
     expanded,
     viewport,
     top,
@@ -93,13 +91,13 @@ const Person = ({
                 size={size}
                 viewport={viewport}
               >
-                {/* <div className="person-info"> */}
-                <h4 className="position">{position}</h4>
-                <Heading h2 className="name">
-                  {name}
-                </Heading>
-                <Content>{_rawBio}</Content>
-                {/* </div> */}
+                <div className="person-info">
+                  <h4 className="position">{position}</h4>
+                  <Heading h2 className="name">
+                    {name}
+                  </Heading>
+                  <Content>{_rawBio}</Content>
+                </div>
                 <CloseButton handleClick={() => handleExpand(null)} />
               </ExpandedPerson>
             </React.Fragment>

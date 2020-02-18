@@ -1,5 +1,7 @@
 import { useSpring, useTransition } from 'react-spring';
 
+import theme from '../theme';
+
 const useExpandButtonTransition = expanded => {
   return useTransition(expanded, null, {
     from: {
@@ -14,15 +16,8 @@ const useExpandButtonTransition = expanded => {
   });
 };
 
-const useImageSpring = (
-  mobile,
-  expanded,
-  viewport,
-  top,
-  left,
-  size,
-  refPosition
-) => {
+const useImageSpring = (expanded, viewport, top, left, size, refPosition) => {
+  const mobile = viewport.width < theme.sizes.break;
   const pos = refPosition;
   const expandedWidth =
     viewport.width * 0.75 * 0.5 > 400 ? 400 : viewport.width * 0.75 * 0.5;
@@ -66,15 +61,8 @@ const useImageSpring = (
   );
 };
 
-const useBioTransition = (
-  mobile,
-  expanded,
-  viewport,
-  top,
-  left,
-  size,
-  refPosition
-) => {
+const useBioTransition = (expanded, viewport, top, left, size, refPosition) => {
+  const mobile = viewport.width < theme.sizes.break;
   const pos = refPosition;
   return useTransition(
     expanded,
@@ -88,6 +76,7 @@ const useBioTransition = (
             top: `${top}px`,
             zIndex: 2,
             opacity: 0,
+            o: 0,
           },
           enter: {
             width: `${viewport.width}px`,
@@ -96,6 +85,7 @@ const useBioTransition = (
             top: `${top}px`,
             zIndex: 2,
             opacity: 1,
+            o: 1,
           },
           leave: {
             width: `${size}px`,
@@ -104,6 +94,7 @@ const useBioTransition = (
             top: `${top}px`,
             zIndex: 1,
             opacity: 0,
+            o: 0,
           },
         }
       : pos
