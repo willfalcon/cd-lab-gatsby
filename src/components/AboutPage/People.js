@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
-import Person from './Person';
+import Person from '../People/Person';
 
 import { media, grid } from '../theme';
 import useSiteContext from '../SiteContext';
