@@ -11,7 +11,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import theme, { media } from './theme';
 import GlobalStyle from './GlobalStyle';
 import { SiteContextProvider } from './SiteContext';
-import { getViewport } from './utils';
+import { useWindowSize } from './utils';
 
 import Header from './Header/Header';
 import Head from './Head';
@@ -20,7 +20,7 @@ import MobileFooter from './MobileFooter';
 library.add(fab, faArrowRight, faAngleRight, faAngleDoubleLeft);
 
 const Wrapper = ({ children, home = false }) => {
-  const viewport = getViewport();
+  const viewport = useWindowSize();
   return (
     <ThemeProvider theme={theme}>
       <SiteContextProvider home={home}>
