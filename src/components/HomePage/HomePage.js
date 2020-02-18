@@ -4,14 +4,13 @@ import Loadable from '@loadable/component';
 
 import Content from '../Content';
 import HomeTopics from './HomeTopics';
-import HomeVideo from './HomeVideo';
-import AboutLink from './AboutLink';
+
 import ContactFormButton from '../ContactForm/ContactFormButton';
 
 import { media } from '../theme';
 import useSiteContext from '../SiteContext';
 
-const FeaturedProjects = Loadable(() => import('./FeaturedProjects'));
+const HomeAside = Loadable(() => import('./HomeAside'));
 
 const HomePage = ({
   _rawBody,
@@ -34,11 +33,12 @@ const HomePage = ({
         <ContactFormButton>Let's Talk</ContactFormButton>
       </HomeMain>
       <HomeTopics />
-      <HomeAside>
-        <HomeVideo thumbnail={thumbnail} homeVideoId={homeVideoId} />
-        <FeaturedProjects projects={featuredProjects} />
-        <AboutLink image={aboutUsImage} />
-      </HomeAside>
+      <HomeAside
+        thumbnail={thumbnail}
+        homeVideoId={homeVideoId}
+        featuredProjects={featuredProjects}
+        aboutUsImage={aboutUsImage}
+      />
     </StyledHomePage>
   );
 };
@@ -67,16 +67,6 @@ const HomeMain = styled.main`
     height: 100%;
     padding-top: 10rem;
     margin-bottom: 0;
-  `}
-`;
-
-const HomeAside = styled.aside`
-  ${media.break`
-    flex: 0 0 40%;
-    max-width: 40%;
-    max-height: 100%;
-    display: flex;
-    flex-direction: column;
   `}
 `;
 
