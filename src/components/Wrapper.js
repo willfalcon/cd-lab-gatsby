@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -20,7 +20,16 @@ import MobileFooter from './MobileFooter';
 library.add(fab, faArrowRight, faAngleRight, faAngleDoubleLeft);
 
 const Wrapper = ({ children, home = false }) => {
-  const viewport = useWindowSize();
+  const [viewport, setViewport] = useState({
+    width: undefined,
+    height: undefined,
+  });
+
+  const window = useWindowSize();
+  useEffect(() => {
+    setViewport(window);
+  }, [window.height]);
+
   return (
     <ThemeProvider theme={theme}>
       <SiteContextProvider home={home}>
@@ -38,7 +47,7 @@ const Wrapper = ({ children, home = false }) => {
 
 const PageWrapper = styled.div`
   min-height: ${({ viewport }) =>
-    viewport.width ? `${viewport.height - 65 - 42}px` : `calc(100vh - 107px)`};
+    viewport.height ? `${viewport.height - 65 - 42}px` : `calc(100vh - 107px)`};
   ${media.break`
     min-height: ${({ viewport }) =>
       viewport.height ? `${viewport.height}px` : `100vh`};
