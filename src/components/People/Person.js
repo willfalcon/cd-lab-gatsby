@@ -1,12 +1,13 @@
 import React, { useState, useLayoutEffect, useRef } from 'react';
 import Img from 'gatsby-image';
 import styled from 'styled-components';
-import { animated } from 'react-spring';
+import { animated, interpolate } from 'react-spring';
 
 import ExpandButton from '../ExpandButton';
 import Heading from '../Heading';
 import Content from '../Content';
 import CloseButton from '../CloseButton';
+import BackgroundOverlay from '../BackgroundOverlay';
 
 import StyledPerson from './StyledPerson';
 import {
@@ -59,13 +60,51 @@ const Person = ({
     viewport,
     top,
     left,
-    size
+    size,
+    refPosition
   );
 
-  const bioTransition = useBioTransition(expanded, viewport, top, left, size);
+  const bioTransition = useBioTransition(
+    mobile,
+    expanded,
+    viewport,
+    top,
+    left,
+    size,
+    refPosition
+  );
 
   return (
     <>
+      {bioTransition.map(
+        ({ item, key, props }) =>
+          item && (
+            <React.Fragment key={key}>
+              <BackgroundOverlay
+                onClick={() => handleExpand(null)}
+                style={{
+                  opacity: props.o.interpolate(o => o),
+                  zIndex: 3,
+                }}
+              />
+              <ExpandedPerson
+                className="expanded-person"
+                style={props}
+                size={size}
+                viewport={viewport}
+              >
+                {/* <div className="person-info"> */}
+                <h4 className="position">{position}</h4>
+                <Heading h2 className="name">
+                  {name}
+                </Heading>
+                <Content>{_rawBio}</Content>
+                {/* </div> */}
+                <CloseButton handleClick={() => handleExpand(null)} />
+              </ExpandedPerson>
+            </React.Fragment>
+          )
+      )}
       <StyledPerson
         className={`person ${
           primary ? `primary-${index + 1}` : `normal-${index + 1}`
@@ -76,6 +115,7 @@ const Person = ({
         left={left}
         size={size}
         ref={ref}
+        pos={refPosition}
       >
         <PersonImg fixed={image.asset.fixed} alt={name} viewport={viewport} />
         {expandButtonTransition.map(
@@ -90,24 +130,6 @@ const Person = ({
             )
         )}
       </StyledPerson>
-      {bioTransition.map(
-        ({ item, key, props }) =>
-          item && (
-            <ExpandedPerson
-              key={key}
-              style={props}
-              size={size}
-              viewport={viewport}
-            >
-              <h4 className="position">{position}</h4>
-              <Heading h2 className="name">
-                {name}
-              </Heading>
-              <Content>{_rawBio}</Content>
-              <CloseButton handleClick={() => handleExpand(null)} />
-            </ExpandedPerson>
-          )
-      )}
     </>
   );
 };
@@ -128,6 +150,16 @@ const ExpandedPerson = styled(animated.div)`
   padding-top: ${({ viewport }) => viewport.width * 0.75 + 20}px;
   padding-left: 2.5rem;
   padding-right: 2.5rem;
+  ${media.break`
+    padding-top: 2rem;
+    background: ${({ theme }) => theme.offWhite};
+    .block-content, * {
+      color: ${({ theme }) => theme.dark};
+    }
+    .person-info {
+      width: 55%;
+    }
+  `}
   .block-content,
   * {
     color: ${({ theme }) => theme.offWhite};
