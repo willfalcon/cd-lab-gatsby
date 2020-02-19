@@ -4,14 +4,14 @@ import Loadable from '@loadable/component';
 
 import Content from '../Content';
 import HomeTopics from './HomeTopics';
-import HomeVideo from './HomeVideo';
-import AboutLink from './AboutLink';
 import ContactFormButton from '../ContactForm/ContactFormButton';
 
 import { media } from '../theme';
 import useSiteContext from '../SiteContext';
 
+const HomeVideo = Loadable(() => import('./HomeVideo'));
 const FeaturedProjects = Loadable(() => import('./FeaturedProjects'));
+const AboutLink = Loadable(() => import('./AboutLink'));
 
 const HomePage = ({
   _rawBody,

@@ -47,11 +47,8 @@ const StyledVideoContainer = styled.div`
   flex: 0 0 33.333%;
   max-height: 33.333%;
   overflow: hidden;
-  /* position: ${({ expanded }) => (expanded ? 'absolute' : 'relative')}; */
   position: relative;
   ${media.break`
-    flex: 0 0 33.333%;
-    /* max-height: 33.333%; */
     max-height: ${({ viewport }) => viewport.height / 3}px;
     height: ${({ viewport }) => viewport.height / 3}px;
   `}
@@ -59,7 +56,7 @@ const StyledVideoContainer = styled.div`
     max-width: 100%;
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
     @media (max-width: ${({ theme }) => theme.break - 1}) {
       display: ${({ expanded }) => (expanded ? 'none' : 'block')};
     }
@@ -67,7 +64,6 @@ const StyledVideoContainer = styled.div`
   #close-button {
     z-index: 30;
   }
-  
 `;
 
 export default HomeVideo;
