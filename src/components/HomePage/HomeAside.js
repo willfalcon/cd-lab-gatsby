@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import HomeVideo from './HomeVideo';
 import FeaturedProjects from './FeaturedProjects';
 import AboutLink from './AboutLink';
+import Loader from '../Loader';
+
+import { media } from '../theme';
 
 const HomeAside = ({
   thumbnail,

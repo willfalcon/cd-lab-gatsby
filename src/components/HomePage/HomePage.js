@@ -10,7 +10,23 @@ import Loader from '../Loader';
 import { media } from '../theme';
 import useSiteContext from '../SiteContext';
 
-const HomeAside = loadable(() => import('./HomeAside'));
+const AsideLoader = styled(Loader)`
+  position: absolute;
+  background: ${({ theme }) => theme.offWhite};
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const HomeAside = loadable(() => import('./HomeAside'), {
+  fallback: <AsideLoader />,
+});
 
 const HomePage = ({
   _rawBody,
