@@ -74,9 +74,6 @@ const HomeAside = styled.aside`
   ${media.break`
     flex: 0 0 40%;
     max-width: 40%;
-    max-height: 100vh;
-    height: ${({ viewport }) =>
-      viewport.height ? `${viewport.height}px` : `100%`};
     display: flex;
     flex-direction: column;
   `}

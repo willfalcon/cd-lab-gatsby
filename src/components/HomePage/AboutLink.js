@@ -6,10 +6,12 @@ import Img from 'gatsby-image/withIEPolyfill';
 import ExpandButton from '../ExpandButton';
 
 import { media } from '../theme';
+import useSiteContext from '../SiteContext';
 
 const AboutLink = ({ image }) => {
+  const { viewport } = useSiteContext();
   return (
-    <StyledAboutLink className="about-link" to="/about">
+    <StyledAboutLink className="about-link" to="/about" viewport={viewport}>
       <AboutLinkImage
         className="about-link__image"
         fluid={image.asset.fluid}
@@ -55,6 +57,7 @@ const StyledAboutLink = styled(Link)`
   ${media.break`
     flex: 0 0 33.333%;
     max-height: 33.333%;
+    height: ${({ viewport }) => viewport.height / 3}px;
   `}
 `;
 

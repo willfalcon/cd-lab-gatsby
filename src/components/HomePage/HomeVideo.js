@@ -5,15 +5,19 @@ import PlayButton from '../PlayButton';
 import VideoModal from './VideoModal';
 
 import { media } from '../theme';
+import useSiteContext from '../SiteContext';
 
 const HomeVideo = ({ thumbnail, homeVideoId }) => {
   const [expanded, toggleExpanded] = useState(false);
   const videoRef = useRef(null);
+  const { viewport } = useSiteContext();
+
   return (
     <>
       <StyledVideoContainer
         className="home-video-container"
         expanded={expanded ? 'true' : undefined}
+        viewport={viewport}
       >
         <img
           src={thumbnail}
@@ -48,6 +52,7 @@ const StyledVideoContainer = styled.div`
   ${media.break`
     flex: 0 0 33.333%;
     max-height: 33.333%;
+    height: ${({ viewport }) => viewport.height / 3}px;
   `}
   img {
     max-width: 100%;

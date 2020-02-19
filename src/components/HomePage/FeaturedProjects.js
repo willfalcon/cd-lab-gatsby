@@ -45,6 +45,7 @@ const StyledFeaturedProjects = styled.div`
   ${media.break`
     flex: 0 0 33.333%;
     max-height: 33.333%;
+    height: ${({ viewport }) => viewport.height / 3}px;
     .slider {
       max-height: 100%;
       .slider-list {
