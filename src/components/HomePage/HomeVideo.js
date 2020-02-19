@@ -51,7 +51,8 @@ const StyledVideoContainer = styled.div`
   position: relative;
   ${media.break`
     flex: 0 0 33.333%;
-    max-height: 33.333%;
+    /* max-height: 33.333%; */
+    max-height: ${({ viewport }) => viewport.height / 3}px;
     height: ${({ viewport }) => viewport.height / 3}px;
   `}
   img {
