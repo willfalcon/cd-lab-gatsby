@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
 import PlayButton from '../PlayButton';
@@ -7,7 +7,7 @@ import VideoModal from './VideoModal';
 import { media } from '../theme';
 import useSiteContext from '../SiteContext';
 
-const HomeVideo = ({ thumbnail, homeVideoId }) => {
+const HomeVideo = ({ thumbnail, homeVideoId, makeReady }) => {
   const [expanded, toggleExpanded] = useState(false);
   const videoRef = useRef(null);
   const { viewport } = useSiteContext();

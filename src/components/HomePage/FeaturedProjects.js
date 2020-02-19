@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Carousel from 'nuka-carousel';
 
@@ -8,7 +8,7 @@ import CarouselControls from '../CarouselControls';
 import { media } from '../theme';
 import useSiteContext from '../SiteContext';
 
-const FeaturedProjects = ({ projects }) => {
+const FeaturedProjects = ({ projects, makeReady }) => {
   const { viewport } = useSiteContext();
   const [index, setIndex] = useState(0);
   const len = projects.length;

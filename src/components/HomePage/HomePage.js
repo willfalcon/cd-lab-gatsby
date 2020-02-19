@@ -1,17 +1,16 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import Loadable from '@loadable/component';
+import loadable from '@loadable/component';
 
 import Content from '../Content';
 import HomeTopics from './HomeTopics';
 import ContactFormButton from '../ContactForm/ContactFormButton';
+import Loader from '../Loader';
 
 import { media } from '../theme';
 import useSiteContext from '../SiteContext';
 
-const HomeVideo = Loadable(() => import('./HomeVideo'));
-const FeaturedProjects = Loadable(() => import('./FeaturedProjects'));
-const AboutLink = Loadable(() => import('./AboutLink'));
+const HomeAside = loadable(() => import('./HomeAside'));
 
 const HomePage = ({
   _rawBody,
@@ -21,8 +20,8 @@ const HomePage = ({
   featuredProjects,
   aboutUsImage,
 }) => {
-  const mainRef = useRef(null);
   const { viewport } = useSiteContext();
+
   return (
     <StyledHomePage className="container homepage" viewport={viewport}>
       <HomeMain
@@ -34,14 +33,27 @@ const HomePage = ({
         <ContactFormButton>Let's Talk</ContactFormButton>
       </HomeMain>
       <HomeTopics />
-      <HomeAside viewport={viewport}>
-        <HomeVideo thumbnail={thumbnail} homeVideoId={homeVideoId} />
-        <FeaturedProjects projects={featuredProjects} />
-        <AboutLink image={aboutUsImage} />
-      </HomeAside>
+      <StyledHomeAside>
+        <HomeAside
+          thumbnail={thumbnail}
+          homeVideoId={homeVideoId}
+          featuredProjects={featuredProjects}
+          aboutUsImage={aboutUsImage}
+        />
+      </StyledHomeAside>
     </StyledHomePage>
   );
 };
+
+const StyledHomeAside = styled.aside`
+  ${media.break`
+    flex: 0 0 40%;
+    max-width: 40%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+  `}
+`;
 
 const StyledHomePage = styled.div`
   ${media.break`
@@ -67,15 +79,6 @@ const HomeMain = styled.main`
     height: 100%;
     padding-top: 10rem;
     margin-bottom: 0;
-  `}
-`;
-
-const HomeAside = styled.aside`
-  ${media.break`
-    flex: 0 0 40%;
-    max-width: 40%;
-    display: flex;
-    flex-direction: column;
   `}
 `;
 

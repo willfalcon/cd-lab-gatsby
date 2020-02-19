@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'gatsby';
 import Img from 'gatsby-image/withIEPolyfill';
@@ -8,7 +8,7 @@ import ExpandButton from '../ExpandButton';
 import { media } from '../theme';
 import useSiteContext from '../SiteContext';
 
-const AboutLink = ({ image }) => {
+const AboutLink = ({ image, makeReady }) => {
   const { viewport } = useSiteContext();
   return (
     <StyledAboutLink className="about-link" to="/about" viewport={viewport}>

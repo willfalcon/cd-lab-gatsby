@@ -2,12 +2,13 @@ import React from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import classNames from 'classnames';
 
 import theme from './theme';
 
-const Loader = () => {
+const Loader = ({ className }) => {
   return (
-    <StyledLoader>
+    <StyledLoader className={classNames('loader', className)}>
       <FontAwesomeIcon icon={faCircleNotch} color={theme.dark} size="2x" />
     </StyledLoader>
   );
