@@ -2,12 +2,20 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useStaticQuery, graphql } from 'gatsby';
 import { useTransition, animated } from 'react-spring';
+import loadable from '@loadable/component';
 
-import Topic from '../Topic';
-import Heading from '../Heading';
-import Content from '../Content';
-import CatList from './CatList';
-import CloseButton from '../CloseButton';
+// import Heading from '../Heading';
+// import Content from '../Content';
+// import CatList from './CatList';
+// import CloseButton from '../CloseButton';
+import Topic from '../Topics/Topic';
+import BackgroundOverlay from '../BackgroundOverlay';
+import ExpandedTopic from '../Topics/ExpandedTopic';
+
+import theme, { media, grid } from '../theme';
+import useSiteContext from '../SiteContext';
+
+// const Topic = loadable(() => import('../Topics/Topic'));
 
 const HomeTopics = () => {
   const topicsQueryRes = useStaticQuery(graphql`
@@ -46,46 +54,57 @@ const HomeTopics = () => {
 
   const [expandedTopic, setExpandedTopic] = useState(null);
 
+  const { viewport } = useSiteContext();
+
+  const mobile = viewport.width <= theme.sizes.break;
+
   const expandedTopicTransition = useTransition(expandedTopic, item => item, {
     from: {
       opacity: 0,
       position: 'absolute',
-      zIndex: 1,
+      zIndex: mobile ? 1 : 4,
     },
     enter: {
       opacity: 1,
-      position: 'relative',
+      position: mobile ? 'relative' : 'absolute',
     },
     leave: {
       opacity: 0,
-      zIndex: 0,
-      position: 'relative',
+      zIndex: mobile ? 0 : 4,
+      position: mobile ? 'relative' : 'absolute',
     },
   });
 
+  const expandedIndex = topics.indexOf(
+    topic => topic.node.id === expandedTopic
+  );
+
   return (
     <>
-      {topics.map(({ node }) => (
-        <Topic key={node.id} {...node} setExpandedTopic={setExpandedTopic} />
+      {topics.map(({ node }, index) => (
+        <Topic
+          key={node.id}
+          {...node}
+          setExpandedTopic={setExpandedTopic}
+          home
+          expanded={node.id === expandedTopic}
+          expandedIndex={expandedIndex}
+          topicIndex={index}
+        />
       ))}
 
       {expandedTopicTransition.map(({ item, key, props }) => {
-        const topic = item
-          ? topics.filter(topic => topic.node.id === expandedTopic)[0]
-          : false;
         return (
-          topic && (
-            <ExpandedTopic key={key} style={props}>
-              <CloseButton handleClick={() => setExpandedTopic(null)} />
-              <Heading h2>{topic.node.title}</Heading>
-              <Content>{topic.node._rawContent}</Content>
-              {topic.node.categories && (
-                <>
-                  <h2 className="list-heading">What We Do</h2>
-                  <CatList categories={topic.node.categories} />
-                </>
-              )}
-            </ExpandedTopic>
+          item && (
+            <React.Fragment key={key}>
+              {!mobile && <BackgroundOverlay style={props} />}
+              <ExpandedTopic
+                topics={topics}
+                expandedTopic={expandedTopic}
+                style={props}
+                setExpandedTopic={setExpandedTopic}
+              />
+            </React.Fragment>
           )
         );
       })}
@@ -93,14 +112,22 @@ const HomeTopics = () => {
   );
 };
 
-const ExpandedTopic = styled(animated.div)`
-  padding: 3.5rem 2.8rem;
-  background: ${({ theme }) => theme.offWhite};
-  .list-heading {
-    color: ${({ theme }) => theme.orange};
-    text-align: center;
-    font-size: 3.6rem;
-  }
-`;
+// const ExpandedTopic = styled(animated.div)`
+//   padding: 3.5rem 2.8rem;
+//   background: ${({ theme }) => theme.offWhite};
+//   .list-heading {
+//     color: ${({ theme }) => theme.orange};
+//     text-align: center;
+//     font-size: 3.6rem;
+//   }
+//   ${media.break`
+//     width: calc(100% - 150px);
+//     max-width: ${({ theme }) => theme.topics.expandedWidth}px;
+//     left: 75px;
+//     top: 10%;
+//     height: 80%;
+//     z-index: 5;
+//   `}
+// `;
 
 export default HomeTopics;

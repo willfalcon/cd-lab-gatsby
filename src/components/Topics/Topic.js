@@ -1,17 +1,40 @@
 import React from 'react';
 import styled from 'styled-components';
 import Img from 'gatsby-image/withIEPolyfill';
+import { useSpring, animated } from 'react-spring';
 
-import ExpandButton from './ExpandButton';
+import ExpandButton from '../ExpandButton';
 
-import theme, { media } from './theme';
-import useSiteContext from './SiteContext';
+import theme, { media } from '../theme';
+import useSiteContext from '../SiteContext';
+import getHomeStyles from './getHomeStyles';
+import getStyles from './getStyles';
 
-const Topic = ({ id, title, _rawContent, image, setExpandedTopic }) => {
+const Topic = ({
+  id,
+  title,
+  _rawContent,
+  image,
+  setExpandedTopic,
+  expanded,
+  expandedIndex = 0,
+  topicIndex,
+  error = false,
+  home = false,
+}) => {
   const { viewport } = useSiteContext();
 
+  const styles =
+    home || error
+      ? getHomeStyles(viewport, expanded, expandedIndex, topicIndex, error)
+      : getStyles(viewport, expanded, expandedIndex, topicIndex);
+
+  const styleProps = useSpring(
+    viewport.width >= theme.sizes.break ? styles : {}
+  );
+
   return (
-    <StyledTopic className="topic" viewport={viewport}>
+    <StyledTopic style={styleProps} className="topic">
       <TopicImage
         className="topic__image"
         fixed={image.asset.fixed}
@@ -26,7 +49,7 @@ const Topic = ({ id, title, _rawContent, image, setExpandedTopic }) => {
   );
 };
 
-const StyledTopic = styled.div`
+const StyledTopic = styled(animated.div)`
   display: inline-block;
   width: 33.333vw;
   height: 33.333vw;
@@ -44,6 +67,11 @@ const StyledTopic = styled.div`
       font-size: 1.3rem;
     `}
   }
+
+  ${media.break`
+    position: absolute;
+    z-index: 8;
+  `}
 `;
 
 const TopicImage = styled(Img)`
