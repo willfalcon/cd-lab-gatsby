@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect, useRef } from 'react';
 import Img from 'gatsby-image';
 import styled from 'styled-components';
-import { animated, interpolate } from 'react-spring';
+import { animated } from 'react-spring';
 
 import ExpandButton from '../ExpandButton';
 import Heading from '../Heading';
@@ -32,7 +32,7 @@ const Person = ({
   className,
   handleExpand,
 }) => {
-  const { viewport, mobile } = useSiteContext();
+  const { viewport } = useSiteContext();
 
   const size = viewport.width / 2;
 

@@ -62,12 +62,13 @@ function getHomeStyles(
       break;
 
     case 1:
+    default:
       top = isExpanded ? '0px' : `${viewHeight / 2 - topicSize / 2}px`;
 
       transform =
         isExpanded || expandedIndex === -1
           ? `translateY(0px)`
-          : expandedIndex == 0
+          : expandedIndex === 0
           ? `translateY(-${topicSize / 2 + 10}px)`
           : `translateY(${topicSize / 2}px)`;
       break;

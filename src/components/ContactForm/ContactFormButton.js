@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { useTransition, animated } from 'react-spring';
@@ -15,18 +15,18 @@ import BackgroundOverlay from '../BackgroundOverlay';
 const ContactFormButton = ({ children }) => {
   const buttonRef = useRef(null);
 
-  const [location, setLocation] = useState({ width: 0, height: 0, x: 0, y: 0 });
+  // const [location, setLocation] = useState({ width: 0, height: 0, x: 0, y: 0 });
 
   const buttonRect = buttonRef.current
     ? buttonRef.current.getBoundingClientRect()
     : { width: 0, height: 0, x: 0, y: 0 };
   const { width, height, y, x } = buttonRect;
 
-  useEffect(() => {
-    if (buttonRef.current) {
-      setLocation(buttonRect);
-    }
-  }, [width, height, y, x]);
+  // useEffect(() => {
+  //   if (buttonRef.current) {
+  //     setLocation(buttonRect);
+  //   }
+  // }, [width, height, y, x]);
 
   const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 
 import { useWindowSize } from './utils';
@@ -72,13 +72,16 @@ const SiteContextProvider = ({ children, home }) => {
       value={{
         viewport,
         ready,
+        makeReady,
         toggleMenu,
         menuOpen,
         home,
         ...sanitySiteSettings,
         ...sanityWhatWeDo,
+        ...allSanityProject,
         mobile: ready ? viewport.width < theme.sizes.break : false,
-      }}>
+      }}
+    >
       {children}
     </SiteContext.Provider>
   );

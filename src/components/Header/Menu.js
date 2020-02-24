@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'gatsby';
 
-import useSiteContext from '../SiteContext';
+// import useSiteContext from '../SiteContext';
 
 const Menu = () => {
-  const { toggleMenu, topics } = useSiteContext();
+  // const { toggleMenu, topics } = useSiteContext();
 
   return (
     <ul className="main-menu">

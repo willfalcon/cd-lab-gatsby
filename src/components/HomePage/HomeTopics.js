@@ -1,21 +1,13 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { useStaticQuery, graphql } from 'gatsby';
-import { useTransition, animated } from 'react-spring';
-import loadable from '@loadable/component';
+import { useTransition } from 'react-spring';
 
-// import Heading from '../Heading';
-// import Content from '../Content';
-// import CatList from './CatList';
-// import CloseButton from '../CloseButton';
 import Topic from '../Topics/Topic';
 import BackgroundOverlay from '../BackgroundOverlay';
 import ExpandedTopic from '../Topics/ExpandedTopic';
 
-import theme, { media, grid } from '../theme';
+import theme from '../theme';
 import useSiteContext from '../SiteContext';
-
-// const Topic = loadable(() => import('../Topics/Topic'));
 
 const HomeTopics = () => {
   const topicsQueryRes = useStaticQuery(graphql`

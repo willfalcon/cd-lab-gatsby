@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { fab } from '@fortawesome/free-brands-svg-icons';
+// import { fab } from '@fortawesome/free-brands-svg-icons';
 
 import useSiteContext from './SiteContext';
 import { media } from './theme';
@@ -20,7 +20,8 @@ const SocialList = () => {
             href={twitter}
             aria-label="Visit us on Twitter"
             target="_blank"
-            rel="noopener noreferrer">
+            rel="noopener noreferrer"
+          >
             <FontAwesomeIcon icon={['fab', 'twitter']} size="lg" />
           </a>
         </li>
@@ -31,7 +32,8 @@ const SocialList = () => {
             href={instagram}
             aria-label="Visit us on Instagram"
             target="_blank"
-            rel="noopener noreferrer">
+            rel="noopener noreferrer"
+          >
             <FontAwesomeIcon icon={['fab', 'instagram']} size="lg" />
           </a>
         </li>
@@ -42,7 +44,8 @@ const SocialList = () => {
             href={facebook}
             aria-label="Visit us on Facebook"
             target="_blank"
-            rel="noopener noreferrer">
+            rel="noopener noreferrer"
+          >
             <FontAwesomeIcon icon={['fab', 'facebook-f']} size="lg" />
           </a>
         </li>
@@ -53,7 +56,8 @@ const SocialList = () => {
             href={linkedin}
             aria-label="Visit us on LinkedIn"
             target="_blank"
-            rel="noopener noreferrer">
+            rel="noopener noreferrer"
+          >
             <FontAwesomeIcon icon={['fab', 'linkedin-in']} size="lg" />
           </a>
         </li>

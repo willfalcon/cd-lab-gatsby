@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import ReactPlayer from 'react-player';
@@ -6,10 +6,10 @@ import ReactPlayer from 'react-player';
 // import { roundToNearest } from '../../lib/utils';
 import useSiteContext from '../SiteContext';
 import CloseButton from '../CloseButton';
-import theme, { media } from '../theme';
+import { media } from '../theme';
 
 const VideoModal = ({ handleClose, expanded, videoRef, videoId }) => {
-  const ref = useRef(null);
+  // const ref = useRef(null);
   const { viewport } = useSiteContext();
   // const width = roundToNearest(viewport.width * 0.8, 200);
 
@@ -28,13 +28,13 @@ const VideoModal = ({ handleClose, expanded, videoRef, videoId }) => {
     }
   }, [videoHeight, videoWidth]);
 
-  const updateDimensions = e => {
-    const { videoWidth, videoHeight } = e.target;
-    setDimensions({
-      width: videoWidth,
-      height: videoHeight,
-    });
-  };
+  // const updateDimensions = e => {
+  //   const { videoWidth, videoHeight } = e.target;
+  //   setDimensions({
+  //     width: videoWidth,
+  //     height: videoHeight,
+  //   });
+  // };
 
   const aspect = dimensions.width / dimensions.height;
   // console.log(aspect);
