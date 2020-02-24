@@ -28,7 +28,7 @@ const SingleService = ({ title, _rawDescription, services, id, projects }) => {
         {mobile && <ProjectCarousel projects={projects} />}
         <div className="content">
           {_rawDescription && <Content>{_rawDescription}</Content>}
-          {/* TODO: ContactFormButton */}
+          {/* <ContactFormButton /> */}
           <ServicePagination prev={services[prev]} next={services[next]} />
         </div>
       </div>
