@@ -67,10 +67,12 @@ const HomeTopics = () => {
     },
   });
 
-  const expandedIndex = topics.indexOf(
+  const expandedIndex = topics.findIndex(
     topic => topic.node.id === expandedTopic
   );
 
+  console.log('topics from HomeTopics.js: ', topics);
+  console.log('expandedTopic from HomeTopics.js: ', { expandedTopic });
   return (
     <>
       {topics.map(({ node }, index) => (
