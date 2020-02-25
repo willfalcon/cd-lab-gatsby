@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import loadable from '@loadable/component';
+import Img from 'gatsby-image';
 
 import Content from '../Content';
 import HomeTopics from './HomeTopics';
@@ -35,6 +36,7 @@ const HomePage = ({
   thumbnail,
   featuredProjects,
   aboutUsImage,
+  logoBadge,
 }) => {
   const { viewport } = useSiteContext();
 
@@ -43,10 +45,17 @@ const HomePage = ({
       <HomeMain
         className="homepage-main"
         viewport={viewport}
-        bg={mainImage.asset.url}
+        bg={mainImage ? mainImage.asset.url : null}
       >
         <Content>{_rawBody}</Content>
         <ContactFormButton>Let's Talk</ContactFormButton>
+        {logoBadge && (
+          <Img
+            className="logo-badge"
+            fluid={logoBadge.asset.fluid}
+            alt={logoBadge.alt}
+          />
+        )}
       </HomeMain>
       <HomeTopics />
       <StyledHomeAside>
@@ -72,19 +81,31 @@ const StyledHomeAside = styled.aside`
 `;
 
 const StyledHomePage = styled.div`
+  .logo-badge {
+    margin-top: 2rem;
+  }
   ${media.break`
     display: flex;
     height: ${({ viewport }) => viewport.height}px;
     .block-content {
       padding-right: 185px;
     }
+    .logo-badge {
+      /* margin-right: 185px; */
+      width: calc(100% - 185px);
+      /* width: ${({ viewport }) => viewport.width * 0.6 - 185}px; */
+    }
   `}
 `;
 
 const HomeMain = styled.main`
-  background-image: ${({ bg }) => `url(${bg})`};
-  background-size: cover;
-  background-position: center;
+  ${({ bg }) =>
+    bg &&
+    `
+    background-image: ${`url(${bg})`};
+    background-size: cover;
+    background-position: center;
+  `}
   color: ${({ theme }) => theme.orange};
   padding: 1rem;
   margin-bottom: ${({ topicHeight, viewport }) =>

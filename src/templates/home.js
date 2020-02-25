@@ -58,6 +58,14 @@ export const HomeQuery = graphql`
           _id
         }
       }
+      logoBadge {
+        alt
+        asset {
+          fluid(maxWidth: 800) {
+            ...GatsbySanityImageFluid
+          }
+        }
+      }
     }
   }
 `;
