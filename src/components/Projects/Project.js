@@ -1,11 +1,19 @@
 import React from 'react';
+import { Link } from 'gatsby';
 import Img from 'gatsby-image';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import { useTransition, animated } from 'react-spring';
 
-const Project = ({ image, hoverState, setHoverState, title }) => {
-  const overlayTransition = useTransition(hoverState === image._key, null, {
+const Project = ({
+  image,
+  hoverState,
+  setHoverState,
+  title,
+  id,
+  slug = false,
+}) => {
+  const overlayTransition = useTransition(hoverState === id, null, {
     from: {
       opacity: 0,
     },
@@ -18,7 +26,11 @@ const Project = ({ image, hoverState, setHoverState, title }) => {
   });
 
   return (
-    <StyledProject onMouseEnter={() => setHoverState(image._key)}>
+    <StyledProject
+      onMouseEnter={() => setHoverState(id)}
+      as={slug ? Link : 'button'}
+      to={`/service/${slug.current}`}
+    >
       <ProjectImage fluid={image.asset.fluid} />
       {overlayTransition.map(({ item, key, props }) =>
         item ? (
@@ -42,6 +54,7 @@ const StyledProject = styled.button`
   outline: none;
   cursor: pointer;
   position: relative;
+  display: block;
 `;
 
 const ProjectImage = styled(Img)`
@@ -56,15 +69,24 @@ const StyledTitle = styled(animated.h3)`
   background: ${({ theme }) => rgba(theme.orange, 0.75)};
   color: ${({ theme }) => theme.offWhite};
   margin-bottom: 0;
+  text-align: center;
 `;
 
-const Overlay = styled(animated.span)`
+const overlayStyles = css`
   position: absolute;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  background: ${({ theme }) => rgba('white', 0.65)};
+  background: ${rgba('white', 0.65)};
+`;
+
+const Overlay = styled(animated.span)`
+  ${overlayStyles}
+`;
+
+const OverlayLink = styled(Link)`
+  ${overlayStyles}
 `;
 
 export default Project;

@@ -24,6 +24,7 @@ const WorkPage = ({ title, _rawBody, id, seoSettings, services }) => {
         edges {
           node {
             id
+            title
             images {
               _key
               asset {
@@ -45,26 +46,39 @@ const WorkPage = ({ title, _rawBody, id, seoSettings, services }) => {
   `);
 
   const allProjects = allSanityProject.edges.map(edge => ({ ...edge.node }));
-  console.log(services);
-  console.log(allProjects);
+  console.log({ projects: allProjects.length });
+  // console.log(services);
+  // console.log(allProjects);
 
   const projects = services
     .map(service => {
-      const firstProject = allProjects.filter(project =>
-        project.categories.findIndex(cat => cat.id === service.id)
+      const serviceProjects = allProjects.filter(
+        project =>
+          project.categories.findIndex(cat => cat.id === service.id) !== -1
+      );
+      const firstProject = serviceProjects.filter(
+        project => project.images.length
       )[0];
       return { ...service, firstProject };
     })
     .filter(service => {
       return (
-        (service.firstProject || service.mainImage) &&
+        ((service.firstProject && service.firstProject.images) ||
+          service.mainImage) &&
         !service._id.startsWith('drafts')
       );
     })
-    .map(({ id, _id, title, slug, firstProject, mainImage }) => {
-      const images = mainImage ? [mainImage] : firstProject.images;
-      return { title, slug, images, _id, id };
-    });
+    .map(
+      ({ id, _id, title, slug, firstProject, mainImage, forceCoverImage }) => {
+        const images =
+          forceCoverImage && mainImage
+            ? [mainImage]
+            : mainImage
+            ? [mainImage]
+            : firstProject.images;
+        return { title, slug, images, _id, id, firstProject, forceCoverImage };
+      }
+    );
   console.log(projects);
 
   return (
@@ -76,7 +90,7 @@ const WorkPage = ({ title, _rawBody, id, seoSettings, services }) => {
           {_rawBody && <Content>{_rawBody}</Content>}
         </div>
       </div>
-      {/* {!mobile && <ProjectMasonry projects={projects} />} */}
+      {!mobile && <ProjectMasonry projects={projects} workpage />}
     </PageLayout>
   );
 };

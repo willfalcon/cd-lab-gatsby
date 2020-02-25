@@ -8,7 +8,7 @@ import Project from './Project';
 
 import useSiteContext from '../SiteContext';
 
-const ProjectMasonry = ({ projects }) => {
+const ProjectMasonry = ({ projects, workpage = false }) => {
   // console.log(projects);
 
   const masonryOptions = {
@@ -28,19 +28,32 @@ const ProjectMasonry = ({ projects }) => {
       ref={containerRef}
     >
       <Masonry options={masonryOptions}>
-        {projects.map(project => {
-          return project.images.map((image, index) => {
-            return (
-              <Project
-                {...project}
-                image={image}
-                key={image._key}
-                hoverState={hoverState}
-                setHoverState={setHoverState}
-                index={index}
-              />
-            );
-          });
+        {projects.map((project, index) => {
+          return workpage ? (
+            <Project
+              {...project}
+              key={project.id}
+              id={project.id}
+              image={project.images[0]}
+              hoverState={hoverState}
+              setHoverState={setHoverState}
+              index={index}
+            />
+          ) : (
+            project.images.map((image, index) => {
+              return (
+                <Project
+                  {...project}
+                  key={image._key}
+                  id={image._key}
+                  image={image}
+                  hoverState={hoverState}
+                  setHoverState={setHoverState}
+                  index={index}
+                />
+              );
+            })
+          );
         })}
       </Masonry>
       <DownArrow

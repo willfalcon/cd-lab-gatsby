@@ -36,6 +36,7 @@ export const WorkQuery = graphql`
           id
           _id
           title
+          forceCoverImage
           mainImage {
             _key
             asset {
