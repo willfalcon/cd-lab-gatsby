@@ -5,6 +5,7 @@ import { useTransition } from 'react-spring';
 import Topic from '../Topics/Topic';
 import BackgroundOverlay from '../BackgroundOverlay';
 import ExpandedTopic from '../Topics/ExpandedTopic';
+import TopicsHeading from './TopicsHeading';
 
 import theme from '../theme';
 import useSiteContext from '../SiteContext';
@@ -75,6 +76,7 @@ const HomeTopics = () => {
   console.log('expandedTopic from HomeTopics.js: ', { expandedTopic });
   return (
     <>
+      <TopicsHeading viewport={viewport} />
       {topics.map(({ node }, index) => (
         <Topic
           key={node.id}
