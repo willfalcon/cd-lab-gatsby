@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'gatsby';
 import Img from 'gatsby-image';
 import styled, { css } from 'styled-components';
@@ -6,13 +6,14 @@ import { rgba } from 'polished';
 import { useTransition, animated } from 'react-spring';
 
 const Project = ({
-  image,
+  project,
   hoverState,
   setHoverState,
-  title,
-  id,
+  image,
   slug = false,
+  setExpandedProject,
 }) => {
+  const { id } = project;
   const overlayTransition = useTransition(hoverState === id, null, {
     from: {
       opacity: 0,
@@ -25,17 +26,32 @@ const Project = ({
     },
   });
 
+  const ref = useRef(null);
+
   return (
     <StyledProject
       onMouseEnter={() => setHoverState(id)}
       as={slug ? Link : 'button'}
       to={`/service/${slug.current}`}
+      ref={ref}
+      onClick={
+        slug
+          ? null
+          : () => {
+              const location = ref.current.getBoundingClientRect();
+              setExpandedProject({
+                location,
+                ...project,
+                image,
+              });
+            }
+      }
     >
       <ProjectImage fluid={image.asset.fluid} />
       {overlayTransition.map(({ item, key, props }) =>
         item ? (
           <StyledTitle className="project__title" key={key} style={props}>
-            {title}
+            {project.title}
           </StyledTitle>
         ) : (
           <Overlay key={key} style={props} />

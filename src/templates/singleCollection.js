@@ -47,7 +47,7 @@ export const SingleCollectionQuery = graphql`
         images {
           _key
           asset {
-            fluid(maxWidth: 500) {
+            fluid(maxWidth: 1000) {
               ...GatsbySanityImageFluid
             }
           }
