@@ -31,6 +31,7 @@ const Project = ({
   return (
     <StyledProject
       onMouseEnter={() => setHoverState(id)}
+      onMouseMove={() => setHoverState(id)}
       as={slug ? Link : 'button'}
       to={`/service/${slug.current}`}
       ref={ref}
@@ -105,4 +106,5 @@ const OverlayLink = styled(Link)`
   ${overlayStyles}
 `;
 
+export { StyledTitle };
 export default Project;

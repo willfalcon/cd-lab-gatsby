@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import Masonry from 'react-masonry-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { useTransition, animated } from 'react-spring';
+import { useTransition, animated, interpolate } from 'react-spring';
 import Img from 'gatsby-image';
 
-import Project from './Project';
+import Project, { StyledTitle } from './Project';
 import BackgroundOverlay from '../BackgroundOverlay';
 import CloseButton from '../CloseButton';
 import ProjectContent from './ProjectContent';
@@ -29,13 +29,12 @@ const ProjectMasonry = ({ projects, workpage = false }) => {
 
   const [expandedProject, setExpandedProject] = useState(null);
 
-  console.log(expandedProject);
+  // console.log(expandedProject);
 
   const [exitWidth, setExitWidth] = useState(0);
   const [exitHeight, setExitHeight] = useState(0);
   const [exitTop, setExitTop] = useState(0);
   const [exitLeft, setExitLeft] = useState(0);
-  const [exitDimensions, setExitDimensions] = useState({ width: 0, height: 0 });
   const dimensions = expandedProject
     ? getDimensions(expandedProject.image.asset.fluid.aspectRatio, viewport)
     : { width: 0, height: 0 };
@@ -45,11 +44,6 @@ const ProjectMasonry = ({ projects, workpage = false }) => {
       setExitHeight(expandedProject.location.height);
       setExitTop(expandedProject.location.top);
       setExitLeft(expandedProject.location.left);
-      // const dimensions = getDimensions(
-      //   expandedProject.images[0].asset.fluid.aspectRatio,
-      //   viewport
-      // );
-      // setExitDimensions(dimensions);
     }
   }, [expandedProject]);
 
@@ -60,6 +54,7 @@ const ProjectMasonry = ({ projects, workpage = false }) => {
       height: `${expandedProject ? expandedProject.location.height : 0}px`,
       top: `${expandedProject ? expandedProject.location.top : 0}px`,
       left: `${expandedProject ? expandedProject.location.left : 0}px`,
+      title: 1,
     },
     enter: {
       opacity: 1,
@@ -71,6 +66,7 @@ const ProjectMasonry = ({ projects, workpage = false }) => {
       left: `${
         expandedProject ? viewport.width / 2 - dimensions.width / 2 : 0
       }px`,
+      title: 1,
     },
     leave: {
       opacity: 0,
@@ -78,7 +74,9 @@ const ProjectMasonry = ({ projects, workpage = false }) => {
       height: `${exitHeight}px`,
       top: `${exitTop}px`,
       left: `${exitLeft}px`,
+      title: 0,
     },
+    onRest: () => setHoverState(null),
   });
 
   return (
@@ -159,13 +157,20 @@ const ProjectMasonry = ({ projects, workpage = false }) => {
                 viewport={viewport}
               >
                 <Img fluid={item.image.asset.fluid} />
-                <CloseButton handleClick={() => setExpandedProject(null)} />
+                <CloseButton
+                  handleClick={() => setExpandedProject(null)}
+                  styles={{ opacity: props.opacity }}
+                />
                 {item._rawDescription && (
                   <ProjectContent
                     content={item._rawDescription}
                     title={item.title}
+                    transitionStyles={{ opacity: props.opacity }}
                   />
                 )}
+                <StyledTitle style={{ opacity: props.title }}>
+                  {item.title}
+                </StyledTitle>
               </ExpandedProject>
             </React.Fragment>
           )
@@ -176,19 +181,13 @@ const ProjectMasonry = ({ projects, workpage = false }) => {
 
 const ExpandedProject = styled(animated.div)`
   position: absolute;
-  /* top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: ${({ viewport }) => viewport.width * 0.75}px;
-  height: ${({ viewport }) => viewport.height * 0.75}px; */
-  background: ${({ theme }) => theme.offWhite};
+  background: white;
   z-index: 5;
 `;
 
 const StyledProjectMasonry = styled.div`
   flex: 0 0 60%;
   overflow: scroll;
-  /* position: relative; */
 `;
 
 const DownArrow = styled.button`
@@ -199,7 +198,6 @@ const DownArrow = styled.button`
   cursor: pointer;
   position: fixed;
   right: ${({ viewport }) => (viewport.width * 0.6) / 2 - 55}px;
-  /* transform: translateX(-50%); */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -207,7 +205,6 @@ const DownArrow = styled.button`
   background: ${({ theme }) => theme.orange};
   width: 50px;
   height: 50px;
-  /* padding: 1rem; */
 `;
 
 export default ProjectMasonry;

@@ -1,10 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
+import { animated } from 'react-spring';
 import classNames from 'classnames';
 
 import { media } from './theme';
 
-const CloseButton = ({ handleClick, position, label = 'Close', className }) => {
+const CloseButton = ({
+  handleClick,
+  position,
+  label = 'Close',
+  className,
+  styles,
+}) => {
   const positions = {
     top: position && position.top ? position.top : 0,
     right: position && position.right ? position.right : 0,
@@ -17,6 +24,7 @@ const CloseButton = ({ handleClick, position, label = 'Close', className }) => {
       position={positions}
       id="close-button"
       aria-label={label}
+      style={styles}
     >
       <span />
       <span />
@@ -24,7 +32,7 @@ const CloseButton = ({ handleClick, position, label = 'Close', className }) => {
   );
 };
 
-const StyledCloseButton = styled.button`
+const StyledCloseButton = styled(animated.button)`
   background-color: ${({ theme }) => theme.orange};
   outline: none;
   border: 0;
