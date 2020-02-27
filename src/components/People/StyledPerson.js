@@ -31,7 +31,7 @@ const StyledPerson = styled(animated.li)`
     top: 0;
     left: 0;
     background: ${({ theme }) => theme.offWhite};
-    z-index: ${({ expanded }) => expanded && `3 !important`};
+    z-index: ${({ expanded }) => expanded && `8 !important`};
     /* z-index: 1; */
 
 

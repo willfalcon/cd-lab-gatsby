@@ -55,7 +55,7 @@ const HomeTopics = () => {
     from: {
       opacity: 0,
       position: 'absolute',
-      zIndex: mobile ? 1 : 4,
+      zIndex: mobile ? 1 : 8,
     },
     enter: {
       opacity: 1,

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { rgba } from 'polished';
 import { Link, useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
@@ -29,16 +30,16 @@ const SiteLogo = ({ home }) => {
 
   return (
     <>
-      {home && (
-        <HomeLogoWrap to="/" className="home-wrap">
-          <Img
-            fixed={images.homeLogo.childImageSharp.fixed}
-            alt="Creative Distillery"
-            className="home-logo"
-            fadeIn={false}
-          />
-        </HomeLogoWrap>
-      )}
+      {/* {home && ( */}
+      <HomeLogoWrap to="/" className="home-wrap">
+        <Img
+          fixed={images.homeLogo.childImageSharp.fixed}
+          alt="Creative Distillery"
+          className="home-logo"
+          fadeIn={false}
+        />
+      </HomeLogoWrap>
+      {/* )} */}
       <StyledLogoLink to="/" className="site-logo">
         <SquareLogo
           className="square"
@@ -58,14 +59,21 @@ const HomeLogoWrap = styled(Link)`
   ${media.break`
     flex-grow: 1;
     line-height: 1;
-    z-index: 6;
+    /* z-index: 6; */
     display: block;
-    height: 75px;
-    width: 387px;
+    height: 95px;
+    width: calc(100vw * .4 - 75px);
+    padding-bottom: 2rem;
     position: absolute;
     top: 0;
     left: ${75 + 10}px;
-    background: transparent;
+    background: ${({ theme }) =>
+      `linear-gradient(
+        ${rgba(theme.offWhite, 0)}, 
+        ${theme.offWhite} 35%,
+        ${theme.offWhite} 60%,
+        ${rgba(theme.offWhite, 0)}
+      )`};
   `}
 `;
 

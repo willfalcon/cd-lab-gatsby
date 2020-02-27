@@ -70,7 +70,7 @@ const StyledTopic = styled(animated.div)`
 
   ${media.break`
     position: absolute;
-    z-index: 8;
+    z-index: 9;
   `}
 `;
 

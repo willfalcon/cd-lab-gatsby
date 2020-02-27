@@ -15,7 +15,7 @@ const BackgroundOverlay = styled(animated.div)`
     top: 0;
     left: 0;
     mix-blend-mode: multiply;
-    z-index: 4;
+    z-index: 8;
   `}
 `;
 

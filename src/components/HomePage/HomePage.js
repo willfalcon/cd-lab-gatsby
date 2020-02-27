@@ -116,6 +116,7 @@ const HomeMain = styled.main`
     height: 100%;
     padding-top: 10rem;
     margin-bottom: 0;
+    overflow: scroll;
   `}
 `;
 

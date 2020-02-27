@@ -182,7 +182,7 @@ const ProjectMasonry = ({ projects, workpage = false }) => {
 const ExpandedProject = styled(animated.div)`
   position: absolute;
   background: white;
-  z-index: 5;
+  z-index: 8;
 `;
 
 const StyledProjectMasonry = styled.div`
