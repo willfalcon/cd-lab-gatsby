@@ -91,7 +91,12 @@ const HomeTopics = () => {
         return (
           item && (
             <React.Fragment key={key}>
-              {!mobile && <BackgroundOverlay style={props} />}
+              {!mobile && (
+                <BackgroundOverlay
+                  style={props}
+                  onClick={() => setExpandedTopic(null)}
+                />
+              )}
               <ExpandedTopic
                 topics={topics}
                 expandedTopic={expandedTopic}
