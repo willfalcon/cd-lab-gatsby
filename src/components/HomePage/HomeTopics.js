@@ -47,7 +47,7 @@ const HomeTopics = () => {
 
   const [expandedTopic, setExpandedTopic] = useState(null);
 
-  const { viewport } = useSiteContext();
+  const { viewport, ready } = useSiteContext();
 
   const mobile = viewport.width <= theme.sizes.break;
 
@@ -72,11 +72,9 @@ const HomeTopics = () => {
     topic => topic.node.id === expandedTopic
   );
 
-  console.log('topics from HomeTopics.js: ', topics);
-  console.log('expandedTopic from HomeTopics.js: ', { expandedTopic });
   return (
     <>
-      <TopicsHeading viewport={viewport} />
+      {ready && <TopicsHeading viewport={viewport} />}
       {topics.map(({ node }, index) => (
         <Topic
           key={node.id}

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useLayoutEffect } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 
 import { useWindowSize } from './utils';
@@ -21,6 +21,10 @@ const SiteContextProvider = ({ children, home }) => {
       setMenuOpen(false);
     }
   }
+
+  useLayoutEffect(() => {
+    makeReady(true);
+  }, []);
 
   const {
     sanitySiteSettings,
