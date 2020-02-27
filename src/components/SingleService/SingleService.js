@@ -6,6 +6,7 @@ import Heading from '../Heading';
 import Content from '../Content';
 import ServicePagination from './ServicePagination';
 import ContactFormButton from '../ContactForm/ContactFormButton';
+import Topics from '../Topics/Topics';
 
 import useSiteContext from '../SiteContext';
 import theme from '../theme';
@@ -33,6 +34,7 @@ const SingleService = ({ title, _rawDescription, services, id, projects }) => {
           <ServicePagination prev={services[prev]} next={services[next]} />
         </div>
       </div>
+      <Topics />
       {!mobile && <ProjectMasonry projects={projects} />}
     </PageLayout>
   );

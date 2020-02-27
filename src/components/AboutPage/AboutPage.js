@@ -6,6 +6,7 @@ import Content from '../Content';
 import ContactFormButton from '../ContactForm/ContactFormButton';
 
 import People from './People';
+import Topics from '../Topics/Topics';
 
 import { media } from '../theme';
 import useSiteContext from '../SiteContext';
@@ -20,6 +21,7 @@ const AboutPage = ({ title, _rawBody, people }) => {
         <Content className="about__content">{_rawBody}</Content>
         <ContactFormButton>Contact Us</ContactFormButton>
       </AboutMain>
+      <Topics />
       <AboutAside className="about-aside" viewport={viewport}>
         <People people={people} />
       </AboutAside>

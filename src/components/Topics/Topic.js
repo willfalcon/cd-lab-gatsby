@@ -13,7 +13,6 @@ import getStyles from './getStyles';
 const Topic = ({
   id,
   title,
-  _rawContent,
   image,
   setExpandedTopic,
   expanded,

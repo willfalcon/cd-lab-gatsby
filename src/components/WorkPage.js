@@ -5,6 +5,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 import PageLayout from './PageLayout';
 import Heading from './Heading';
 import Content from './Content';
+import Topics from './Topics/Topics';
 
 import useSiteContext from './SiteContext';
 import theme from './theme';
@@ -90,6 +91,7 @@ const WorkPage = ({ title, _rawBody, id, seoSettings, services }) => {
           {_rawBody && <Content>{_rawBody}</Content>}
         </div>
       </div>
+      <Topics />
       {!mobile && <ProjectMasonry projects={projects} workpage />}
     </PageLayout>
   );

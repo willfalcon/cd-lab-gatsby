@@ -1,53 +1,22 @@
-import React, { useState } from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import React from 'react';
 import { useTransition } from 'react-spring';
 
-import Topic from '../Topics/Topic';
+import Topic from './Topic';
 import BackgroundOverlay from '../BackgroundOverlay';
-import ExpandedTopic from '../Topics/ExpandedTopic';
+import ExpandedTopic from './ExpandedTopic';
 import TopicsHeading from './TopicsHeading';
 
 import theme from '../theme';
 import useSiteContext from '../SiteContext';
 
-const HomeTopics = () => {
-  const topicsQueryRes = useStaticQuery(graphql`
-    {
-      allSanityTopic(sort: { fields: _updatedAt, order: DESC }) {
-        edges {
-          node {
-            id
-            title
-            _rawContent
-            image {
-              alt
-              asset {
-                fixed(width: 175, height: 175) {
-                  ...GatsbySanityImageFixed
-                }
-              }
-            }
-            slug {
-              current
-            }
-            categories {
-              _id
-              slug {
-                current
-              }
-              title
-            }
-          }
-        }
-      }
-    }
-  `);
-
-  const topics = topicsQueryRes.allSanityTopic.edges;
-
-  const [expandedTopic, setExpandedTopic] = useState(null);
-
-  const { viewport, ready } = useSiteContext();
+const Topics = ({ home = false }) => {
+  const {
+    viewport,
+    ready,
+    topics,
+    setExpandedTopic,
+    expandedTopic,
+  } = useSiteContext();
 
   const mobile = viewport.width <= theme.sizes.break;
 
@@ -72,21 +41,21 @@ const HomeTopics = () => {
     topic => topic.node.id === expandedTopic
   );
 
+  console.log({ expandedIndex });
   return (
     <>
-      {ready && <TopicsHeading viewport={viewport} />}
+      {ready && home && <TopicsHeading viewport={viewport} />}
       {topics.map(({ node }, index) => (
         <Topic
           key={node.id}
           {...node}
           setExpandedTopic={setExpandedTopic}
-          home
+          home={home}
           expanded={node.id === expandedTopic}
           expandedIndex={expandedIndex}
           topicIndex={index}
         />
       ))}
-
       {expandedTopicTransition.map(({ item, key, props }) => {
         return (
           item && (
@@ -111,22 +80,4 @@ const HomeTopics = () => {
   );
 };
 
-// const ExpandedTopic = styled(animated.div)`
-//   padding: 3.5rem 2.8rem;
-//   background: ${({ theme }) => theme.offWhite};
-//   .list-heading {
-//     color: ${({ theme }) => theme.orange};
-//     text-align: center;
-//     font-size: 3.6rem;
-//   }
-//   ${media.break`
-//     width: calc(100% - 150px);
-//     max-width: ${({ theme }) => theme.topics.expandedWidth}px;
-//     left: 75px;
-//     top: 10%;
-//     height: 80%;
-//     z-index: 5;
-//   `}
-// `;
-
-export default HomeTopics;
+export default Topics;

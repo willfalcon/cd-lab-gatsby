@@ -46,11 +46,8 @@ const Person = ({
 
   const ref = useRef(null);
   useLayoutEffect(() => {
-    console.log(ref);
     setPosition(ref.current.getBoundingClientRect());
   }, []);
-
-  console.log(refPosition);
 
   const expandButtonTransition = useExpandButtonTransition(expanded);
 

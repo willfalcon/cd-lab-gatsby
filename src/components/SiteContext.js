@@ -26,10 +26,13 @@ const SiteContextProvider = ({ children, home }) => {
     makeReady(true);
   }, []);
 
+  const [expandedTopic, setExpandedTopic] = useState(null);
+
   const {
     sanitySiteSettings,
     sanityWhatWeDo,
     allSanityProject,
+    allSanityTopic,
   } = useStaticQuery(graphql`
     query {
       sanitySiteSettings(_id: { eq: "cdSiteSettings" }) {
@@ -68,8 +71,37 @@ const SiteContextProvider = ({ children, home }) => {
           }
         }
       }
+      allSanityTopic(sort: { fields: _updatedAt, order: DESC }) {
+        edges {
+          node {
+            id
+            title
+            _rawContent
+            image {
+              alt
+              asset {
+                fixed(width: 175, height: 175) {
+                  ...GatsbySanityImageFixed
+                }
+              }
+            }
+            slug {
+              current
+            }
+            categories {
+              _id
+              slug {
+                current
+              }
+              title
+            }
+          }
+        }
+      }
     }
   `);
+
+  const topics = allSanityTopic.edges;
 
   return (
     <SiteContext.Provider
@@ -84,6 +116,9 @@ const SiteContextProvider = ({ children, home }) => {
         ...sanityWhatWeDo,
         ...allSanityProject,
         mobile: ready ? viewport.width < theme.sizes.break : false,
+        topics,
+        expandedTopic,
+        setExpandedTopic,
       }}
     >
       {children}

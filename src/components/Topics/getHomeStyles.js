@@ -17,8 +17,6 @@ function getHomeStyles(
 
   const isExpanded = expanded === true;
 
-  console.log(expandedIndex);
-
   // See if the viewport is wide enough to get the full "expanded width" with 75px on each side, which is the width of the nav column
   if (viewWidth < expandedWidth + 150) {
     // NOT wide enough for full expanded width

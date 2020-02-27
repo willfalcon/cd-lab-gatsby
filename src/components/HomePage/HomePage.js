@@ -4,7 +4,7 @@ import loadable from '@loadable/component';
 import Img from 'gatsby-image';
 
 import Content from '../Content';
-import HomeTopics from './HomeTopics';
+import Topics from '../Topics/Topics';
 import ContactFormButton from '../ContactForm/ContactFormButton';
 import Loader from '../Loader';
 
@@ -57,7 +57,7 @@ const HomePage = ({
           />
         )}
       </HomeMain>
-      <HomeTopics />
+      <Topics home />
       <StyledHomeAside>
         <HomeAside
           thumbnail={thumbnail}

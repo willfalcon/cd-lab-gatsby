@@ -5,6 +5,7 @@ import PageLayout from './PageLayout';
 import Heading from './Heading';
 import Content from './Content';
 import ServiceList from './ServiceList';
+import Topics from './Topics/Topics';
 
 import useSiteContext from './SiteContext';
 import theme from './theme';
@@ -27,6 +28,7 @@ const SingleCollection = ({ title, _rawDescription, projects }) => {
           {/* TODO: ContactFormButton */}
         </div>
       </div>
+      <Topics />
       {!mobile && <ProjectMasonry projects={projects} />}
     </PageLayout>
   );
