@@ -113,6 +113,7 @@ const ContactFormButton = ({ children }) => {
                 onClick={() => setOpen(false)}
                 style={{
                   opacity: props.o.interpolate(o => o),
+                  zIndex: 10,
                 }}
                 className="contact-form-bg-overlay"
               />

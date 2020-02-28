@@ -16,6 +16,8 @@ const Topics = ({ home = false, error = false }) => {
     topics,
     setExpandedTopic,
     expandedTopic,
+    menuOpen,
+    topicZIndex,
   } = useSiteContext();
 
   const mobile = viewport.width <= theme.sizes.break;
@@ -24,15 +26,16 @@ const Topics = ({ home = false, error = false }) => {
     from: {
       opacity: 0,
       position: 'absolute',
-      zIndex: mobile ? 1 : 8,
+      zIndex: mobile ? 1 : 10,
     },
     enter: {
       opacity: 1,
       position: mobile ? 'relative' : 'absolute',
+      zIndex: mobile ? 0 : 12,
     },
     leave: {
       opacity: 0,
-      zIndex: mobile ? 0 : 4,
+      zIndex: mobile ? 0 : 12,
       position: mobile ? 'relative' : 'absolute',
     },
   });
@@ -41,7 +44,7 @@ const Topics = ({ home = false, error = false }) => {
     topic => topic.node.id === expandedTopic
   );
 
-  console.log(home || error);
+  // console.log(home || error);
   const [topicsOpen, setTopicsOpen] = useState(home || error);
 
   useEffect(() => {
@@ -54,24 +57,12 @@ const Topics = ({ home = false, error = false }) => {
     leave: { opacity: 0 },
   });
 
-  console.log({ expandedIndex });
+  // console.log({ expandedIndex });
   return allTopicTransition.map(
     ({ item, key, props: allProps }) =>
       item && (
         <React.Fragment key={key}>
           {ready && home && <TopicsHeading viewport={viewport} />}
-          {topics.map(({ node }, index) => (
-            <Topic
-              key={node.id}
-              {...node}
-              setExpandedTopic={setExpandedTopic}
-              home={home}
-              expanded={node.id === expandedTopic}
-              expandedIndex={expandedIndex}
-              topicIndex={index}
-              styles={allProps}
-            />
-          ))}
           {expandedTopicTransition.map(({ item, key, props }) => {
             return (
               item && (
@@ -81,6 +72,7 @@ const Topics = ({ home = false, error = false }) => {
                       style={{
                         ...allProps,
                         ...props,
+                        // zIndex: 10,
                       }}
                       onClick={() => setExpandedTopic(null)}
                     />
@@ -95,6 +87,18 @@ const Topics = ({ home = false, error = false }) => {
               )
             );
           })}
+          {topics.map(({ node }, index) => (
+            <Topic
+              key={node.id}
+              {...node}
+              setExpandedTopic={setExpandedTopic}
+              home={home}
+              expanded={node.id === expandedTopic}
+              expandedIndex={expandedIndex}
+              topicIndex={index}
+              styles={{ allProps, zIndex: topicZIndex }}
+            />
+          ))}
         </React.Fragment>
       )
   );

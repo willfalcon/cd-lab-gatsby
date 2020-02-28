@@ -10,6 +10,7 @@ const SiteContextProvider = ({ children, home }) => {
   const [ready, makeReady] = useState(false);
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [topicZIndex, setTopicZIndex] = useState(false);
   const viewport = useWindowSize();
 
   function toggleMenu(open) {
@@ -119,6 +120,8 @@ const SiteContextProvider = ({ children, home }) => {
         topics,
         expandedTopic,
         setExpandedTopic,
+        topicZIndex,
+        setTopicZIndex,
       }}
     >
       {children}

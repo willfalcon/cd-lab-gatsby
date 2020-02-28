@@ -70,18 +70,13 @@ const StyledTopic = styled(animated.div)`
 
   ${media.break`
     position: absolute;
-    z-index: 9;
+    z-index: 11;
   `}
 `;
 
 const TopicImage = styled(Img)`
   mix-blend-mode: multiply;
   opacity: 0.45;
-  /* position: absolute; */
-  /* width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0; */
   width: 100% !important;
   height: 100% !important;
   object-fit: cover;

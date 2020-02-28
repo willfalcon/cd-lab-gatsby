@@ -79,7 +79,7 @@ const Person = ({
                 onClick={() => handleExpand(null)}
                 style={{
                   opacity: props.o.interpolate(o => o),
-                  zIndex: 8,
+                  zIndex: 10,
                 }}
               />
               <ExpandedPerson

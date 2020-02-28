@@ -48,7 +48,7 @@ const useImageSpring = (expanded, viewport, top, left, size, refPosition) => {
               expandedWidth +
               viewport.width * 0.15}px`,
             height: `${expandedWidth}px`,
-            zIndex: 8,
+            zIndex: 10,
           }
         : {
             top: `${pos.top}px`,
@@ -104,7 +104,7 @@ const useBioTransition = (expanded, viewport, top, left, size, refPosition) => {
             height: `${pos.height}px`,
             left: `${pos.left}px`,
             top: `${pos.top}px`,
-            zIndex: 8,
+            zIndex: 10,
             // opacity: 0,
             o: 0,
           },
@@ -113,7 +113,7 @@ const useBioTransition = (expanded, viewport, top, left, size, refPosition) => {
             height: `${viewport.height * 0.75}px`,
             left: `75px`,
             top: `${viewport.height / 2 - (viewport.height * 0.75) / 2}px`,
-            zIndex: 8,
+            zIndex: 10,
             opacity: 1,
             o: 1,
           },

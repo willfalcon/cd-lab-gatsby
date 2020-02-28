@@ -10,31 +10,47 @@ import useSiteContext from '../SiteContext';
 import theme, { media } from '../theme';
 
 const Nav = () => {
-  const { viewport, menuOpen, toggleMenu } = useSiteContext();
+  const { viewport, menuOpen, toggleMenu, setTopicZIndex } = useSiteContext();
   const [formOpen, toggleForm] = useState(false);
 
   const navTransitionObject = {
     from: {
       scale: 0,
       translate: -75,
-      o: 0
+      o: 0,
+      zIndex: 14,
     },
     enter: {
       scale: 1,
       translate: 0,
-      o: 1
+      o: 1,
+      zIndex: 14,
     },
     leave: {
       scale: 0,
       translate: -75,
-      o: 0
-    }
+      o: 0,
+      zIndex: 14,
+    },
+    onRest: open => {
+      if (open) {
+        setTopicZIndex(11);
+      }
+      if (!open) {
+        setTopicZIndex(13);
+      }
+    },
+    onStart: open => {
+      if (open) {
+        setTopicZIndex(11);
+      }
+    },
   };
 
   const navTransition = useTransition(menuOpen, null, navTransitionObject);
 
   return navTransition.map(
-    ({ item, key, props: { scale, translate, o } }) =>
+    ({ item, key, props: { scale, translate, o, zIndex } }) =>
       item && (
         <React.Fragment key={key}>
           {viewport.width >= theme.sizes.break && (
@@ -52,7 +68,7 @@ const Nav = () => {
             viewwidth={viewport.width}
             style={{
               transform:
-                viewport.width >= parseInt(theme.break, 10)
+                viewport.width >= theme.sizes.break
                   ? interpolate(
                       [scale, translate],
                       (scale, translate) =>
@@ -62,7 +78,8 @@ const Nav = () => {
                       [scale, translate],
                       (scale, translate) =>
                         `translateY(${translate}px) scale(${scale})`
-                    )
+                    ),
+              zIndex,
             }}
           >
             <Menu />

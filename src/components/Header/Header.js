@@ -36,7 +36,7 @@ const StyledHeader = styled.header`
     width: 75px;
     background: transparent;
     z-index: ${({ topicsOpen, menuOpen }) => (topicsOpen && !menuOpen ? 8 : 9)};
-    z-index: ${({ topicsOpen, menuOpen }) => (topicsOpen ? 8 : 10)};
+    z-index: ${({ topicsOpen, menuOpen }) => (topicsOpen ? 8 : 12)};
   `}
 `;
 

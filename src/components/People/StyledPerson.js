@@ -11,7 +11,7 @@ const StyledPerson = styled(animated.li)`
   top: ${({ top }) => top}px;
   height: ${({ size }) => size}px;
   width: ${({ size }) => size}px;
-  z-index: ${({ expanded }) => (expanded ? 3 : 0)};
+  z-index: ${({ expanded }) => (expanded ? 4 : 0)};
   line-height: 1;
   display: block;
   /* background: ${({ expanded, theme }) =>
@@ -31,7 +31,7 @@ const StyledPerson = styled(animated.li)`
     top: 0;
     left: 0;
     background: ${({ theme }) => theme.offWhite};
-    z-index: ${({ expanded }) => expanded && `8 !important`};
+    z-index: ${({ expanded }) => expanded && `10 !important`};
     /* z-index: 1; */
 
 
