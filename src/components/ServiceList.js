@@ -6,7 +6,7 @@ import { Link } from 'gatsby';
 
 import { media } from './theme';
 
-const ServiceList = ({ projects }) => {
+const ServiceList = ({ projects, right, width }) => {
   let services = [];
   if (projects && projects.length > 0) {
     projects.forEach(project => {
@@ -21,7 +21,7 @@ const ServiceList = ({ projects }) => {
   console.log(services);
 
   return (
-    <StyledServiceList className="service-list">
+    <StyledServiceList className="service-list" right={right} width={width}>
       {uniqWith(services, isEqual).map(({ title, slug, id }) => {
         return (
           <li key={id} className="service-list__item link">
@@ -64,10 +64,11 @@ const StyledServiceList = styled.ul`
   ${media.break`
     order: 3;
     margin: 0;
-    width: 50%;
-    position: absolute;
-    right: -10%;
-    top: 12rem;
+    width: ${({ width }) => width}px;
+    position: fixed;
+    right: ${({ right }) => right}px;
+    top: 16rem;
+    top: calc(12rem + 5%);
     li {
       text-align: left;
     }

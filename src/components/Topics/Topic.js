@@ -20,20 +20,21 @@ const Topic = ({
   topicIndex,
   error = false,
   home = false,
+  styles,
 }) => {
   const { viewport } = useSiteContext();
 
-  const styles =
+  const calculatedStyles =
     home || error
       ? getHomeStyles(viewport, expanded, expandedIndex, topicIndex, error)
       : getStyles(viewport, expanded, expandedIndex, topicIndex);
 
   const styleProps = useSpring(
-    viewport.width >= theme.sizes.break ? styles : {}
+    viewport.width >= theme.sizes.break ? calculatedStyles : {}
   );
 
   return (
-    <StyledTopic style={styleProps} className="topic">
+    <StyledTopic style={{ ...styleProps, ...styles }} className="topic">
       <TopicImage
         className="topic__image"
         fixed={image.asset.fixed}

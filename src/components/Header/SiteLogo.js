@@ -69,7 +69,7 @@ const HomeLogoWrap = styled(Link)`
     left: ${75 + 10}px;
     background: ${({ theme }) =>
       `linear-gradient(
-        ${rgba(theme.offWhite, 0)}, 
+        ${rgba(theme.offWhite, 1)}, 
         ${theme.offWhite} 35%,
         ${theme.offWhite} 60%,
         ${rgba(theme.offWhite, 0)}

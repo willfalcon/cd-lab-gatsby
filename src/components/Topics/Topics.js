@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTransition } from 'react-spring';
 
 import Topic from './Topic';
@@ -9,7 +9,7 @@ import TopicsHeading from './TopicsHeading';
 import theme from '../theme';
 import useSiteContext from '../SiteContext';
 
-const Topics = ({ home = false }) => {
+const Topics = ({ home = false, error = false }) => {
   const {
     viewport,
     ready,
@@ -41,42 +41,62 @@ const Topics = ({ home = false }) => {
     topic => topic.node.id === expandedTopic
   );
 
+  console.log(home || error);
+  const [topicsOpen, setTopicsOpen] = useState(home || error);
+
+  useEffect(() => {
+    setTopicsOpen(home || error || expandedTopic ? true : false);
+  }, [expandedTopic]);
+
+  const allTopicTransition = useTransition(topicsOpen, null, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+  });
+
   console.log({ expandedIndex });
-  return (
-    <>
-      {ready && home && <TopicsHeading viewport={viewport} />}
-      {topics.map(({ node }, index) => (
-        <Topic
-          key={node.id}
-          {...node}
-          setExpandedTopic={setExpandedTopic}
-          home={home}
-          expanded={node.id === expandedTopic}
-          expandedIndex={expandedIndex}
-          topicIndex={index}
-        />
-      ))}
-      {expandedTopicTransition.map(({ item, key, props }) => {
-        return (
-          item && (
-            <React.Fragment key={key}>
-              {!mobile && (
-                <BackgroundOverlay
-                  style={props}
-                  onClick={() => setExpandedTopic(null)}
-                />
-              )}
-              <ExpandedTopic
-                topics={topics}
-                expandedTopic={expandedTopic}
-                style={props}
-                setExpandedTopic={setExpandedTopic}
-              />
-            </React.Fragment>
-          )
-        );
-      })}
-    </>
+  return allTopicTransition.map(
+    ({ item, key, props: allProps }) =>
+      item && (
+        <React.Fragment key={key}>
+          {ready && home && <TopicsHeading viewport={viewport} />}
+          {topics.map(({ node }, index) => (
+            <Topic
+              key={node.id}
+              {...node}
+              setExpandedTopic={setExpandedTopic}
+              home={home}
+              expanded={node.id === expandedTopic}
+              expandedIndex={expandedIndex}
+              topicIndex={index}
+              styles={allProps}
+            />
+          ))}
+          {expandedTopicTransition.map(({ item, key, props }) => {
+            return (
+              item && (
+                <React.Fragment key={key}>
+                  {!mobile && (
+                    <BackgroundOverlay
+                      style={{
+                        ...allProps,
+                        ...props,
+                      }}
+                      onClick={() => setExpandedTopic(null)}
+                    />
+                  )}
+                  <ExpandedTopic
+                    topics={topics}
+                    expandedTopic={expandedTopic}
+                    style={{ ...allProps, ...props }}
+                    setExpandedTopic={setExpandedTopic}
+                  />
+                </React.Fragment>
+              )
+            );
+          })}
+        </React.Fragment>
+      )
   );
 };
 

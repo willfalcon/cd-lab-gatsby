@@ -30,6 +30,7 @@ const PageLayout = styled.div.attrs(() => ({
       display: flex;
       flex-flow: column;
       flex: 0 0 40%;
+      overflow: scroll;
       ${({ collection }) =>
         collection &&
         `
@@ -53,7 +54,7 @@ const PageLayout = styled.div.attrs(() => ({
           padding-right: 5%;
         `}
         width: ${({ collection = false }) => (collection ? 65 : 100)}%;
-        overflow: scroll;
+        /* overflow: scroll; */
 
         ${media.break`
           ${grid.enabled`
