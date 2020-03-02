@@ -103,13 +103,21 @@ class ContactForm extends React.Component {
   };
 
   render() {
-    const { formOpen, toggleForm, modal = false, className } = this.props;
+    const {
+      formOpen,
+      toggleForm,
+      modal = false,
+      className,
+      styles,
+      children,
+    } = this.props;
     const { success, submitting, error } = this.state;
 
     return (
       <SiteContext.Consumer>
         {({ formOptions: { errorMessage, successMessage }, mobile }) => (
           <StyledForm
+            style={styles}
             className={classNames('contact-form', className)}
             formOpen={formOpen}
             onSubmit={this.handleSubmit}
@@ -226,6 +234,7 @@ class ContactForm extends React.Component {
                 </div>
               </fieldset>
             )}
+            {children}
           </StyledForm>
         )}
       </SiteContext.Consumer>

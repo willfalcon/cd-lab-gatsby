@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { animated } from 'react-spring';
 
 import { media } from '../theme';
 
-const StyledForm = styled.form`
+const StyledForm = styled(animated.form)`
   overflow: hidden;
   background: ${props => props.theme.offWhite};
   flex: 0 0 50%;
@@ -11,7 +12,7 @@ const StyledForm = styled.form`
   bottom: 42px;
   width: 100%;
   height: calc(100% - 42px);
-  transition: 0.25s ease-out;
+  /* transition: 0.25s ease-out; */
   padding: ${props => (props.formOpen ? '0rem 2rem 4rem' : '0 2rem')};
   /* max-height: ${props => (props.formOpen ? '100vh' : '0')}; */
   h1 {

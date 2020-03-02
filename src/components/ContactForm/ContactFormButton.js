@@ -47,19 +47,23 @@ const ContactFormButton = ({ children }) => {
       paddingBottom: '0rem',
       paddingLeft: '0%',
       paddingRight: '0%',
-      opacity: 1,
+      // opacity: 1,
       o: 0,
+      position: 'absolute',
+      zIndex: 8,
     },
     enter: {
-      width: `${mobile ? viewport.width : viewport.width}px`,
-      height: `${viewport.height}px`,
+      width: `${mobile ? viewport.width : viewport.width / 2}px`,
+      height: `${mobile ? viewport.height : viewport.height * 0.75}px`,
       left: `${viewport.width * 0.5}px`,
       transform: `translateX(-50%)`,
-      top: `${scrollY}px`,
+      top: `${
+        mobile ? scrollY : viewport.height / 2 - (viewport.height * 0.75) / 2
+      }px`,
       paddingTop: '5rem',
       paddingBottom: '5rem',
-      paddingLeft: '0%',
-      paddingRight: '0%',
+      paddingLeft: mobile ? '0%' : '2rem',
+      paddingRight: mobile ? '0%' : '2rem',
       opacity: 1,
       o: 1,
     },
@@ -95,7 +99,7 @@ const ContactFormButton = ({ children }) => {
         ({ item, key, props }) =>
           item && (
             <React.Fragment key={key}>
-              <ContactFormModal
+              {/* <ContactFormModal
                 style={props}
                 viewheight={viewport.height}
                 className="contact-form-modal"
@@ -108,7 +112,7 @@ const ContactFormButton = ({ children }) => {
                   className="modal-contact-form"
                 />
                 <CloseButton handleClose={() => setOpen(false)} />
-              </ContactFormModal>
+              </ContactFormModal> */}
               <BackgroundOverlay
                 onClick={() => setOpen(false)}
                 style={{
@@ -116,6 +120,15 @@ const ContactFormButton = ({ children }) => {
                 }}
                 className="contact-form-bg-overlay"
               />
+              <ContactForm
+                modal
+                formOpen={true}
+                toggleForm={() => setOpen(!open)}
+                className="modal-contact-form"
+                styles={props}
+              >
+                <CloseButton handleClick={() => setOpen(false)} />
+              </ContactForm>
             </React.Fragment>
           )
       )}
