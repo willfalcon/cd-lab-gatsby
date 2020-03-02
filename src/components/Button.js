@@ -35,17 +35,15 @@ const Button = React.forwardRef(
       );
     }
     return (
-      <Link href={href}>
-        <StyledLink
-          className={classNames('button button--link', className)}
-          big={big}
-          ref={ref}
-        >
-          {title}
-          {children}
-        </StyledLink>
-        ;
-      </Link>
+      <StyledLink
+        className={classNames('button button--link', className)}
+        big={big}
+        ref={ref}
+        to={href}
+      >
+        {title}
+        {children}
+      </StyledLink>
     );
   }
 );
@@ -63,13 +61,16 @@ const StyledButton = styled.button`
   cursor: pointer;
 `;
 
-const StyledLink = styled.a`
+const StyledLink = styled(Link)`
   background: ${props => props.theme.orange};
   padding: ${({ big }) => (big ? '.75rem 5rem' : '.25rem 1.5rem')};
   color: white;
   font-size: 3rem;
   cursor: pointer;
   line-height: 1.5;
+  text-decoration: none;
+  display: block;
+  align-self: flex-start;
 `;
 
 export default Button;

@@ -16,14 +16,13 @@ function getHomeStyles(
   var right, top, transform, width, height;
 
   const isExpanded = expanded === true;
-
   // See if the viewport is wide enough to get the full "expanded width" with 75px on each side, which is the width of the nav column
   if (viewWidth < expandedWidth + 150) {
     // NOT wide enough for full expanded width
     right = isExpanded
       ? // If this topic is expanded
         `${viewWidth - 75 - selectedTopicSize - 20}px` // this is counting down from the left. View width - nav width - topic width - padding
-      : // If not expanded
+      : // If none expanded
       expandedIndex !== -1
       ? // If any topic is expanded
         '10px' // 10px from the right
@@ -37,7 +36,7 @@ function getHomeStyles(
           expandedWidth -
           selectedTopicSize -
           100}px`
-      : // If not expanded
+      : // If none expanded
       expandedIndex !== -1
       ? // If any topic is expanded
         `${(viewport.width - expandedWidth) / 2 - topicSize / 2}px`

@@ -41,7 +41,6 @@ const Topics = ({ home = false, error = false }) => {
     topic => topic.node.id === expandedTopic
   );
 
-  console.log(home || error);
   const [topicsOpen, setTopicsOpen] = useState(home || error);
 
   useEffect(() => {
@@ -59,7 +58,9 @@ const Topics = ({ home = false, error = false }) => {
     ({ item, key, props: allProps }) =>
       item && (
         <React.Fragment key={key}>
-          {ready && home && <TopicsHeading viewport={viewport} />}
+          {ready && (home || error) && (
+            <TopicsHeading viewport={viewport} error={error} />
+          )}
           {topics.map(({ node }, index) => (
             <Topic
               key={node.id}
@@ -70,6 +71,7 @@ const Topics = ({ home = false, error = false }) => {
               expandedIndex={expandedIndex}
               topicIndex={index}
               styles={allProps}
+              error={error}
             />
           ))}
           {expandedTopicTransition.map(({ item, key, props }) => {
