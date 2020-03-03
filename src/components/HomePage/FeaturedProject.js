@@ -24,14 +24,14 @@ const FeaturedProject = ({ project, service }) => {
             {service.title}
           </ProjectServiceName>
         </Link>
-        <Link to={`/project/${project.slug.current}`}>
+        <Link to={`/service/${service.slug.current}`}>
           <ProjectTitle className="featured-project__title">
             {project.title}
           </ProjectTitle>
         </Link>
         <Link
           className="featured-project__link"
-          to={`/project/${project.slug.current}`}
+          to={`/service/${service.slug.current}`}
         >
           Learn More >
         </Link>
