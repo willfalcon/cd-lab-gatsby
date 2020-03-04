@@ -12,6 +12,7 @@ const Project = ({
   image,
   slug = false,
   setExpandedProject,
+  initialProject
 }) => {
   const { id } = project;
   const overlayTransition = useTransition(hoverState === id, null, {
@@ -27,6 +28,17 @@ const Project = ({
   });
 
   const ref = useRef(null);
+
+  useEffect(() => {
+    if (initialProject && initialProject.id === id) {
+      const location = ref.current.getBoundingClientRect();
+      setExpandedProject({
+        location,
+        ...project,
+        image,
+      });
+    }
+  }, []);
 
   return (
     <StyledProject

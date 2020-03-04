@@ -42,6 +42,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
   const {
     data: {
       allSanityCategory: { edges: services },
+      allSanityProject: { group }
     },
   } = await graphql(`
     {
@@ -51,6 +52,20 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
             title
             slug {
               current
+            }
+          }
+        }
+      }
+      allSanityProject {
+        group(field: categories___slug___current) {
+          fieldValue
+          totalCount
+          edges {
+            node {
+              title
+              slug {
+                current
+              }
             }
           }
         }
@@ -65,6 +80,21 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
       context: { slug: service.node.slug.current },
     });
     console.log(`Created single service page for ${service.node.title}`);
+
+    /**
+     * Create single project pages for each project on top of each service
+     */
+    const serviceGroup = group.filter(group => group.fieldValue === service.node.slug.current)[0];
+    if (serviceGroup) {
+      serviceGroup.edges.map(edge => {
+        createPage({
+          path: `/service/${service.node.slug.current}/${edge.node.slug.current}`,
+          component: require.resolve('./src/templates/singleService.js'),
+          context: { slug: service.node.slug.current, project: edge.node.slug.current }
+        });
+        console.log(`Created single project page for ${edge.node.title} on top of service ${service.node.title}.`);
+      });
+    }
   });
 
   /**
@@ -84,6 +114,13 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
             slug {
               current
             }
+            projects {
+              id
+              slug {
+                current
+              }
+              title
+            }
           }
         }
       }
@@ -97,6 +134,14 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
       context: { slug: collection.node.slug.current },
     });
     console.log(`Created single Collection page for ${collection.node.title}`);
+    collection.node.projects.forEach(project => {
+      createPage({
+        path: `/collection/${collection.node.slug.current}/${project.slug.current}`,
+        component: require.resolve('./src/templates/singleCollection.js'),
+        context: { slug: collection.node.slug.current, project: project.slug.current},
+      });
+      console.log(`Created single Project page for ${project.title} on top of Collection ${collection.node.title}`);
+    })
   });
 
   /**

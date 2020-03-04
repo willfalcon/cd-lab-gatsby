@@ -9,12 +9,12 @@ import ContactFormButton from '../ContactForm/ContactFormButton';
 import Topics from '../Topics/Topics';
 
 import useSiteContext from '../SiteContext';
-import theme from '../theme';
+import theme from '../theme'
 
 const ProjectCarousel = Loadable(() => import('../Projects/ProjectCarousel'));
 const ProjectMasonry = Loadable(() => import('../Projects/ProjectMasonry'));
 
-const SingleService = ({ title, _rawDescription, services, id, projects }) => {
+const SingleService = ({ title, _rawDescription, services, id, projects, project }) => {
   const { viewport } = useSiteContext();
   const mobile = viewport.width < theme.sizes.break;
 
@@ -35,7 +35,7 @@ const SingleService = ({ title, _rawDescription, services, id, projects }) => {
         </div>
       </div>
       <Topics />
-      {!mobile && <ProjectMasonry projects={projects} />}
+      {!mobile && <ProjectMasonry projects={projects} project={project} />}
     </PageLayout>
   );
 };

@@ -4,10 +4,11 @@ import { graphql } from 'gatsby';
 import Wrapper from '../components/Wrapper';
 import SingleCollection from '../components/SingleCollection';
 
-const singleCollection = ({ data }) => {
+const singleCollection = ({ data, pageContext }) => {
+  const project = pageContext.project;
   return (
     <Wrapper>
-      <SingleCollection {...data.sanityCollection} />
+      <SingleCollection {...data.sanityCollection} project={project} />
     </Wrapper>
   );
 };
