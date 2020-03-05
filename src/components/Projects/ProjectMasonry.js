@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { useTransition, animated, interpolate } from 'react-spring';
 import Img from 'gatsby-image';
+import Helmet from 'react-helmet';
 
 import Project, { StyledTitle } from './Project';
 import BackgroundOverlay from '../BackgroundOverlay';
@@ -14,7 +15,7 @@ import ProjectContent from './ProjectContent';
 import useSiteContext from '../SiteContext';
 import getDimensions from './getDimensions';
 
-const ProjectMasonry = ({ projects, workpage = false }) => {
+const ProjectMasonry = ({ projects, project, slug, service = false, workpage = false }) => {
   // console.log(projects);
 
   const masonryOptions = {
@@ -26,6 +27,9 @@ const ProjectMasonry = ({ projects, workpage = false }) => {
   const containerRef = useRef(null);
 
   const { viewport } = useSiteContext();
+
+  const initialProject = projects[projects.findIndex(proj => proj.slug.current === project)];
+  // console.log({initialProject})
 
   const [expandedProject, setExpandedProject] = useState(null);
 
@@ -46,6 +50,8 @@ const ProjectMasonry = ({ projects, workpage = false }) => {
       setExitLeft(expandedProject.location.left);
     }
   }, [expandedProject]);
+
+  const serviceOrCollection = service ? 'service' : 'collection';
 
   const modalTransition = useTransition(expandedProject, null, {
     from: {
@@ -76,8 +82,15 @@ const ProjectMasonry = ({ projects, workpage = false }) => {
       left: `${exitLeft}px`,
       title: 0,
     },
-    onRest: () => setHoverState(null),
+    onRest: (props, state) => {
+      setHoverState(null);
+    },
   });
+
+  const handleCloseProject = () => {
+    setExpandedProject(null);
+    window.history.pushState({}, '', `/${serviceOrCollection}/${slug}`);
+  }
 
   return (
     <StyledProjectMasonry
@@ -97,6 +110,7 @@ const ProjectMasonry = ({ projects, workpage = false }) => {
               setHoverState={setHoverState}
               index={index}
               slug={project.slug}
+              workpage
             />
           ) : (
             project.images.map((image, index) => {
@@ -110,6 +124,10 @@ const ProjectMasonry = ({ projects, workpage = false }) => {
                   setHoverState={setHoverState}
                   index={index}
                   setExpandedProject={setExpandedProject}
+                  initialProject={initialProject}
+                  serviceOrCollection={serviceOrCollection}
+                  slug={slug}
+                  expandedProject={expandedProject}
                 />
               );
             })
@@ -142,12 +160,15 @@ const ProjectMasonry = ({ projects, workpage = false }) => {
         />
       </DownArrow>
       {modalTransition.map(
-        ({ item, key, props }) =>
-          item && (
+        ({ item, key, props }) => {
+          const canonicalService = item ? item.categories[0] : null;
+          const origin = window.location.origin;
+          const canonicalUrl = canonicalService ? `${origin}/service/${canonicalService.slug.current}/${item.slug.current}` : false;
+          return item && (
             <React.Fragment key={key}>
               <BackgroundOverlay
                 style={{ opacity: props.opacity }}
-                onClick={() => setExpandedProject(null)}
+                onClick={handleCloseProject}
               />
               <ExpandedProject
                 style={{
@@ -158,9 +179,12 @@ const ProjectMasonry = ({ projects, workpage = false }) => {
               >
                 <Img fluid={item.image.asset.fluid} />
                 <CloseButton
-                  handleClick={() => setExpandedProject(null)}
+                  handleClick={handleCloseProject}
                   styles={{ opacity: props.opacity }}
                 />
+                <StyledTitle style={{ opacity: props.title }}>
+                  {item.title}
+                </StyledTitle>
                 {item._rawDescription && (
                   <ProjectContent
                     content={item._rawDescription}
@@ -168,12 +192,15 @@ const ProjectMasonry = ({ projects, workpage = false }) => {
                     transitionStyles={{ opacity: props.opacity }}
                   />
                 )}
-                <StyledTitle style={{ opacity: props.title }}>
-                  {item.title}
-                </StyledTitle>
               </ExpandedProject>
+              {canonicalService && (
+                <Helmet>
+                  <link rel="canonical" href={canonicalUrl} />
+                </Helmet>
+              )}
             </React.Fragment>
           )
+        }
       )}
     </StyledProjectMasonry>
   );

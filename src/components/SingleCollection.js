@@ -14,10 +14,9 @@ import theme from './theme';
 const ProjectCarousel = Loadable(() => import('./Projects/ProjectCarousel'));
 const ProjectMasonry = Loadable(() => import('./Projects/ProjectMasonry'));
 
-const SingleCollection = ({ title, _rawDescription, projects }) => {
+const SingleCollection = ({ title, _rawDescription, projects, project, slug }) => {
   const { viewport } = useSiteContext();
   const mobile = viewport.width < theme.sizes.break;
-  console.log(projects);
   return (
     <PageLayout collection className="single-collection">
       <div className="main">
@@ -36,7 +35,7 @@ const SingleCollection = ({ title, _rawDescription, projects }) => {
         </div>
       </div>
       <Topics />
-      {!mobile && <ProjectMasonry projects={projects} />}
+      {!mobile && <ProjectMasonry projects={projects} project={project} slug={slug} />}
     </PageLayout>
   );
 };

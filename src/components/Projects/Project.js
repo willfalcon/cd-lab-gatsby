@@ -12,6 +12,10 @@ const Project = ({
   image,
   slug = false,
   setExpandedProject,
+  initialProject,
+  serviceOrCollection,
+  expandedProject,
+  workpage = false
 }) => {
   const { id } = project;
   const overlayTransition = useTransition(hoverState === id, null, {
@@ -26,17 +30,29 @@ const Project = ({
     },
   });
 
+  
   const ref = useRef(null);
+
+  useEffect(() => {
+    if (initialProject && initialProject.id === id) {
+      const location = ref.current.getBoundingClientRect();
+      setExpandedProject({
+        location,
+        ...project,
+        image,
+      });
+    }
+  }, []);
 
   return (
     <StyledProject
       onMouseEnter={() => setHoverState(id)}
-      onMouseMove={() => setHoverState(id)}
-      as={slug ? Link : 'button'}
+      onMouseMove={() => setHoverState(id)} 
+      as={workpage ? Link : 'button'}
       to={`/service/${slug.current}`}
       ref={ref}
       onClick={
-        slug
+        workpage
           ? null
           : () => {
               const location = ref.current.getBoundingClientRect();
@@ -45,6 +61,9 @@ const Project = ({
                 ...project,
                 image,
               });
+              if(!expandedProject) {
+                window.history.pushState({}, '', `/${serviceOrCollection}/${slug}/${project.slug.current}`);
+              }
             }
       }
     >

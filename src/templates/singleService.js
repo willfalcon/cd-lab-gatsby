@@ -4,13 +4,17 @@ import { graphql } from 'gatsby';
 import Wrapper from '../components/Wrapper';
 import SingleService from '../components/SingleService/SingleService';
 
-const singleService = ({ data }) => {
+const singleService = ({ data, pageContext }) => {
+  const project = pageContext.project;
+  const slug = pageContext.slug;
   return (
     <Wrapper>
       <SingleService
         {...data.sanityCategory}
         projects={data.allSanityProject.edges.map(edge => ({ ...edge.node }))}
         services={data.allSanityCategory.edges.map(edge => ({ ...edge.node }))}
+        project={project}
+        slug={slug}
       />
     </Wrapper>
   );
@@ -58,6 +62,9 @@ export const SingleServiceQuery = graphql`
           }
           _rawDescription
           videoID
+          slug {
+            current
+          }
         }
       }
     }
