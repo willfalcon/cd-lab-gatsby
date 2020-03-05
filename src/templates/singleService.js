@@ -6,6 +6,7 @@ import SingleService from '../components/SingleService/SingleService';
 
 const singleService = ({ data, pageContext }) => {
   const project = pageContext.project;
+  const slug = pageContext.slug;
   return (
     <Wrapper>
       <SingleService
@@ -13,6 +14,7 @@ const singleService = ({ data, pageContext }) => {
         projects={data.allSanityProject.edges.map(edge => ({ ...edge.node }))}
         services={data.allSanityCategory.edges.map(edge => ({ ...edge.node }))}
         project={project}
+        slug={slug}
       />
     </Wrapper>
   );

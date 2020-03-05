@@ -14,7 +14,7 @@ import theme from '../theme'
 const ProjectCarousel = Loadable(() => import('../Projects/ProjectCarousel'));
 const ProjectMasonry = Loadable(() => import('../Projects/ProjectMasonry'));
 
-const SingleService = ({ title, _rawDescription, services, id, projects, project }) => {
+const SingleService = ({ title, _rawDescription, services, id, slug, projects, project }) => {
   const { viewport } = useSiteContext();
   const mobile = viewport.width < theme.sizes.break;
 
@@ -35,7 +35,7 @@ const SingleService = ({ title, _rawDescription, services, id, projects, project
         </div>
       </div>
       <Topics />
-      {!mobile && <ProjectMasonry projects={projects} project={project} />}
+      {!mobile && <ProjectMasonry projects={projects} project={project} slug={slug} service />}
     </PageLayout>
   );
 };

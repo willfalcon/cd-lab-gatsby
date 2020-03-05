@@ -15,7 +15,7 @@ import ProjectContent from './ProjectContent';
 import useSiteContext from '../SiteContext';
 import getDimensions from './getDimensions';
 
-const ProjectMasonry = ({ projects, project, workpage = false }) => {
+const ProjectMasonry = ({ projects, project, slug, service = false, workpage = false }) => {
   // console.log(projects);
 
   const masonryOptions = {
@@ -29,7 +29,7 @@ const ProjectMasonry = ({ projects, project, workpage = false }) => {
   const { viewport } = useSiteContext();
 
   const initialProject = projects[projects.findIndex(proj => proj.slug.current === project)];
-  console.log({initialProject})
+  // console.log({initialProject})
 
   const [expandedProject, setExpandedProject] = useState(null);
 
@@ -50,6 +50,8 @@ const ProjectMasonry = ({ projects, project, workpage = false }) => {
       setExitLeft(expandedProject.location.left);
     }
   }, [expandedProject]);
+
+  const serviceOrCollection = service ? 'service' : 'collection';
 
   const modalTransition = useTransition(expandedProject, null, {
     from: {
@@ -80,8 +82,15 @@ const ProjectMasonry = ({ projects, project, workpage = false }) => {
       left: `${exitLeft}px`,
       title: 0,
     },
-    onRest: () => setHoverState(null),
+    onRest: (props, state) => {
+      setHoverState(null);
+    },
   });
+
+  const handleCloseProject = () => {
+    setExpandedProject(null);
+    window.history.pushState({}, '', `/${serviceOrCollection}/${slug}`);
+  }
 
   return (
     <StyledProjectMasonry
@@ -101,6 +110,7 @@ const ProjectMasonry = ({ projects, project, workpage = false }) => {
               setHoverState={setHoverState}
               index={index}
               slug={project.slug}
+              workpage
             />
           ) : (
             project.images.map((image, index) => {
@@ -115,6 +125,9 @@ const ProjectMasonry = ({ projects, project, workpage = false }) => {
                   index={index}
                   setExpandedProject={setExpandedProject}
                   initialProject={initialProject}
+                  serviceOrCollection={serviceOrCollection}
+                  slug={slug}
+                  expandedProject={expandedProject}
                 />
               );
             })
@@ -155,7 +168,7 @@ const ProjectMasonry = ({ projects, project, workpage = false }) => {
             <React.Fragment key={key}>
               <BackgroundOverlay
                 style={{ opacity: props.opacity }}
-                onClick={() => setExpandedProject(null)}
+                onClick={handleCloseProject}
               />
               <ExpandedProject
                 style={{
@@ -166,7 +179,7 @@ const ProjectMasonry = ({ projects, project, workpage = false }) => {
               >
                 <Img fluid={item.image.asset.fluid} />
                 <CloseButton
-                  handleClick={() => setExpandedProject(null)}
+                  handleClick={handleCloseProject}
                   styles={{ opacity: props.opacity }}
                 />
                 <StyledTitle style={{ opacity: props.title }}>

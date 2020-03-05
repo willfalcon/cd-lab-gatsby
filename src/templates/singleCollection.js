@@ -5,10 +5,10 @@ import Wrapper from '../components/Wrapper';
 import SingleCollection from '../components/SingleCollection';
 
 const singleCollection = ({ data, pageContext }) => {
-  const project = pageContext.project;
+  const { project, slug } = pageContext;
   return (
     <Wrapper>
-      <SingleCollection {...data.sanityCollection} project={project} />
+      <SingleCollection {...data.sanityCollection} project={project} slug={slug} />
     </Wrapper>
   );
 };
