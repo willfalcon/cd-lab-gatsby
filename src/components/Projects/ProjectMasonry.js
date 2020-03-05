@@ -1,22 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Masonry from 'react-masonry-component';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { useTransition, animated, interpolate } from 'react-spring';
-import Img from 'gatsby-image';
-import Helmet from 'react-helmet';
+import { useTransition } from 'react-spring';
 
-import Project, { StyledTitle } from './Project';
-import BackgroundOverlay from '../BackgroundOverlay';
-import CloseButton from '../CloseButton';
-import ProjectContent from './ProjectContent';
+import Project from './Project';
+import ProjectModal from './ProjectModal';
+import DownArrow from './DownArrow';
 
 import useSiteContext from '../SiteContext';
 import getDimensions from './getDimensions';
+import useModalTransition from './modalTransition';
 
 const ProjectMasonry = ({ projects, project, slug, service = false, workpage = false }) => {
-  // console.log(projects);
 
   const masonryOptions = {
     transitionDuration: 100,
@@ -35,57 +30,31 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
 
   // console.log(expandedProject);
 
-  const [exitWidth, setExitWidth] = useState(0);
-  const [exitHeight, setExitHeight] = useState(0);
-  const [exitTop, setExitTop] = useState(0);
-  const [exitLeft, setExitLeft] = useState(0);
+  const [exitSizes, setExitSizes] = useState({
+    exitWidth: 0,
+    exitHeight: 0,
+    exitTop: 0,
+    exitLeft: 0,
+  });
+
   const dimensions = expandedProject
     ? getDimensions(expandedProject.image.asset.fluid.aspectRatio, viewport)
     : { width: 0, height: 0 };
+
   useEffect(() => {
     if (expandedProject) {
-      setExitWidth(expandedProject.location.width);
-      setExitHeight(expandedProject.location.height);
-      setExitTop(expandedProject.location.top);
-      setExitLeft(expandedProject.location.left);
+      setExitSizes({
+        exitWidth: expandedProject.location.width,
+        exitHeight: expandedProject.location.height,
+        exitTop: expandedProject.location.top,
+        exitLeft: expandedProject.location.left,
+      })
     }
   }, [expandedProject]);
 
   const serviceOrCollection = service ? 'service' : 'collection';
 
-  const modalTransition = useTransition(expandedProject, null, {
-    from: {
-      opacity: 0,
-      width: `${expandedProject ? expandedProject.location.width : 0}px`,
-      height: `${expandedProject ? expandedProject.location.height : 0}px`,
-      top: `${expandedProject ? expandedProject.location.top : 0}px`,
-      left: `${expandedProject ? expandedProject.location.left : 0}px`,
-      title: 1,
-    },
-    enter: {
-      opacity: 1,
-      width: `${dimensions.width}px`,
-      height: `${dimensions.height}px`,
-      top: `${
-        expandedProject ? viewport.height / 2 - dimensions.height / 2 : 0
-      }px`,
-      left: `${
-        expandedProject ? viewport.width / 2 - dimensions.width / 2 : 0
-      }px`,
-      title: 1,
-    },
-    leave: {
-      opacity: 0,
-      width: `${exitWidth}px`,
-      height: `${exitHeight}px`,
-      top: `${exitTop}px`,
-      left: `${exitLeft}px`,
-      title: 0,
-    },
-    onRest: (props, state) => {
-      setHoverState(null);
-    },
-  });
+  const modalTransition = useModalTransition(expandedProject, dimensions, exitSizes, viewport, setHoverState);
 
   const handleCloseProject = () => {
     setExpandedProject(null);
@@ -134,104 +103,27 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
           );
         })}
       </Masonry>
-      <DownArrow
-        viewport={viewport}
-        onClick={e => {
-          e.persist();
-          containerRef.current.scrollTo({
-            top: containerRef.current.scrollHeight,
-            behavior: 'smooth',
-          });
-          setTimeout(() => {
-            let el = e.target;
-            while (el.tagName !== 'BUTTON') {
-              el = el.parentElement;
-            }
-            el.blur();
-          }, 2000);
-        }}
-        aria-label="Scroll to the bottom"
-      >
-        <FontAwesomeIcon
-          icon={faArrowDown}
-          color={'white'}
-          size="2x"
-          className="down-arrow"
-        />
-      </DownArrow>
+      <DownArrow containerRef={containerRef} viewport={viewport} />
       {modalTransition.map(
         ({ item, key, props }) => {
-          const canonicalService = item ? item.categories[0] : null;
-          const origin = window.location.origin;
-          const canonicalUrl = canonicalService ? `${origin}/service/${canonicalService.slug.current}/${item.slug.current}` : false;
-          return item && (
-            <React.Fragment key={key}>
-              <BackgroundOverlay
-                style={{ opacity: props.opacity }}
-                onClick={handleCloseProject}
-              />
-              <ExpandedProject
-                style={{
-                  ...props,
-                  opacity: 1,
-                }}
-                viewport={viewport}
-              >
-                <Img fluid={item.image.asset.fluid} />
-                <CloseButton
-                  handleClick={handleCloseProject}
-                  styles={{ opacity: props.opacity }}
-                />
-                <StyledTitle style={{ opacity: props.title }}>
-                  {item.title}
-                </StyledTitle>
-                {item._rawDescription && (
-                  <ProjectContent
-                    content={item._rawDescription}
-                    title={item.title}
-                    transitionStyles={{ opacity: props.opacity }}
-                  />
-                )}
-              </ExpandedProject>
-              {canonicalService && (
-                <Helmet>
-                  <link rel="canonical" href={canonicalUrl} />
-                </Helmet>
-              )}
-            </React.Fragment>
-          )
+          return item && <ProjectModal 
+            key={key} 
+            viewport={viewport} 
+            item={item} 
+            styles={props} 
+            handleCloseProject={handleCloseProject} 
+            dimensions={dimensions} 
+            initialProject={initialProject} 
+          />
         }
       )}
     </StyledProjectMasonry>
   );
 };
 
-const ExpandedProject = styled(animated.div)`
-  position: absolute;
-  background: white;
-  z-index: 8;
-`;
-
 const StyledProjectMasonry = styled.div`
   flex: 0 0 60%;
   overflow: scroll;
-`;
-
-const DownArrow = styled.button`
-  display: block;
-  padding: 0;
-  margin: 0;
-  border: 0;
-  cursor: pointer;
-  position: fixed;
-  right: ${({ viewport }) => (viewport.width * 0.6) / 2 - 55}px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  bottom: 10px;
-  background: ${({ theme }) => theme.orange};
-  width: 50px;
-  height: 50px;
 `;
 
 export default ProjectMasonry;

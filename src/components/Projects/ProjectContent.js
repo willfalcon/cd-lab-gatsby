@@ -9,18 +9,29 @@ import Content from '../Content';
 import theme, { media } from '../theme';
 import useSiteContext from '../SiteContext';
 
-const ProjectContent = ({ content, title, transitionStyles }) => {
+const ProjectContent = ({ content, title, transitionStyles, contentOpen, toggleContent, dimensions }) => {
   const { viewport } = useSiteContext();
 
-  const [open, toggle] = useState(false);
   const width = Math.round(viewport.width * 0.3);
+
+  const openSpaceRight = (viewport.width - dimensions.width - width) / 2;
+  const closedSpaceRight = (viewport.width - dimensions.width) / 2;
+  // console.log({width, spaceRight});
+  
   const contentSpring = useSpring({
-    width: open ? `${width}px` : '40px',
-    maxHeight: open ? `${Math.round(viewport.height * 0.5)}px` : '40px',
-    padding: open ? '2.5rem' : '0rem',
-    overflow: open ? 'scroll' : 'hidden',
-    color: open ? theme.offWhite : rgba(theme.offWhite, 0),
+    width: contentOpen ? `${width}px` : '40px',
+    maxHeight: contentOpen ? `${Math.round(viewport.height * 0.5)}px` : '40px',
+    padding: contentOpen ? '2.5rem' : '0rem',
+    overflow: contentOpen ? 'scroll' : 'hidden',
+    color: contentOpen ? theme.offWhite : rgba(theme.offWhite, 0),
+    transform: `translateX(${contentOpen 
+      ? openSpaceRight < 30 
+        ? `${closedSpaceRight - 30}px` 
+        : `${width / 2}px` 
+      : `${40 / 2}px`})`
+    // transform: contentOpen ? `${width / 2}px` : `${width / 2}px`,
   });
+
 
   return (
     <StyledProjectContent
@@ -32,8 +43,8 @@ const ProjectContent = ({ content, title, transitionStyles }) => {
       </Heading>
       <Content>{content}</Content>
       <DescriptionButton
-        onClick={() => toggle(!open)}
-        open={open}
+        onClick={() => toggleContent(!contentOpen)}
+        open={contentOpen}
         aria-label="Show project description"
         className="project-content__button"
       >
@@ -49,7 +60,6 @@ const StyledProjectContent = styled(animated.div)`
   color: ${({ theme }) => theme.offWhite};
   position: absolute;
   top: 30%;
-  left: ${({ left }) => left}px;
   right: 0;
   transform: translateX(50%);
   max-height: 50%;
@@ -59,44 +69,42 @@ const StyledProjectContent = styled(animated.div)`
 `;
 
 const DescriptionButton = styled(animated.button)`
-  ${media.break`
-    display: block;
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 40px;
+  width: 40px;
+  background: ${({ theme, open }) =>
+    open ? 'transparent' : rgba(theme.orange, 0.9)};
+  transition: .25s;
+  /* transform: ${({ open }) => (open ? 'rotateY(0)' : 'rotateY(180deg)')}; */
+  z-index: 1;
+  border: 0;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+  span {
     position: absolute;
-    top: 0;
-    right: 0;
-    height: 40px;
-    width: 40px;
-    background: ${({ theme, open }) =>
-      open ? 'transparent' : rgba(theme.orange, 0.9)};
+    display: block;
+    background: ${({ theme }) => theme.offWhite};
+    height: 4px;
+    width: 25px;
+    left: 50%;
+    top: 50%;
     transition: .25s;
-    /* transform: ${({ open }) => (open ? 'rotateY(0)' : 'rotateY(180deg)')}; */
-    z-index: 1;
-    border: 0;
-    cursor: pointer;
-    &:focus {
-      outline: none;
+    &:nth-child(1) {
+      transform: translate(-50%, -50%) ${({ open }) =>
+        open ? 'rotate(1.375turn)' : 'rotate(.25turn)'};
     }
-    span {
-      position: absolute;
-      display: block;
-      background: ${({ theme }) => theme.offWhite};
-      height: 4px;
-      width: 25px;
-      left: 50%;
-      top: 50%;
-      transition: .25s;
-      &:nth-child(1) {
-        transform: translate(-50%, -50%) ${({ open }) =>
-          open ? 'rotate(1.375turn)' : 'rotate(.25turn)'};
-      }
-      &:nth-child(2) {
-        transform: translate(-50%, -50%) ${({ open }) =>
-          open ? 'rotate(1.125turn)' : 'rotate(0turn)'};
-      }
-      /* transform: ${({ open }) =>
-        open ? 'rotate(1.125turn)' : 'rotate(0turn)'}; */
+    &:nth-child(2) {
+      transform: translate(-50%, -50%) ${({ open }) =>
+        open ? 'rotate(1.125turn)' : 'rotate(0turn)'};
     }
-  `}
+    /* transform: ${({ open }) =>
+      open ? 'rotate(1.125turn)' : 'rotate(0turn)'}; */
+  }
 `;
 
 export default ProjectContent;
