@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Masonry from 'react-masonry-component';
-import { useTransition } from 'react-spring';
 
 import Project from './Project';
 import ProjectModal from './ProjectModal';

@@ -22,7 +22,7 @@ const ProjectModal = ({ viewport, item, styles, handleCloseProject, dimensions, 
     if (initialProject && initialProject.id === item.id) {
       toggleContent(true);
     }
-  }, []);
+  }, [initialProject, item.id]);
 
   return (
     <React.Fragment>

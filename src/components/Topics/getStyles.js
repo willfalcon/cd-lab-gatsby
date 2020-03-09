@@ -40,6 +40,7 @@ function getStyles(viewport, expanded, expandedIndex, topicIndex) {
       break;
 
     case 1:
+    default:
       top = isExpanded ? '0px' : `${viewHeight / 2 - topicSize / 2}px`;
 
       transform =

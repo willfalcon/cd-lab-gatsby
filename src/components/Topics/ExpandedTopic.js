@@ -28,8 +28,7 @@ const ExpandedTopic = ({
 
   useEffect(() => {
     setTopicProps({
-      ...topics[topics.findIndex(topic => topic.node.id === expandedTopic)]
-        .node,
+      ...topics[topics.findIndex(topic => topic.node.id === expandedTopic)].node,
     });
   }, []);
 

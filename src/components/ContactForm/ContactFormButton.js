@@ -136,26 +136,6 @@ const ContactFormButton = ({ children }) => {
   );
 };
 
-const ContactFormModal = styled(animated.div)`
-  position: absolute;
-  width: 100%;
-  height: ${({ viewheight }) => viewheight - 65}px;
-  top: 65px;
-  left: 0;
-  z-index: 32;
-  ${media.break`
-    height: ${({ viewheight }) => viewheight}px;
-    top: 0;
-    /* background: ${({ theme }) => rgba(theme.dark, 0.65)}; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5rem 8%;
-    .modal-contact-form {
-      overflow: scroll;
-      -ms-overflow-style: -ms-autohiding-scrollbar;
-    }
-  `}
-`;
+
 
 export default ContactFormButton;

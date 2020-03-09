@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { useSpring, animated } from 'react-spring';
@@ -6,7 +6,7 @@ import { useSpring, animated } from 'react-spring';
 import Heading from '../Heading';
 import Content from '../Content';
 
-import theme, { media } from '../theme';
+import theme from '../theme';
 import useSiteContext from '../SiteContext';
 
 const ProjectContent = ({ content, title, transitionStyles, contentOpen, toggleContent, dimensions }) => {
