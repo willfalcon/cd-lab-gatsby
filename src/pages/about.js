@@ -7,7 +7,7 @@ import AboutPage from '../components/AboutPage/AboutPage';
 const index = ({ data }) => {
   // console.log(data);
   return (
-    <Wrapper>
+    <Wrapper seo={data.sanityAboutPage.seoSettings} pageTitle={data.sanityAboutPage.title}>
       <AboutPage
         {...data.sanityAboutPage}
         people={data.allSanityPerson.edges}

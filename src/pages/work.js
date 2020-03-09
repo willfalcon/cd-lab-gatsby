@@ -6,7 +6,7 @@ import WorkPage from '../components/WorkPage';
 
 const work = ({ data }) => {
   return (
-    <Wrapper>
+    <Wrapper seo={data.sanityWorkPage.seoSettings} pageTitle={data.sanityWorkPage.title}>
       <WorkPage
         {...data.sanityWorkPage}
         services={data.allSanityCategory.edges.map(edge => ({ ...edge.node }))}

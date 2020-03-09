@@ -7,7 +7,7 @@ import SingleCollection from '../components/SingleCollection';
 const singleCollection = ({ data, pageContext }) => {
   const { project, slug } = pageContext;
   return (
-    <Wrapper>
+    <Wrapper seo={data.sanityCollection.seoSettings} pageTitle={data.sanityCollection.title}>
       <SingleCollection {...data.sanityCollection} project={project} slug={slug} />
     </Wrapper>
   );

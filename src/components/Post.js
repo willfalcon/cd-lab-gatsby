@@ -4,6 +4,8 @@ import Img from 'gatsby-image';
 
 import Heading from './Heading';
 import Content from './Content';
+import Topics from './Topics/Topics';
+
 
 const Post = ({ id, _rawBody, mainImage, title, author, publishedAt }) => {
   return (
@@ -17,6 +19,7 @@ const Post = ({ id, _rawBody, mainImage, title, author, publishedAt }) => {
       <span className="date">{publishedAt}</span>
       <Heading>{title}</Heading>
       <Content>{_rawBody}</Content>
+      <Topics />
     </Article>
   );
 };

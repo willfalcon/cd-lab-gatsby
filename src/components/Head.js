@@ -2,22 +2,32 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { useStaticQuery, graphql } from 'gatsby';
 
-const Head = () => {
+const Head = ({ canonicalUrl, metaDescription, title, pageTitle, home }) => {
+  const titleTag = title ? title : pageTitle;
+  // TODO: Do something with canonicalUrl setting
   const {
-    sanitySiteSettings: { customCSS },
+    sanitySiteSettings: { customCSS, title: siteTitle },
   } = useStaticQuery(graphql`
     {
       sanitySiteSettings(_id: { eq: "cdSiteSettings" }) {
         customCSS {
           code
         }
+        title
       }
     }
   `);
+  console.log({metaDescription});
   return (
-    <Helmet>
+    <Helmet
+      titleTemplate={home ? siteTitle : `%s | ${siteTitle}`}
+      title={titleTag}
+    >
       <link rel="stylesheet" href="https://use.typekit.net/vcl0nfa.css" />
       <style type="text/css">{customCSS.code}</style>
+      {metaDescription && (
+        <meta name="description" content={metaDescription} />
+      )}
     </Helmet>
   );
 };

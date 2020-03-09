@@ -8,7 +8,7 @@ const singleService = ({ data, pageContext }) => {
   const project = pageContext.project;
   const slug = pageContext.slug;
   return (
-    <Wrapper>
+    <Wrapper seo={data.sanityCategory.seoSettings} pageTitle={data.sanityCategory.title}>
       <SingleService
         {...data.sanityCategory}
         projects={data.allSanityProject.edges.map(edge => ({ ...edge.node }))}

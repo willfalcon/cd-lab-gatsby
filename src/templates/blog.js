@@ -7,7 +7,7 @@ import BlogPage from '../components/BlogPage/BlogPage';
 const blog = ({ data, pageContext }) => {
   console.log(data.allSanityPost.edges.map(edge => ({ ...edge.node })));
   return (
-    <Wrapper>
+    <Wrapper seo={data.sanityBlogPage.seoSettings} pageTitle={data.sanityBlogPage.title}>
       <BlogPage
         posts={data.allSanityPost.edges.map(edge => ({ ...edge.node }))}
         {...data.sanityBlogPage}

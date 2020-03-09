@@ -19,12 +19,12 @@ import MobileFooter from './MobileFooter';
 
 library.add(fab, faArrowRight, faAngleRight, faAngleDoubleLeft);
 
-const Wrapper = ({ children, home = false }) => {
+const Wrapper = ({ children, seo, pageTitle, home = false }) => {
   const viewport = useWindowSize();
   return (
     <ThemeProvider theme={theme}>
       <SiteContextProvider home={home}>
-        <Head />
+        <Head {...seo} pageTitle={pageTitle} home={home} />
         <Header />
         <PageWrapper className="page-wrapper" viewport={viewport} home={home}>
           {children}

@@ -6,7 +6,7 @@ import HomePage from '../components/HomePage/HomePage';
 
 const index = ({ data, pageContext }) => {
   return (
-    <Wrapper home>
+    <Wrapper home seo={data.sanityHomePage.seoSettings} pageTitle={data.sanityHomePage.title}>
       <HomePage {...data.sanityHomePage} thumbnail={pageContext.thumbnail} />
     </Wrapper>
   );
@@ -65,6 +65,11 @@ export const HomeQuery = graphql`
             ...GatsbySanityImageFluid
           }
         }
+      }
+      seoSettings {
+        canonicalUrl
+        metaDescription
+        title
       }
     }
   }
