@@ -17,7 +17,6 @@ const Head = ({ canonicalUrl, metaDescription, title, pageTitle, home }) => {
       }
     }
   `);
-  console.log({metaDescription});
   return (
     <Helmet
       titleTemplate={home ? siteTitle : `%s | ${siteTitle}`}
