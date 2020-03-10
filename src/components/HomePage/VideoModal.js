@@ -2,31 +2,22 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import ReactPlayer from 'react-player';
+import { animated, useTransition } from 'react-spring';
 
 // import { roundToNearest } from '../../lib/utils';
 import useSiteContext from '../SiteContext';
 import CloseButton from '../CloseButton';
 import { media } from '../theme';
+import BackgroundOverlay from '../BackgroundOverlay';
 
-const VideoModal = ({ handleClose, expanded, videoRef, videoId }) => {
+const VideoModal = ({ handleClose, expanded, videoRef, videoId, thumbnail,alt, aspect, styles}) => {
   // const ref = useRef(null);
   const { viewport } = useSiteContext();
   // const width = roundToNearest(viewport.width * 0.8, 200);
 
-  const [dimensions, setDimensions] = useState({ width: 0, height: 1 });
 
-  const videoWidth = videoRef.current ? videoRef.current.videoWidth : 0;
-  const videoHeight = videoRef.current ? videoRef.current.videoHeight : 0;
   // console.dir(ref.current);
 
-  useEffect(() => {
-    if (videoWidth > 0) {
-      setDimensions({
-        width: videoWidth,
-        height: videoHeight,
-      });
-    }
-  }, [videoHeight, videoWidth]);
 
   // const updateDimensions = e => {
   //   const { videoWidth, videoHeight } = e.target;
@@ -36,24 +27,41 @@ const VideoModal = ({ handleClose, expanded, videoRef, videoId }) => {
   //   });
   // };
 
-  const aspect = dimensions.width / dimensions.height;
-  // console.log(aspect);
+  
+  const [videoLoaded, setVideoLoaded] = useState(false);
+
+  const thumbnailTransition = useTransition(videoLoaded, null, {
+    from: {
+      opacity: 1
+    },
+    enter: {
+      opacity: 1
+    },
+    leave: {
+      opacity: 0
+    }
+  })
+
+
   return (
     <>
-      <VideoBackdrop onClick={handleClose} className="home-video-backdrop" />
+      <BackgroundOverlay onClick={handleClose} className="home-video-backdrop" style={styles} />
       <StyledVideoModal
         className="video-modal"
         top={videoRef.current ? videoRef.current.offsetTop : 'inital'}
         viewwidth={viewport.width}
         viewHeight={viewport.height}
         aspect={aspect}
+        style={styles}
       >
+        {thumbnailTransition.map(({item, key, props}) => !item && <animated.img key={key} className="video-modal-thumbnail" src={thumbnail} alt={alt} style={{ ...styles, ...props }} />)}
         <ReactPlayer
           url={`https://vimeo.com/${videoId}`}
           controls
           width={viewport.width < 768 ? viewport.width : 640}
           height={viewport.width < 768 ? (viewport.width * 9) / 16 : 360}
           ref={videoRef}
+          onReady={() => setVideoLoaded(true)}
         />
         <CloseButton handleClick={handleClose} />
       </StyledVideoModal>
@@ -61,22 +69,7 @@ const VideoModal = ({ handleClose, expanded, videoRef, videoId }) => {
   );
 };
 
-const VideoBackdrop = styled.div`
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 31;
-  background: ${({ theme }) => rgba(theme.dark, 0.65)};
-  ${media.break`
-    display: block;
-  `}
-`;
-
-const StyledVideoModal = styled.div`
-  /* position: fixed; */
+const StyledVideoModal = styled(animated.div)`
   position: absolute;
   top: ${({ top }) => top}px;
   top: 0;
@@ -96,9 +89,6 @@ const StyledVideoModal = styled.div`
     }
   }
   ${media.break`
-    
-    /* width: 100%;
-    height: 100%; */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -106,21 +96,36 @@ const StyledVideoModal = styled.div`
     padding-bottom: 0;
     width: auto;
     height: auto;
-    /* ${({ viewwidth, aspect }) => `
-      width: ${viewwidth * 0.75}px;
-      height: ${(viewwidth * 0.75) / aspect}px;
-    `} */
       video {
         position: static;
-        /* width: 75%; */
-        /* height: auto;
-        object-fit: initial;
+      }
+      .video-modal-thumbnail {
         position: absolute;
-        top: 50%;
-        left: 75px;
-        transform: translateY(-50%); */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        &:focus {
+          outline: none;
+        }
       }
   `}
 `;
+
+
+// const VideoBackdrop = styled.div`
+//   display: none;
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   z-index: 31;
+//   background: ${({ theme }) => rgba(theme.dark, 0.65)};
+//   ${media.break`
+//     display: block;
+//   `}
+// `;
+
 
 export default VideoModal;
