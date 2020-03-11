@@ -5,6 +5,7 @@ import PageLayout from '../PageLayout';
 import Heading from '../Heading';
 import Content from '../Content';
 import ServicePagination from './ServicePagination';
+import ServiceCoverImage from './ServiceCoverImage';
 import ContactFormButton from '../ContactForm/ContactFormButton';
 import Topics from '../Topics/Topics';
 
@@ -14,7 +15,7 @@ import theme from '../theme'
 const ProjectCarousel = Loadable(() => import('../Projects/ProjectCarousel'));
 const ProjectMasonry = Loadable(() => import('../Projects/ProjectMasonry'));
 
-const SingleService = ({ title, _rawDescription, services, id, slug, projects, project }) => {
+const SingleService = ({ title, _rawDescription, services, id, slug, projects, project, forceCoverImage, mainImage }) => {
   const { viewport } = useSiteContext();
   const mobile = viewport.width < theme.sizes.break;
 
@@ -22,7 +23,6 @@ const SingleService = ({ title, _rawDescription, services, id, slug, projects, p
   const len = services.length;
   const next = (index + len - 1) % len;
   const prev = (index + 1) % len;
-
   return (
     <PageLayout className="single-service">
       <div className="main">
@@ -35,7 +35,14 @@ const SingleService = ({ title, _rawDescription, services, id, slug, projects, p
         </div>
       </div>
       <Topics />
-      {!mobile && <ProjectMasonry projects={projects} project={project} slug={slug} service />}
+      {forceCoverImage || !projects.length ? (
+        <ServiceCoverImage
+          className="service-cover-image"
+          image={mainImage}
+        />
+      ) : (
+        !mobile && <ProjectMasonry projects={projects} project={project} slug={slug} service />
+      )}
     </PageLayout>
   );
 };

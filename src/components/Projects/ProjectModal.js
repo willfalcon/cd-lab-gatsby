@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { animated } from 'react-spring';
 import Img from 'gatsby-image';
 import Helmet from 'react-helmet';
+import ReactPlayer from 'react-player';
 
 import BackgroundOverlay from '../BackgroundOverlay';
 import { StyledTitle } from './Project';
@@ -17,13 +18,14 @@ const ProjectModal = ({ viewport, item, styles, handleCloseProject, dimensions, 
 
   const [contentOpen, toggleContent] = useState(false);
 
-
+  console.log({dimensions})
   useEffect(() => {
     if (initialProject && initialProject.id === item.id) {
       toggleContent(true);
     }
   }, [initialProject, item.id]);
 
+  
   return (
     <React.Fragment>
       <BackgroundOverlay style={{ opacity: styles.opacity }}
@@ -35,13 +37,18 @@ const ProjectModal = ({ viewport, item, styles, handleCloseProject, dimensions, 
           opacity: 1,
         }}
         viewport={viewport}
+        videoThumb={item.videoThumb}
       >
-        <Img fluid={item.image.asset.fluid} />
+        {item.image && item.image.asset.extension === 'gif' && (
+          <img src={item.image.asset.fluid.src} sizes={item.image.asset.fluid.sizes} srcSet={item.image.asset.fluid.srcSet} />
+        )}
+        {item.image && item.image.asset.extension !== 'gif' && <Img fluid={item.image.asset.fluid} />}
+        {item.videoID && <ReactPlayer url={`https://vimeo.com/${item.videoID}`} controls width={dimensions.width} height={dimensions.height} />}
         <CloseButton
           handleClick={handleCloseProject}
           styles={{ opacity: styles.opacity }}
         />
-        <StyledTitle style={{ opacity: styles.title }}>
+        <StyledTitle style={{ opacity: styles.title }} video={item.videoID}>
           {item.title}
         </StyledTitle>
         {item._rawDescription && (
@@ -68,6 +75,12 @@ const ExpandedProject = styled(animated.div)`
   position: absolute;
   background: white;
   z-index: 8;
+  ${({ videoThumb }) => videoThumb && `
+    background-image: url(${videoThumb});
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  `}
 `;
 
 export default ProjectModal;

@@ -86,13 +86,13 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
      */
     const serviceGroup = group.filter(group => group.fieldValue === service.node.slug.current)[0];
     if (serviceGroup) {
-      serviceGroup.edges.map(edge => {
+      serviceGroup.edges.map(project => {
         createPage({
-          path: `/service/${service.node.slug.current}/${edge.node.slug.current}`,
+          path: `/service/${service.node.slug.current}/${project.node.slug.current}`,
           component: require.resolve('./src/templates/singleService.js'),
-          context: { slug: service.node.slug.current, project: edge.node.slug.current }
+          context: { slug: service.node.slug.current, project: project.node.slug.current }
         });
-        console.log(`Created single project page for ${edge.node.title} on top of service ${service.node.title}.`);
+        console.log(`Created single project page for ${project.node.title} on top of service ${service.node.title}.`);
       });
     }
   });

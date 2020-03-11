@@ -82,4 +82,19 @@ function useWindowSize() {
   return windowSize;
 }
 
-export { getViewport, getCurrentBreakpoint, unique, debounce, useWindowSize };
+async function getThumb(id) {
+  const thumbnailsRes = await fetch(
+    `https://api.vimeo.com/videos/${id}/pictures`,
+    {
+      headers: {
+        Authorization: 'bearer cabd18ff9e594c5abe72ddbc5878aed1',
+      },
+    }
+  );
+  const thumbnails = await thumbnailsRes.json();
+  return thumbnails.data[0].sizes[
+      thumbnails.data[0].sizes.findIndex(size => size.width === 640)
+    ].link;
+}
+
+export { getViewport, getCurrentBreakpoint, unique, debounce, useWindowSize, getThumb };
