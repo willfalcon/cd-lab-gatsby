@@ -1,9 +1,13 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Link } from 'gatsby';
 import Img from 'gatsby-image';
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import { useTransition, animated } from 'react-spring';
+
+import PlayButton from '../PlayButton';
+
+import { getThumb } from '../utils';
 
 const Project = ({
   project,
@@ -15,8 +19,10 @@ const Project = ({
   initialProject,
   serviceOrCollection,
   expandedProject,
+  video,
   workpage = false
 }) => {
+
   const { id } = project;
   const overlayTransition = useTransition(hoverState === id, null, {
     from: {
@@ -30,8 +36,25 @@ const Project = ({
     },
   });
 
-  
+    
   const ref = useRef(null);
+  
+  const [videoThumb, setVideoThumb] = useState(null);
+  const [videoAspect, setVideoAspect] = useState(null);
+
+  useEffect(() => {
+    async function getThumbnail() {
+      const thumb = await getThumb(video);
+      setVideoThumb(thumb);
+      const tempImg = new Image();
+      tempImg.src = thumb;
+      setVideoAspect(tempImg.width/tempImg.height);
+    }
+    if (video) {
+      getThumbnail();
+    }
+  }, [video]);
+
 
   useEffect(() => {
     if (initialProject && initialProject.id === id) {
@@ -40,9 +63,12 @@ const Project = ({
         location,
         ...project,
         image,
+        videoAspect: video ? videoAspect ? videoAspect : 16/9 : false,
+        video,
+        videoThumb
       });
     }
-  }, []);
+  }, [videoThumb]);
 
   return (
     <StyledProject
@@ -60,6 +86,9 @@ const Project = ({
                 location,
                 ...project,
                 image,
+                video,
+                videoAspect: video ? videoAspect ? videoAspect : 16/9 : false,
+                videoThumb
               });
               if(!expandedProject) {
                 window.history.pushState({}, '', `/${serviceOrCollection}/${slug}/${project.slug.current}`);
@@ -67,7 +96,14 @@ const Project = ({
             }
       }
     >
-      <ProjectImage fluid={image.asset.fluid} />
+      {videoThumb && (<>
+        <img src={videoThumb} />
+        <PlayButton as='div' />
+      </>)}
+      {image && image.asset.extension === 'gif' && (
+        <img src={image.asset.fluid.src} sizes={image.asset.fluid.sizes} srcSet={image.asset.fluid.srcSet} />
+      )}
+      {image && image.asset.extension !== 'gif' && (<ProjectImage fluid={image.asset.fluid} />)}
       {overlayTransition.map(({ item, key, props }) =>
         item ? (
           <StyledTitle className="project__title" key={key} style={props}>
@@ -101,6 +137,7 @@ const StyledTitle = styled(animated.h3)`
   position: absolute;
   width: 100%;
   bottom: 0;
+  bottom: ${({ video }) => video ? '-30px' : 0};
   left: 0;
   background: ${({ theme }) => rgba(theme.orange, 0.75)};
   color: ${({ theme }) => theme.offWhite};

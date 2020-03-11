@@ -31,6 +31,13 @@ export const SingleServiceQuery = graphql`
         title
       }
       forceCoverImage
+      mainImage {
+        asset {
+          fluid(maxWidth: 1000) {
+            ...GatsbySanityImageFluid
+          }
+        }
+      }
       title
     }
     allSanityProject(
@@ -47,6 +54,7 @@ export const SingleServiceQuery = graphql`
           images {
             _key
             asset {
+              extension
               fluid(maxWidth: 1000) {
                 ...GatsbySanityImageFluid
               }

@@ -16,18 +16,21 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
     transitionDuration: 100,
   };
 
-  const [hoverState, setHoverState] = useState(projects[0].images[0]._key);
+
+  const firstImage = projects[0] 
+    ? projects[0].images.length 
+      ? projects[0].images[0]._key 
+      : {_key: null} 
+    : {_key: null};
+  const [hoverState, setHoverState] = useState(firstImage._key);
 
   const containerRef = useRef(null);
 
   const { viewport } = useSiteContext();
 
   const initialProject = projects[projects.findIndex(proj => proj.slug.current === project)];
-  // console.log({initialProject})
 
   const [expandedProject, setExpandedProject] = useState(null);
-
-  // console.log(expandedProject);
 
   const [exitSizes, setExitSizes] = useState({
     exitWidth: 0,
@@ -37,7 +40,7 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
   });
 
   const dimensions = expandedProject
-    ? getDimensions(expandedProject.image.asset.fluid.aspectRatio, viewport)
+    ? getDimensions(expandedProject.videoAspect ? expandedProject.videoAspect : expandedProject.image.asset.fluid.aspectRatio, viewport)
     : { width: 0, height: 0 };
 
   useEffect(() => {
@@ -60,6 +63,8 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
     window.history.pushState({}, '', `/${serviceOrCollection}/${slug}`);
   }
 
+  console.log({projects})
+
   return (
     <StyledProjectMasonry
       className="masonry"
@@ -68,8 +73,8 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
     >
       <Masonry options={masonryOptions}>
         {projects.map((project, index) => {
-          return workpage ? (
-            <Project
+          if (workpage) {
+            return <Project
               project={project}
               key={project.id}
               id={project.id}
@@ -80,8 +85,29 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
               slug={project.slug}
               workpage
             />
-          ) : (
-            project.images.map((image, index) => {
+          }
+          const {images, videoID} = project;
+          
+          if (videoID) {
+            return (
+              <Project
+                project={project}
+                key={project.id}
+                id={project.id}
+                video={videoID}
+                hoverState={hoverState}
+                setHoverState={setHoverState}
+                index={index}
+                setExpandedProject={setExpandedProject}
+                initialProject={initialProject}
+                serviceOrCollection={serviceOrCollection}
+                slug={slug}
+                expandedProject={expandedProject}
+              />
+            )
+          }
+          if (images.length) {
+            return images.map((image, index) => {
               return (
                 <Project
                   project={project}
@@ -99,7 +125,8 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
                 />
               );
             })
-          );
+          }
+          
         })}
       </Masonry>
       <DownArrow containerRef={containerRef} viewport={viewport} />

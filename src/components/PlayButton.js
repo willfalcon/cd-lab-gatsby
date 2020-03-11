@@ -6,12 +6,13 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
 import theme from './theme';
 
-const PlayButton = ({ handleClick, opacity = 1 }) => {
+const PlayButton = ({ handleClick, opacity = 1, as = 'button' }) => {
   return (
     <StyledPlayButton
       className="play-icon-button"
       onClick={handleClick}
       opacity={opacity}
+      as={as}
     >
       <FontAwesomeIcon icon={faPlay} color={theme.offWhite} size="4x" />
     </StyledPlayButton>
