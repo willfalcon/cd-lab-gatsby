@@ -43,9 +43,30 @@ const HomeVideo = ({ thumbnail, homeVideoId, makeReady }) => {
   const width = viewport.width < 768 ? viewport.width : 640;
   const height = viewport.width < 768 ? (viewport.width * 9) / 16 : 360;
 
-  const mobile = viewport.width > theme.sizes.break;
+  const mobile = viewport.width <= theme.sizes.break;
 
   const videoTransition = useTransition(expanded, null, mobile ? {
+    from: {
+      opacity: 0,
+      width: `${placeholderPos.width}px`,
+      height: `${placeholderPos.height}px`,
+      top: `${placeholderPos.top}px`,
+      left: `${placeholderPos.left}px`,
+    },
+    enter: {
+      opacity: 1,
+      width: `${placeholderPos.width}px`,
+      height: `${placeholderPos.height}px`,
+      top: `${placeholderPos.top}px`,
+      left: `${placeholderPos.left}px`,
+    },
+    leave: { opacity: 0,
+      width: `${placeholderPos.width}px`,
+      height: `${placeholderPos.height}px`,
+      top: `${placeholderPos.top}px`,
+      left: `${placeholderPos.left}px`,
+    }
+  } : {
     from: {
       opacity: 0,
       width: `${placeholderPos.width}px`,
@@ -69,7 +90,7 @@ const HomeVideo = ({ thumbnail, homeVideoId, makeReady }) => {
       top: `${placeholderPos.top}px`,
       left: `${placeholderPos.left}px`,
     }
-  } : {});
+  });
 
   useEffect(() => {
     if (videoWidth > 0) {

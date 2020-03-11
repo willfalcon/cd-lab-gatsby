@@ -44,16 +44,16 @@ const VideoModal = ({ handleClose, expanded, videoRef, videoId, thumbnail,alt, a
         aspect={aspect}
         style={styles}
       >
-        {thumbnailTransition.map(({item, key, props}) => !item && <animated.img key={key} className="video-modal-thumbnail" src={thumbnail} alt={alt} style={{ ...props }} />)}
+        {thumbnailTransition.map(({item, key, props}) => !item && !mobile && <animated.img key={key} className="video-modal-thumbnail" src={thumbnail} alt={alt} style={{ ...props }} />)}
         <ReactPlayer
           url={`https://vimeo.com/${videoId}`}
           controls
           width={viewport.width < 768 ? viewport.width : 640}
           height={viewport.width < 768 ? (viewport.width * 9) / 16 : 360}
           ref={videoRef}
-          onReady={(e) => {
+          onReady={() => {
             setVideoLoaded(true);
-            if (!mobile) setPlaying(true);
+            setPlaying(true);
           }}
           playing={playing}
         />
