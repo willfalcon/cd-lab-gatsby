@@ -10,23 +10,11 @@ import CloseButton from '../CloseButton';
 import { media } from '../theme';
 import BackgroundOverlay from '../BackgroundOverlay';
 
-const VideoModal = ({ handleClose, expanded, videoRef, videoId, thumbnail,alt, aspect, styles}) => {
-  // const ref = useRef(null);
+const VideoModal = ({ handleClose, expanded, videoRef, videoId, thumbnail,alt, aspect, styles, mobile }) => {
+  
   const { viewport } = useSiteContext();
-  // const width = roundToNearest(viewport.width * 0.8, 200);
 
-
-  // console.dir(ref.current);
-
-
-  // const updateDimensions = e => {
-  //   const { videoWidth, videoHeight } = e.target;
-  //   setDimensions({
-  //     width: videoWidth,
-  //     height: videoHeight,
-  //   });
-  // };
-
+  console.log(mobile);
   
   const [videoLoaded, setVideoLoaded] = useState(false);
 
@@ -40,12 +28,14 @@ const VideoModal = ({ handleClose, expanded, videoRef, videoId, thumbnail,alt, a
     leave: {
       opacity: 0
     }
-  })
+  });
+
+  const [playing, setPlaying] = useState(false);
 
 
   return (
     <>
-      <BackgroundOverlay onClick={handleClose} className="home-video-backdrop" style={styles} />
+      <BackgroundOverlay onClick={handleClose} className="home-video-backdrop" style={{ opacity: styles.opacity }} />
       <StyledVideoModal
         className="video-modal"
         top={videoRef.current ? videoRef.current.offsetTop : 'inital'}
@@ -54,14 +44,18 @@ const VideoModal = ({ handleClose, expanded, videoRef, videoId, thumbnail,alt, a
         aspect={aspect}
         style={styles}
       >
-        {thumbnailTransition.map(({item, key, props}) => !item && <animated.img key={key} className="video-modal-thumbnail" src={thumbnail} alt={alt} style={{ ...styles, ...props }} />)}
+        {thumbnailTransition.map(({item, key, props}) => !item && <animated.img key={key} className="video-modal-thumbnail" src={thumbnail} alt={alt} style={{ ...props }} />)}
         <ReactPlayer
           url={`https://vimeo.com/${videoId}`}
           controls
           width={viewport.width < 768 ? viewport.width : 640}
           height={viewport.width < 768 ? (viewport.width * 9) / 16 : 360}
           ref={videoRef}
-          onReady={() => setVideoLoaded(true)}
+          onReady={(e) => {
+            setVideoLoaded(true);
+            if (!mobile) setPlaying(true);
+          }}
+          playing={playing}
         />
         <CloseButton handleClick={handleClose} />
       </StyledVideoModal>
@@ -91,7 +85,7 @@ const StyledVideoModal = styled(animated.div)`
   ${media.break`
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    /* transform: translate(-50%, -50%); */
     z-index: 35;
     padding-bottom: 0;
     width: auto;

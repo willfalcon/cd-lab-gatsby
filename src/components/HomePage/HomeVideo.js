@@ -5,7 +5,7 @@ import { useTransition } from 'react-spring';
 import PlayButton from '../PlayButton';
 import VideoModal from './VideoModal';
 
-import { media } from '../theme';
+import theme, { media } from '../theme';
 import useSiteContext from '../SiteContext';
 
 const HomeVideo = ({ thumbnail, homeVideoId, makeReady }) => {
@@ -14,7 +14,22 @@ const HomeVideo = ({ thumbnail, homeVideoId, makeReady }) => {
   const { viewport } = useSiteContext();
 
   const placeholderRef = useRef(null);
-  console.log(placeholderRef);
+
+  const [placeholderPos, setPlaceholderPos] = useState({
+    width: 0, height: 0, top: 0, left: 0,
+  });
+
+  useEffect(() => {
+    if (placeholderRef.current) {
+      setPlaceholderPos({
+        width: placeholderRef.current.offsetWidth,
+        height: placeholderRef.current.offsetHeight,
+        top: placeholderRef.current.offsetTop,
+        left: placeholderRef.current.offsetLeft,
+      })
+    }
+  }, [placeholderRef.current]);
+
 
   const alt = 'Creative Distillery Video Reel';
 
@@ -28,31 +43,33 @@ const HomeVideo = ({ thumbnail, homeVideoId, makeReady }) => {
   const width = viewport.width < 768 ? viewport.width : 640;
   const height = viewport.width < 768 ? (viewport.width * 9) / 16 : 360;
 
-  const videoTransition = useTransition(expanded, null, {
+  const mobile = viewport.width > theme.sizes.break;
+
+  const videoTransition = useTransition(expanded, null, mobile ? {
     from: {
       opacity: 0,
-      width: `${placeholderRef.current ? placeholderRef.current.offsetWidth: 0}px`,
-      height: `${placeholderRef.current ? placeholderRef.current.offsetHeight: 0}px`,
-      top: `${placeholderRef.current ? placeholderRef.current.offsetTop: 0}px`,
-      left: `${placeholderRef.current ? placeholderRef.current.offsetLeft: 0}px`,
+      width: `${placeholderPos.width}px`,
+      height: `${placeholderPos.height}px`,
+      top: `${placeholderPos.top}px`,
+      left: `${placeholderPos.left}px`,
     },
     enter: {
       opacity: 1,
-      width: `${viewport.width}px`,
-      height: `${viewport.height}px`,
-      // top: `${(viewport.height / 2) - (height / 2)}px`,
-      top: `${0}px`,
-      // left: `${(viewport.width / 2) - (width / 2)}px`,
-      left: `${0}px`,
+      width: `${width}px`,
+      height: `${height}px`,
+      top: `${(viewport.height / 2) - (height / 2)}px`,
+      // top: `${0}px`,
+      left: `${(viewport.width / 2) - (width / 2)}px`,
+      // left: `${0}px`,
     },
     leave: {
       opacity: 0,
-      width: `${placeholderRef.current ? placeholderRef.current.offsetWidth: 0}px`,
-      height: `${placeholderRef.current ? placeholderRef.current.offsetHeight: 0}px`,
-      top: `${placeholderRef.current ? placeholderRef.current.offsetTop: 0}px`,
-      left: `${placeholderRef.current ? placeholderRef.current.offsetLeft: 0}px`,
+      width: `${placeholderPos.width}px`,
+      height: `${placeholderPos.height}px`,
+      top: `${placeholderPos.top}px`,
+      left: `${placeholderPos.left}px`,
     }
-  });
+  } : {});
 
   useEffect(() => {
     if (videoWidth > 0) {
@@ -93,6 +110,7 @@ const HomeVideo = ({ thumbnail, homeVideoId, makeReady }) => {
           thumbnail={thumbnail}
           aspect={aspect}
           alt={alt}
+          mobile={mobile}
         />
       ))}
     </>
