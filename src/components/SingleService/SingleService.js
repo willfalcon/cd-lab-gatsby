@@ -23,6 +23,8 @@ const SingleService = ({ title, _rawDescription, services, id, slug, projects, p
   const len = services.length;
   const next = (index + len - 1) % len;
   const prev = (index + 1) % len;
+
+  console.log(projects.length);
   return (
     <PageLayout className="single-service">
       <div className="main">
@@ -35,7 +37,7 @@ const SingleService = ({ title, _rawDescription, services, id, slug, projects, p
         </div>
       </div>
       <Topics />
-      {forceCoverImage || !projects.length ? (
+      {(forceCoverImage || !projects.length) && mainImage ? (
         <ServiceCoverImage
           className="service-cover-image"
           image={mainImage}

@@ -5,7 +5,6 @@ import Wrapper from '../components/Wrapper';
 import AboutPage from '../components/AboutPage/AboutPage';
 
 const index = ({ data }) => {
-  // console.log(data);
   return (
     <Wrapper seo={data.sanityAboutPage.seoSettings} pageTitle={data.sanityAboutPage.title}>
       <AboutPage
