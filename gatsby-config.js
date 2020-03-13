@@ -61,5 +61,11 @@ module.exports = {
         // cookieDomain: "example.com",
       },
     },
+    {
+      resolve: `gatsby-plugin-facebook-pixel`,
+      options: {
+        pixelId: '1493901710913628',
+      },
+    },
   ],
 };
