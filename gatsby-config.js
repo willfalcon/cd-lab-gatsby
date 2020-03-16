@@ -2,6 +2,7 @@ module.exports = {
   siteMetadata: {
     title: `Creative Distillery`,
     description: `Creative Distillery works with businesses, nonprofits, and government agencies to create projects that achieve your advertising and communications goals.`,
+    siteUrl: `https://www.creativedistillery.com`
   },
   plugins: [
     {
@@ -67,5 +68,6 @@ module.exports = {
         pixelId: '1493901710913628',
       },
     },
+    `gatsby-plugin-sitemap`
   ],
 };
