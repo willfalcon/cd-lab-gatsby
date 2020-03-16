@@ -19,7 +19,7 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
   const firstImage = workpage ? { _key: null} : projects[0] 
     ? projects[0].images.length 
       ? projects[0].images[0]._key 
-      : {_key: null} 
+      : {_key: null}
     : {_key: null};
 
   const [hoverState, setHoverState] = useState(firstImage._key);
@@ -62,8 +62,6 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
     setExpandedProject(null);
     window.history.pushState({}, '', `/${serviceOrCollection}/${slug}`);
   }
-
-  console.log({projects})
 
   return (
     <StyledProjectMasonry
