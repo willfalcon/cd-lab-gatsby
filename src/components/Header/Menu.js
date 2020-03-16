@@ -4,8 +4,7 @@ import { Link } from 'gatsby';
 import useSiteContext from '../SiteContext';
 
 const Menu = () => {
-  const { topics, setExpandedTopic, toggleMenu } = useSiteContext();
-  console.log(topics);
+  const { topics, setExpandedTopic, toggleMenu, setTopicToggledFromMenu } = useSiteContext();
   const firstTopic = topics[0].node.id;
   return (
     <ul className="main-menu">
@@ -16,6 +15,7 @@ const Menu = () => {
         <button
           onClick={() => {
             setExpandedTopic(firstTopic);
+            setTopicToggledFromMenu(true);
             toggleMenu(false);
           }}
         >

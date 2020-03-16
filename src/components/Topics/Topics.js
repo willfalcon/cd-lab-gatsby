@@ -16,9 +16,11 @@ const Topics = ({ home = false, error = false }) => {
     topics,
     setExpandedTopic,
     expandedTopic,
+    topicToggledFromMenu,
+    setTopicToggledFromMenu
   } = useSiteContext();
 
-  const mobile = viewport.width <= theme.sizes.break;
+  const mobile = viewport.width < theme.sizes.break;
 
   const expandedTopicTransition = useTransition(expandedTopic, item => item, {
     from: {
@@ -28,12 +30,12 @@ const Topics = ({ home = false, error = false }) => {
     },
     enter: {
       opacity: 1,
-      position: mobile ? 'relative' : 'absolute',
+      position: mobile && !topicToggledFromMenu ? 'relative' : 'absolute',
     },
     leave: {
       opacity: 0,
       zIndex: mobile ? 0 : 4,
-      position: mobile ? 'relative' : 'absolute',
+      position: mobile && !topicToggledFromMenu ? 'relative' : 'absolute',
     },
   });
 
@@ -42,8 +44,12 @@ const Topics = ({ home = false, error = false }) => {
   );
 
   const [topicsOpen, setTopicsOpen] = useState(home || error);
+  const [scrollY, setScrollY] = useState(false);
 
   useEffect(() => {
+    if (topicToggledFromMenu) {
+      setScrollY(window.scrollY);
+    }
     setTopicsOpen(home || error || expandedTopic ? true : false);
   }, [expandedTopic]);
 
@@ -72,6 +78,8 @@ const Topics = ({ home = false, error = false }) => {
               topicIndex={index}
               styles={allProps}
               error={error}
+              toggledFromMenu={topicToggledFromMenu}
+              scrollY={scrollY}
             />
           ))}
           {expandedTopicTransition.map(({ item, key, props }) => {
@@ -92,6 +100,8 @@ const Topics = ({ home = false, error = false }) => {
                     expandedTopic={expandedTopic}
                     style={{ ...allProps, ...props }}
                     setExpandedTopic={setExpandedTopic}
+                    toggledFromMenu={topicToggledFromMenu}
+                    scrollY={scrollY}
                   />
                 </React.Fragment>
               )

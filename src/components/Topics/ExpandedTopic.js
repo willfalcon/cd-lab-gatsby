@@ -17,8 +17,10 @@ const ExpandedTopic = ({
   setExpandedTopic,
   style,
   className,
+  toggledFromMenu,
+  scrollY
 }) => {
-  const { viewport } = useSiteContext();
+  const { viewport, setTopicToggledFromMenu } = useSiteContext();
 
   const [topicProps, setTopicProps] = useState({
     title: '',
@@ -37,8 +39,13 @@ const ExpandedTopic = ({
       style={style}
       className={classNames('expanded-topic', className)}
       viewport={viewport}
+      toggledFromMenu={toggledFromMenu}
+      scrollY={scrollY}
     >
-      <CloseButton handleClick={() => setExpandedTopic(null)} />
+      <CloseButton handleClick={() => {
+        setExpandedTopic(null);
+        setTopicToggledFromMenu(false);
+      }} />
       <Heading className="expanded-topic-title" h2>
         {topicProps.title}
       </Heading>
@@ -61,6 +68,11 @@ const StyledExpandedTopic = styled(animated.div)`
     text-align: center;
     font-size: 3.6rem;
   }
+  ${({ toggledFromMenu, scrollY, viewport }) => toggledFromMenu && `
+    position: absolute;
+    top: ${viewport.width * .3333 + scrollY}px;
+    left: 0px;
+  `}
   ${media.break`
     width: calc(100% - 150px);
     max-width: ${({ theme }) => theme.topics.expandedWidth}px;

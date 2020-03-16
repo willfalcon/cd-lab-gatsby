@@ -21,7 +21,10 @@ const Topic = ({
   error = false,
   home = false,
   styles,
+  toggledFromMenu,
+  scrollY
 }) => {
+
   const { viewport } = useSiteContext();
 
   const calculatedStyles =
@@ -34,7 +37,11 @@ const Topic = ({
   );
 
   return (
-    <StyledTopic style={{ ...styleProps, ...styles }} className="topic">
+    <StyledTopic style={{ ...styleProps, ...styles }} className="topic"
+      toggledFromMenu={toggledFromMenu}
+      scrollY={scrollY}
+      topicIndex={topicIndex}
+    >
       <TopicImage
         className="topic__image"
         fixed={image.asset.fixed}
@@ -56,6 +63,14 @@ const StyledTopic = styled(animated.div)`
   position: relative;
   overflow: hidden;
   background-color: ${({ theme }) => theme.orange};
+
+  ${({ toggledFromMenu, scrollY, topicIndex }) => toggledFromMenu && `
+    position: absolute;
+    top: ${scrollY}px;
+    left: ${ topicIndex * 33.33}%;
+    z-index: 6;
+  `}
+
   .label {
     color: ${({ theme }) => theme.offWhite};
     z-index: 1;
@@ -77,11 +92,6 @@ const StyledTopic = styled(animated.div)`
 const TopicImage = styled(Img)`
   mix-blend-mode: multiply;
   opacity: 0.45;
-  /* position: absolute; */
-  /* width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0; */
   width: 100% !important;
   height: 100% !important;
   object-fit: cover;

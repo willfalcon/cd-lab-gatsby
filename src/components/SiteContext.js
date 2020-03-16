@@ -27,6 +27,7 @@ const SiteContextProvider = ({ children, home }) => {
   }, []);
 
   const [expandedTopic, setExpandedTopic] = useState(null);
+  const [topicToggledFromMenu, setTopicToggledFromMenu] = useState(false);
 
   const {
     sanitySiteSettings,
@@ -119,6 +120,8 @@ const SiteContextProvider = ({ children, home }) => {
         topics,
         expandedTopic,
         setExpandedTopic,
+        topicToggledFromMenu,
+        setTopicToggledFromMenu,
       }}
     >
       {children}
