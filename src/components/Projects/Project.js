@@ -31,19 +31,22 @@ const Project = ({
   const [videoThumb, setVideoThumb] = useState(null);
   const [videoAspect, setVideoAspect] = useState(null);
   const [height, setHeight] = useState(0);
+  const [titleHeight, setTitleHeight] = useState(0);
 
   useEffect(() => {
     if (ref.current) {
       setHeight(ref.current.offsetHeight);
+      const title = ref.current.querySelector('h3');
+      setTitleHeight(title.offsetHeight);
     }
-  });
+  }, [ref.current]);
 
   const hovering = hoverState === id;
 
   const titleSpring = useSpring({
-    height: hovering ? `50px` : `${height}px`,
-    background: hovering ? theme.orange : rgba('white', .6),
-    color: hovering ? theme.offWhite : theme.orange
+    height: hovering ? `${titleHeight + 10}px` : `${height}px`,
+    background: hovering ? theme.orange : rgba('white', .65),
+    color: hovering ? theme.offWhite : theme.dark,
   });
 
   console.log({height})
@@ -112,7 +115,7 @@ const Project = ({
       <StyledTitle className="project__title"
        style={titleSpring}
        >
-        {project.title}
+        <h3>{project.title}</h3>
       </StyledTitle>
     </StyledProject>
   );
@@ -134,11 +137,10 @@ const ProjectImage = styled(Img)`
   width: 100% !important;
 `;
 
-const StyledTitle = styled(animated.h3)`
+const StyledTitle = styled(animated.div)`
   position: absolute;
   width: 100%;
-  bottom: 0;
-  bottom: ${({ video }) => video ? '-30px' : 0};
+  bottom: ${({ modal = false }) => modal ? '-30px' : 0};
   left: 0;
   background: ${({ theme }) => rgba(theme.orange, 0.75)};
   color: ${({ theme }) => theme.offWhite};
