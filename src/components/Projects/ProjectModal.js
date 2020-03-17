@@ -48,7 +48,7 @@ const ProjectModal = ({ viewport, item, styles, handleCloseProject, dimensions, 
           handleClick={handleCloseProject}
           styles={{ opacity: styles.opacity }}
         />
-        <StyledTitle style={{ opacity: styles.title }} video={item.videoID}>
+        <StyledTitle style={{ opacity: styles.title }} modal >
           {item.title}
         </StyledTitle>
         {item._rawDescription && (

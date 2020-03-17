@@ -24,7 +24,6 @@ const SingleService = ({ title, _rawDescription, services, id, slug, projects, p
   const next = (index + len - 1) % len;
   const prev = (index + 1) % len;
 
-  console.log(projects.length);
   return (
     <PageLayout className="single-service">
       <div className="main">

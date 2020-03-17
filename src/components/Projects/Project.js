@@ -3,11 +3,12 @@ import { Link } from 'gatsby';
 import Img from 'gatsby-image';
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { useTransition, animated } from 'react-spring';
+import { useSpring, animated, interpolate } from 'react-spring';
 
 import PlayButton from '../PlayButton';
 
 import { getThumb } from '../utils';
+import theme from '../theme';
 
 const Project = ({
   project,
@@ -24,23 +25,31 @@ const Project = ({
 }) => {
 
   const { id } = project;
-  const overlayTransition = useTransition(hoverState === id, null, {
-    from: {
-      opacity: 0,
-    },
-    enter: {
-      opacity: 1,
-    },
-    leave: {
-      opacity: 0,
-    },
-  });
 
-    
   const ref = useRef(null);
   
   const [videoThumb, setVideoThumb] = useState(null);
   const [videoAspect, setVideoAspect] = useState(null);
+  const [height, setHeight] = useState(0);
+  const [titleHeight, setTitleHeight] = useState(0);
+
+  useEffect(() => {
+    if (ref.current) {
+      setHeight(ref.current.offsetHeight);
+      const title = ref.current.querySelector('h3');
+      setTitleHeight(title.offsetHeight);
+    }
+  }, [ref.current, hoverState]);
+
+  const hovering = hoverState === id;
+
+  const titleSpring = useSpring({
+    height: hovering ? `${titleHeight + 10}px` : `${height}px`,
+    background: hovering ? theme.orange : rgba('white', .65),
+    o: hovering ? 1 : 0,
+  });
+
+  console.log({titleHeight})
 
   useEffect(() => {
     async function getThumbnail() {
@@ -54,7 +63,6 @@ const Project = ({
       getThumbnail();
     }
   }, [video]);
-
 
   useEffect(() => {
     if (initialProject && initialProject.id === id) {
@@ -104,15 +112,9 @@ const Project = ({
         <img src={image.asset.fluid.src} sizes={image.asset.fluid.sizes} srcSet={image.asset.fluid.srcSet} />
       )}
       {image && image.asset.extension !== 'gif' && (<ProjectImage fluid={image.asset.fluid} />)}
-      {overlayTransition.map(({ item, key, props }) =>
-        item ? (
-          <StyledTitle className="project__title" key={key} style={props}>
-            {project.title}
-          </StyledTitle>
-        ) : (
-          <Overlay key={key} style={props} />
-        )
-      )}
+      <StyledTitle className="project__title" style={titleSpring}>
+        <animated.h3 style={{ opacity: titleSpring.o}} >{project.title}</animated.h3>
+      </StyledTitle>
     </StyledProject>
   );
 };
@@ -133,16 +135,19 @@ const ProjectImage = styled(Img)`
   width: 100% !important;
 `;
 
-const StyledTitle = styled(animated.h3)`
+const StyledTitle = styled(animated.div)`
   position: absolute;
   width: 100%;
-  bottom: 0;
-  bottom: ${({ video }) => video ? '-30px' : 0};
+  bottom: ${({ modal = false }) => modal ? '-30px' : 0};
   left: 0;
   background: ${({ theme }) => rgba(theme.orange, 0.75)};
   color: ${({ theme }) => theme.offWhite};
   margin-bottom: 0;
   text-align: center;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  justify-content: center;
 `;
 
 const overlayStyles = css`
