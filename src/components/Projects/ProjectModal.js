@@ -6,7 +6,7 @@ import Helmet from 'react-helmet';
 import ReactPlayer from 'react-player';
 
 import BackgroundOverlay from '../BackgroundOverlay';
-import { StyledTitle } from './Project';
+import ProjectTitle from './ProjectTitle';
 import CloseButton from '../CloseButton';
 import ProjectContent from './ProjectContent';
 
@@ -18,7 +18,6 @@ const ProjectModal = ({ viewport, item, styles, handleCloseProject, dimensions, 
 
   const [contentOpen, toggleContent] = useState(false);
 
-  console.log({dimensions})
   useEffect(() => {
     if (initialProject && initialProject.id === item.id) {
       toggleContent(true);
@@ -48,9 +47,9 @@ const ProjectModal = ({ viewport, item, styles, handleCloseProject, dimensions, 
           handleClick={handleCloseProject}
           styles={{ opacity: styles.opacity }}
         />
-        <StyledTitle style={{ opacity: styles.title }} modal >
+        <ProjectTitle style={{ opacity: styles.title }} modal>
           {item.title}
-        </StyledTitle>
+        </ProjectTitle>
         {item._rawDescription && (
           <ProjectContent
             content={item._rawDescription}

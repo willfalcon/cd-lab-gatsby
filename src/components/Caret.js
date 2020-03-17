@@ -1,32 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
+import { animated } from 'react-spring';
 import classNames from 'classnames';
 
-const Caret = ({ left = false, right = true, className }) => {
+import theme from './theme';
+
+const Caret = ({ left = false, right = true, className, styles, color = theme.orange }) => {
   if (left) {
     right = false;
   }
   return (
-    <StyledCaret className={classNames('caret', className, { left, right })}>
+    <StyledCaret className={classNames('caret', className, { left, right })} color={color} style={styles}>
       <span />
       <span />
     </StyledCaret>
   );
 };
 
-const StyledCaret = styled.div`
+const StyledCaret = styled(animated.div)`
   position: relative;
   width: 20px;
   height: 20px;
   display: block;
   span {
     position: absolute;
-    background: ${({ theme }) => theme.orange};
+    background: ${({ color }) => color};
     height: 2px;
     width: 50%;
     top: 50%;
     left: 0;
-    /* transform: translate(-50%, -50%); */
     transform-origin: left;
     border-radius: 1px;
     &:nth-child(1) {
