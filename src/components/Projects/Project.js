@@ -3,7 +3,7 @@ import { Link } from 'gatsby';
 import Img from 'gatsby-image';
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { useSpring, animated } from 'react-spring';
+import { useSpring, animated, interpolate } from 'react-spring';
 
 import PlayButton from '../PlayButton';
 
@@ -39,17 +39,17 @@ const Project = ({
       const title = ref.current.querySelector('h3');
       setTitleHeight(title.offsetHeight);
     }
-  }, [ref.current]);
+  }, [ref.current, hoverState]);
 
   const hovering = hoverState === id;
 
   const titleSpring = useSpring({
     height: hovering ? `${titleHeight + 10}px` : `${height}px`,
     background: hovering ? theme.orange : rgba('white', .65),
-    color: hovering ? theme.offWhite : theme.dark,
+    o: hovering ? 1 : 0,
   });
 
-  console.log({height})
+  console.log({titleHeight})
 
   useEffect(() => {
     async function getThumbnail() {
@@ -112,10 +112,8 @@ const Project = ({
         <img src={image.asset.fluid.src} sizes={image.asset.fluid.sizes} srcSet={image.asset.fluid.srcSet} />
       )}
       {image && image.asset.extension !== 'gif' && (<ProjectImage fluid={image.asset.fluid} />)}
-      <StyledTitle className="project__title"
-       style={titleSpring}
-       >
-        <h3>{project.title}</h3>
+      <StyledTitle className="project__title" style={titleSpring}>
+        <animated.h3 style={{ opacity: titleSpring.o}} >{project.title}</animated.h3>
       </StyledTitle>
     </StyledProject>
   );
