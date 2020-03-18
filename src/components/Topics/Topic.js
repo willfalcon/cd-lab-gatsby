@@ -64,7 +64,7 @@ const StyledTopic = styled(animated.div)`
   overflow: hidden;
   background-color: ${({ theme }) => theme.orange};
 
-  ${({ toggledFromMenu, scrollY, topicIndex }) => toggledFromMenu && `
+  ${({ toggledFromMenu, scrollY, topicIndex }) => toggledFromMenu && scrollY !== false && `
     position: absolute;
     top: ${scrollY}px;
     left: ${ topicIndex * 33.33}%;

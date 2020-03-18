@@ -47,7 +47,7 @@ const Topics = ({ home = false, error = false }) => {
   const [scrollY, setScrollY] = useState(false);
 
   useEffect(() => {
-    if (topicToggledFromMenu) {
+    if (topicToggledFromMenu && mobile) {
       setScrollY(window.scrollY);
     }
     setTopicsOpen(home || error || expandedTopic ? true : false);
