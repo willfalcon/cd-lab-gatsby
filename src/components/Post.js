@@ -9,7 +9,7 @@ import Topics from './Topics/Topics';
 
 const Post = ({ id, _rawBody, mainImage, title, author, publishedAt }) => {
   return (
-    <Article>
+    <Article className="single-post">
       {mainImage && (
         <Img
           fluid={mainImage.asset.fluid}
