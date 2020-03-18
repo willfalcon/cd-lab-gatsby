@@ -106,14 +106,14 @@ const Project = ({
     >
       {videoThumb && (
         <>
-          <img src={videoThumb} />
+          <img src={videoThumb} alt={project.title} />
           <PlayButton as='div' />
         </>
       )}
       {image && image.asset.extension === 'gif' && (
-        <img src={image.asset.fluid.src} sizes={image.asset.fluid.sizes} srcSet={image.asset.fluid.srcSet} />
+        <img src={image.asset.fluid.src} sizes={image.asset.fluid.sizes} srcSet={image.asset.fluid.srcSet} alt={project.title} />
       )}
-      {image && image.asset.extension !== 'gif' && (<ProjectImage fluid={image.asset.fluid} />)}
+      {image && image.asset.extension !== 'gif' && (<ProjectImage fluid={image.asset.fluid} alt={project.title} />)}
       <ProjectTitle 
         className="project__title" 
         styles={titleSpring} 

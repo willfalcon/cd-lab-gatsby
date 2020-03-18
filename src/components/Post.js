@@ -6,6 +6,7 @@ import Heading from './Heading';
 import Content from './Content';
 import Topics from './Topics/Topics';
 
+import { media } from './theme';
 
 const Post = ({ id, _rawBody, mainImage, title, author, publishedAt }) => {
   return (
@@ -14,6 +15,7 @@ const Post = ({ id, _rawBody, mainImage, title, author, publishedAt }) => {
         <Img
           fluid={mainImage.asset.fluid}
           alt={mainImage.alt ? mainImage.alt : title}
+          className="single-post__image"
         />
       )}
       <span className="date">{publishedAt}</span>
@@ -31,11 +33,13 @@ const Article = styled.article`
   margin-left: auto;
   margin-right: auto;
   padding-top: 5rem;
+  ${media.break`
+    padding-top: 10rem;
+  `}
   .date {
     display: block;
     margin-top: 3rem;
   }
-
   h1 {
     line-height: 1.25;
     margin-bottom: 3rem;

@@ -6,7 +6,7 @@ import Post from '../components/Post';
 
 const post = ({ data }) => {
   return (
-    <Wrapper>
+    <Wrapper seo={data.sanityPost.seoSettings} pageTitle={data.sanityPost.title}>
       <Post {...data.sanityPost} />
     </Wrapper>
   );
@@ -30,6 +30,11 @@ export const PostQuery = graphql`
         name
       }
       publishedAt(formatString: "MM.DD.YY")
+      seoSettings {
+        metaDescription
+        title
+        canonicalUrl
+      }
     }
   }
 `;
