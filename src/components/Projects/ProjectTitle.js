@@ -1,13 +1,35 @@
 import React from 'react';
 import styled from 'styled-components';
 import {rgba} from 'polished';
-import { animated } from 'react-spring';
+import { useSpring, useTransition, animated } from 'react-spring';
 import classNames from 'classnames';
 
-const ProjectTitle = ({ className, styles, titleStyles, children, modal = false }) => {
+import Caret from '../Caret';
+
+const ProjectTitle = ({ className, styles, titleStyles, children, modal = false, hovering }) => {
+
+  const caretTrans = useTransition(hovering, null, {
+    from: {
+      opacity: 0
+    },
+    enter: {
+      opacity: 1
+    },
+    leave: {
+      opacity: 0
+    },
+  })
+
   return (
     <StyledTitle className={classNames(className, 'project-title')} style={styles} modal={modal}>
       <animated.h3 style={titleStyles}>{children}</animated.h3>
+      {caretTrans.map(({item, key, props}) => !modal && item && <Caret 
+        key={key}
+        color="white" 
+        styles={props}
+        pulse
+        big
+      />)}
     </StyledTitle>
   );
 };

@@ -7,7 +7,7 @@ import { useSpring, animated, useTransition, useChain, interpolate } from 'react
 
 import PlayButton from '../PlayButton';
 import ProjectTitle from './ProjectTitle';
-import Caret from '../Caret';
+
 
 import { getThumb } from '../utils';
 import theme from '../theme';
@@ -34,16 +34,6 @@ const Project = ({
   const [videoAspect, setVideoAspect] = useState(null);
   const [height, setHeight] = useState(0);
   const [titleHeight, setTitleHeight] = useState(0);
-  const [caretBumped, bumpCaret] = useState(false);
-
-  useEffect(() => {
-    const bumpCaretInterval = setInterval(() => {
-      bumpCaret(true);
-    }, 5000);
-    return () => {
-      clearInterval(bumpCaretInterval);
-    }
-  }, []);
 
   useEffect(() => {
     if (ref.current) {
@@ -59,35 +49,6 @@ const Project = ({
     height: hovering ? `${titleHeight + 10}px` : `${height}px`,
     background: hovering ? theme.orange : rgba('white', .65),
     titleOpacity: hovering ? 1 : 0,
-    caretRotation: hovering ? 'rotate(2turn)' : 'rotate(0turn)'
-  });
-
-  const caretTransRef = useRef();
-  const caretTrans = useTransition(hovering, null, {
-    from: {
-      opacity: 0,
-      rotation: 0
-    },
-    enter: {
-      opacity: 1,
-      rotation: 2
-    },
-    leave: {
-      opacity: 0,
-      rotation: 0
-    },
-    // ref: caretTransRef,
-    onRest: e => {
-      console.log(e);
-      bumpCaret(true);
-    }
-  });
-
-  const caretSpringRef = useRef();
-  const caretSpring = useSpring({
-    // ref: caretSpringRef,
-    translate: caretBumped ? 5 : 0,
-    onRest: () => bumpCaret(false)
   });
 
   useEffect(() => {
@@ -155,22 +116,11 @@ const Project = ({
       {image && image.asset.extension !== 'gif' && (<ProjectImage fluid={image.asset.fluid} />)}
       <ProjectTitle 
         className="project__title" 
-        styles={{...titleSpring,
-        paddingRight: '30px'}} 
+        styles={titleSpring} 
         titleStyles={{opacity: titleSpring.titleOpacity}}
+        hovering={hovering}
       >
         {project.title}
-        {caretTrans.map(({ item, key, props }) => item && <Caret 
-            key={key} 
-            color="white" 
-            styles={{ 
-              transform: interpolate([props.rotation, caretSpring.translate], (r, t) => `rotate(${r}turn) translateX(${t}px)`),
-              position: 'absolute',
-              right: '15px',
-              bottom: `${(titleHeight + 10) / 2 - 10}px`
-            }} 
-          />
-        )}
       </ProjectTitle>
     </StyledProject>
   );
