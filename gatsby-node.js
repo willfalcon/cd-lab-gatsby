@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-exports.createPages = async ({ graphql, actions: { createPage } }) => {
+exports.createPages = async ({ graphql, actions: { createPage, createRedirect } }) => {
   /**
    * Create Home Page with pre-fetched video thumbnail which you can only do here and not in the page component for some reason.
    * There really should be a gatsby version of getInitialProps
@@ -206,4 +206,24 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
       },
     });
   });
+
+  const { data: { sanitySiteSettings: { redirects } } } = await graphql(`{
+    sanitySiteSettings(_id: {eq: "cdSiteSettings"}) {
+      redirects {
+        temporary
+        from
+        to
+      }
+    }
+  }`);
+
+  redirects.forEach(({from, to, temporary = false }) => {
+    createRedirect({
+      fromPath: from,
+      toPath: to,
+      isPermanent: temporary ? temporary : true
+    });
+    console.log(`Created ${temporary ? '302' : '301'} redirect from ${from} to ${to}.`)
+  });
+
 };

@@ -68,6 +68,7 @@ module.exports = {
         pixelId: '1493901710913628',
       },
     },
-    `gatsby-plugin-sitemap`
+    `gatsby-plugin-sitemap`,
+    `gatsby-plugin-netlify`
   ],
 };
