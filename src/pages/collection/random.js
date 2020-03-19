@@ -5,11 +5,11 @@ const random = ({ data }) => {
   
   const { allSanityCollection: { edges } } = data;
   
+  useEffect(() => {
+    const random = edges[Math.floor(Math.random() * edges.length)];
+    navigate(`/collection/${random.node.slug.current}`);
+  });
   
-  
-  const random = edges[Math.floor(Math.random() * edges.length)]
-  
-  navigate(`/collection/${random.node.slug.current}`);
   return (
     <div>
       

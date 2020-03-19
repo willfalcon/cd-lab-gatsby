@@ -5,10 +5,11 @@ const random = ({ data }) => {
   
   const { allSanityPost: { edges } } = data;
 
-  
-  const random = edges[Math.floor(Math.random() * edges.length)]
-  
-  navigate(`/post/${random.node.slug.current}`);
+  useEffect(() => {
+    const random = edges[Math.floor(Math.random() * edges.length)];
+    navigate(`/post/${random.node.slug.current}`);
+  });
+
   return (
     <div>
       
