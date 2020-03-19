@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 
 import Wrapper from '../components/Wrapper';
-import SingleCollection from '../components/SingleCollection';
+import SingleCollection from '../components/Collection/SingleCollection';
 
 const singleCollection = ({ data, pageContext }) => {
   const { project, slug } = pageContext;
