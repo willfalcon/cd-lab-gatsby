@@ -4,13 +4,20 @@ import { rgba } from 'polished';
 import { Link } from 'gatsby';
 
 const CatList = ({ categories }) => {
-  // const catsWith = categories.filter(cat => cat.description);
+  const deactivated = categories.filter(cat => cat.deactivated);
+  const active = categories.filter(cat => !cat.deactivated);
+  console.log({deactivated,active})
 
   return (
     <StyledCatList className="cats">
-      {categories.map(({ _id, title, slug }) => (
+      {active.map(({ service: {_id, title, slug} }) => (
         <StyledCategory key={_id} className="link">
           <Link to={`/service/${slug.current}`}>{title}</Link>
+        </StyledCategory>
+      ))}
+      {deactivated.map(({ service: {_id, title} }) => (
+        <StyledCategory key={_id} className="no-link">
+          <span>{title}</span>
         </StyledCategory>
       ))}
     </StyledCatList>

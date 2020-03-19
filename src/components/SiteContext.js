@@ -85,16 +85,19 @@ const SiteContextProvider = ({ children, home }) => {
                   ...GatsbySanityImageFixed
                 }
               }
-            }
+            } 
             slug {
               current
             }
             categories {
-              _id
-              slug {
-                current
+              service {
+                _id
+                slug {
+                  current
+                }
+                title
               }
-              title
+              deactivated
             }
           }
         }
