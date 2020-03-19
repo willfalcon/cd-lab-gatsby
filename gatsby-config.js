@@ -71,7 +71,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {
-        exclude: ['/collection/random', '/service/random']
+        exclude: ['/collection/random', '/service/random', '/post/random']
       }
     },
     `gatsby-plugin-netlify`
