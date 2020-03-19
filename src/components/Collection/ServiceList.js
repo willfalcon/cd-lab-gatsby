@@ -26,10 +26,13 @@ const ServiceList = ({ projects, titleHeight }) => {
   const right = roundToDecimal((viewport.width - 100) * 0.6 - (viewport.width - 100) * 0.4 * 0.1, 2);
   const width = roundToDecimal(((viewport.width - 100) * 0.4) / 2, 2);
 
+  const baseTop = viewport.height * .05 + 120;
+
   return (
     <StyledServiceList className="service-list" style={mobile ? {} : {
       right: `${right}px`,
-      width: `${width}px`
+      width: `${width}px`,
+      top: titleHeight > 91 ? `${baseTop + titleHeight - 91}px` : `${baseTop}px`
     }}>
       {uniqWith(services, isEqual).map(({ title, slug, id }) => {
         return (

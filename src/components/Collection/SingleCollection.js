@@ -20,13 +20,13 @@ const SingleCollection = ({ title, _rawDescription, projects, project, slug }) =
   const mobile = viewport.width < theme.sizes.break;
 
   const titleRef = useRef(null);
-  console.log({titleRef});
   const [titleHeight, setTitleHeight] = useState(0);
   useLayoutEffect(() => {
     if (titleRef.current) {
       setTitleHeight(titleRef.current.offsetHeight);
     }
   });
+  console.log({titleHeight});
   return (
     <PageLayout collection className="single-collection">
       <div className="main">
