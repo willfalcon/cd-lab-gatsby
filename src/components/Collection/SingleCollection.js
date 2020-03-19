@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useRef, useState, useLayoutEffect } from 'react';
 import Loadable from '@loadable/component';
 
 import PageLayout from '../PageLayout';
 import Heading from '../Heading';
 import Content from '../Content';
-import ServiceList from './ServiceList';
+// import ServiceList from './ServiceList';
 import Topics from '../Topics/Topics';
 import ContactFormButton from '../ContactForm/ContactFormButton';
 
@@ -13,20 +13,27 @@ import theme from '../theme';
 
 const ProjectCarousel = Loadable(() => import('../Projects/ProjectCarousel'));
 const ProjectMasonry = Loadable(() => import('../Projects/ProjectMasonry'));
+const ServiceList = Loadable(() => import('./ServiceList'));
 
 const SingleCollection = ({ title, _rawDescription, projects, project, slug }) => {
-  const { viewport } = useSiteContext();
+  const viewport = useSiteContext();
   const mobile = viewport.width < theme.sizes.break;
+
+  const titleRef = useRef(null);
+  console.log({titleRef});
+  const [titleHeight, setTitleHeight] = useState(0);
+  useLayoutEffect(() => {
+    if (titleRef.current) {
+      setTitleHeight(titleRef.current.offsetHeight);
+    }
+  });
   return (
     <PageLayout collection className="single-collection">
       <div className="main">
-        <Heading>{title}</Heading>
+        <Heading ref={titleRef}>{title}</Heading>
         <ServiceList
           projects={projects}
-          right={
-            (viewport.width - 100) * 0.6 - (viewport.width - 100) * 0.4 * 0.1
-          }
-          width={((viewport.width - 100) * 0.4) / 2}
+          titleHeight={titleHeight}
         />
         {mobile && <ProjectCarousel projects={projects} />}
         <div className="content">

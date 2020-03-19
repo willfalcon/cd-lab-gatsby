@@ -4,9 +4,11 @@ import uniqWith from 'lodash.uniqwith';
 import isEqual from 'lodash.isequal';
 import { Link } from 'gatsby';
 
-import { media } from '../theme';
+import theme, { media } from '../theme';
+import useSiteContext from '../SiteContext';
+import { roundToDecimal } from '../utils';
 
-const ServiceList = ({ projects, right, width }) => {
+const ServiceList = ({ projects, titleHeight }) => {
   let services = [];
   if (projects && projects.length > 0) {
     projects.forEach(project => {
@@ -18,8 +20,17 @@ const ServiceList = ({ projects, right, width }) => {
     });
   }
 
+  const { viewport } = useSiteContext();
+  const mobile = viewport.width < theme.sizes.break;
+
+  const right = roundToDecimal((viewport.width - 100) * 0.6 - (viewport.width - 100) * 0.4 * 0.1, 2);
+  const width = roundToDecimal(((viewport.width - 100) * 0.4) / 2, 2);
+
   return (
-    <StyledServiceList className="service-list" right={right} width={width}>
+    <StyledServiceList className="service-list" style={mobile ? {} : {
+      right: `${right}px`,
+      width: `${width}px`
+    }}>
       {uniqWith(services, isEqual).map(({ title, slug, id }) => {
         return (
           <li key={id} className="service-list__item link">
@@ -62,9 +73,9 @@ const StyledServiceList = styled.ul`
   ${media.break`
     order: 3;
     margin: 0;
-    width: ${({ width }) => width}px;
+    /* width: ${({ width }) => width}px; */
     position: fixed;
-    right: ${({ right }) => right}px;
+    /* right: ${({ right }) => right}px; */
     top: 16rem;
     top: calc(12rem + 5%);
     li {

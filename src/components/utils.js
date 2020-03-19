@@ -97,4 +97,17 @@ async function getThumb(id) {
     ].link;
 }
 
-export { getViewport, getCurrentBreakpoint, unique, debounce, useWindowSize, getThumb };
+
+function roundToDecimal(number,decimal) {
+  var zeros = new String( 1.0.toFixed(decimal) );
+  zeros = zeros.substr(2);
+  var mul_div = parseInt( "1"+zeros );
+  var increment = parseFloat( "."+zeros+"01" );
+  if( ( (number * (mul_div * 10)) % 10) >= 5 ) 
+    { number += increment; }
+  return Math.round(number * mul_div) / mul_div;
+}
+  
+
+  
+export { getViewport, getCurrentBreakpoint, unique, debounce, useWindowSize, getThumb, roundToDecimal };

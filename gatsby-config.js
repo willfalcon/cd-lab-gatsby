@@ -68,7 +68,12 @@ module.exports = {
         pixelId: '1493901710913628',
       },
     },
-    `gatsby-plugin-sitemap`,
+    {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        exclude: ['/collection/random', '/service/random']
+      }
+    },
     `gatsby-plugin-netlify`
   ],
 };

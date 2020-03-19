@@ -4,19 +4,20 @@ import classNames from 'classnames';
 
 import { media } from './theme';
 
-const Heading = ({
+const Heading = React.forwardRef(({
   heading,
   children,
   h2 = false,
   color = 'orange',
   inheritColor = false,
   className,
-}) => {
+}, ref) => {
   return h2 ? (
     <StyledH2
       className={classNames('heading heading--h2', className)}
       color={color}
       inheritColor={inheritColor}
+      ref={ref}
     >
       {heading}
       {children}
@@ -26,12 +27,13 @@ const Heading = ({
       className={classNames('heading heading--h1', className)}
       color={color}
       inheritColor={inheritColor}
+      ref={ref}
     >
       {heading}
       {children}
     </StyledHeading>
   );
-};
+});
 
 const headingStyles = css`
   color: ${({ theme, color }) => theme[color]};
