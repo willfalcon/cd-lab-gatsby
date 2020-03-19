@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Link } from 'gatsby';
 import Img from 'gatsby-image';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { rgba } from 'polished';
-import { useSpring, animated, useTransition, useChain, interpolate } from 'react-spring';
+import { useSpring } from 'react-spring';
 
 import PlayButton from '../PlayButton';
 import ProjectTitle from './ProjectTitle';
@@ -41,7 +41,7 @@ const Project = ({
       const title = ref.current.querySelector('h3');
       setTitleHeight(title.offsetHeight);
     }
-  }, [ref.current, hoverState]);
+  }, [hoverState]);
 
   const hovering = hoverState === id;
 
@@ -76,7 +76,7 @@ const Project = ({
         videoThumb
       });
     }
-  }, [videoThumb]);
+  }, [videoThumb, id, image, initialProject, project, setExpandedProject, video, videoAspect]);
 
   return (
     <StyledProject
@@ -142,21 +142,21 @@ const ProjectImage = styled(Img)`
   width: 100% !important;
 `;
 
-const overlayStyles = css`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: ${rgba('white', 0.65)};
-`;
+// const overlayStyles = css`
+//   position: absolute;
+//   width: 100%;
+//   height: 100%;
+//   top: 0;
+//   left: 0;
+//   background: ${rgba('white', 0.65)};
+// `;
 
-const Overlay = styled(animated.span)`
-  ${overlayStyles}
-`;
+// const Overlay = styled(animated.span)`
+//   ${overlayStyles}
+// `;
 
-const OverlayLink = styled(Link)`
-  ${overlayStyles}
-`;
+// const OverlayLink = styled(Link)`
+//   ${overlayStyles}
+// `;
 
 export default Project;

@@ -8,7 +8,7 @@ import VideoModal from './VideoModal';
 import theme, { media } from '../theme';
 import useSiteContext from '../SiteContext';
 
-const HomeVideo = ({ thumbnail, homeVideoId, makeReady }) => {
+const HomeVideo = ({ thumbnail, homeVideoId }) => {
   const [expanded, toggleExpanded] = useState(false);
   const videoRef = useRef(null);
   const { viewport } = useSiteContext();
@@ -28,7 +28,7 @@ const HomeVideo = ({ thumbnail, homeVideoId, makeReady }) => {
         left: placeholderRef.current.offsetLeft,
       })
     }
-  }, [placeholderRef.current]);
+  }, []);
 
 
   const alt = 'Creative Distillery Video Reel';

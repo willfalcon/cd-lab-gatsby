@@ -13,8 +13,6 @@ const Caret = ({ left = false, right = true, className, styles, color = theme.or
   
   const [caretBumped, bumpCaret] = useState(false);
   
-  console.log({caretBumped})
-
   const caretSpring = useSpring({
     from: {
       transform: `rotate(2turn) translateX(0px)`
@@ -32,7 +30,7 @@ const Caret = ({ left = false, right = true, className, styles, color = theme.or
       }, 4000);
       return () => clearInterval(caretInterval);
     }
-  }, []);
+  }, [pulse]);
 
   return (
     <StyledCaret className={classNames('caret', className, { left, right })} color={color} style={{...styles, ...caretSpring, marginRight: '10px'}} big={big}>

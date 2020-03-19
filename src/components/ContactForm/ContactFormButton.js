@@ -1,11 +1,6 @@
 import React, { useState, useRef } from 'react';
-import styled from 'styled-components';
-import { rgba } from 'polished';
-import { useTransition, animated } from 'react-spring';
+import { useTransition } from 'react-spring';
 
-// import client from '../../lib/client';
-// import media from '../media';
-import { media } from '../theme';
 import useSiteContext from '../SiteContext';
 import Button from '../Button';
 import ContactForm from './ContactForm';

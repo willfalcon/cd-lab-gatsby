@@ -124,7 +124,7 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
               );
             })
           }
-          
+          return null;
         })}
       </Masonry>
       <DownArrow containerRef={containerRef} viewport={viewport} />

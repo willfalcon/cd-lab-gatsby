@@ -26,7 +26,7 @@ const ProjectModal = ({ viewport, item, styles, handleCloseProject, dimensions, 
 
   
   return (
-    <React.Fragment>
+    <>
       <BackgroundOverlay style={{ opacity: styles.opacity }}
         onClick={handleCloseProject}
       />
@@ -39,9 +39,9 @@ const ProjectModal = ({ viewport, item, styles, handleCloseProject, dimensions, 
         videoThumb={item.videoThumb}
       >
         {item.image && item.image.asset.extension === 'gif' && (
-          <img src={item.image.asset.fluid.src} sizes={item.image.asset.fluid.sizes} srcSet={item.image.asset.fluid.srcSet} />
+          <img src={item.image.asset.fluid.src} sizes={item.image.asset.fluid.sizes} srcSet={item.image.asset.fluid.srcSet} alt={item.title} />
         )}
-        {item.image && item.image.asset.extension !== 'gif' && <Img fluid={item.image.asset.fluid} />}
+        {item.image && item.image.asset.extension !== 'gif' && <Img fluid={item.image.asset.fluid} alt={item.title} />}
         {item.videoID && <ReactPlayer url={`https://vimeo.com/${item.videoID}`} controls width={dimensions.width} height={dimensions.height} />}
         <CloseButton
           handleClick={handleCloseProject}
@@ -66,7 +66,7 @@ const ProjectModal = ({ viewport, item, styles, handleCloseProject, dimensions, 
           </Helmet>
         )}
       </ExpandedProject>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -17,7 +17,6 @@ const Topics = ({ home = false, error = false }) => {
     setExpandedTopic,
     expandedTopic,
     topicToggledFromMenu,
-    setTopicToggledFromMenu
   } = useSiteContext();
 
   const mobile = viewport.width < theme.sizes.break;
@@ -51,7 +50,7 @@ const Topics = ({ home = false, error = false }) => {
       setScrollY(window.scrollY);
     }
     setTopicsOpen(home || error || expandedTopic ? true : false);
-  }, [expandedTopic]);
+  }, [expandedTopic, mobile, home, error, topicToggledFromMenu]);
 
   const allTopicTransition = useTransition(topicsOpen, null, {
     from: { opacity: 0 },

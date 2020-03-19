@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {rgba} from 'polished';
-import { useSpring, useTransition, animated } from 'react-spring';
+import { useTransition, animated } from 'react-spring';
 import classNames from 'classnames';
 
 import Caret from '../Caret';

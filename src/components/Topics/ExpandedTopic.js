@@ -22,17 +22,18 @@ const ExpandedTopic = ({
 }) => {
   const { viewport, setTopicToggledFromMenu } = useSiteContext();
 
-  const [topicProps, setTopicProps] = useState({
+  const emptyTopicProps = {
     title: '',
     _rawContent: [],
     categories: [],
-  });
+  };
+  const [topicProps, setTopicProps] = useState(emptyTopicProps);
 
   useEffect(() => {
     setTopicProps({
       ...topics[topics.findIndex(topic => topic.node.id === expandedTopic)].node,
     });
-  }, []);
+  }, [topics]);
 
   return (
     <StyledExpandedTopic
@@ -43,6 +44,7 @@ const ExpandedTopic = ({
       scrollY={scrollY}
     >
       <CloseButton handleClick={() => {
+        setTopicProps(emptyTopicProps);
         setExpandedTopic(null);
         setTopicToggledFromMenu(false);
       }} />

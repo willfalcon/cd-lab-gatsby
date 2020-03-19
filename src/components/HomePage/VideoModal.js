@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { rgba } from 'polished';
 import ReactPlayer from 'react-player';
 import { animated, useTransition } from 'react-spring';
 
