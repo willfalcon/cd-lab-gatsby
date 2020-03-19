@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 import uniqWith from 'lodash.uniqwith';
 import isEqual from 'lodash.isequal';
@@ -8,7 +8,7 @@ import theme, { media } from '../theme';
 import useSiteContext from '../SiteContext';
 import { roundToDecimal } from '../utils';
 
-const ServiceList = ({ projects, titleHeight }) => {
+const ServiceList = ({ projects, titleRef }) => {
   let services = [];
   if (projects && projects.length > 0) {
     projects.forEach(project => {
@@ -19,6 +19,14 @@ const ServiceList = ({ projects, titleHeight }) => {
       }
     });
   }
+
+  const [titleHeight, setTitleHeight] = useState(0);
+
+  useLayoutEffect(() => {
+    if (titleRef.current) {
+      setTitleHeight(titleRef.current.offsetHeight);
+    }
+  }, []);
 
   const { viewport } = useSiteContext();
   const mobile = viewport.width < theme.sizes.break;
