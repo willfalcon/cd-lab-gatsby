@@ -15,7 +15,7 @@ const serializers = {
 const Content = ({ children, className }) => {
   return (
     <div className={classNames('block-content', className)}>
-      <BlockContent blocks={children} projectId="sgba0i04" dataset="dev" serializers={serializers} />
+      <BlockContent blocks={children} projectId="sgba0i04" dataset="gatsby" serializers={serializers} />
     </div>
   );
 };
