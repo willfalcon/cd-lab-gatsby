@@ -5,11 +5,12 @@ import classNames from 'classnames';
 
 import theme from './theme';
 
-const Caret = ({ left = false, right = true, className, styles, color = theme.orange, pulse = false, spin = false, big = false }) => {
+const Caret = ({ left = false, right = true, className, styles, color = theme.orange, pulse = false, spin = false, big = false, hover = false }) => {
   if (left) {
     right = false;
   }
 
+  console.log({hover})
   
   const [caretBumped, bumpCaret] = useState(false);
   
@@ -18,7 +19,7 @@ const Caret = ({ left = false, right = true, className, styles, color = theme.or
       transform: spin ? `rotate(2turn) translateX(0px)` : `rotate(0turn) translateX(0px)`
     },
     to: {
-      transform: pulse ? caretBumped ? `rotate(0turn) translateX(10px)` : `rotate(0turn) translateX(0px)` : 'rotate(0turn) translateX(0px)',
+      transform: (pulse || hover) ? (caretBumped || hover) ? `rotate(0turn) translateX(10px)` : `rotate(0turn) translateX(0px)` : 'rotate(0turn) translateX(0px)',
     },
     onRest: () => bumpCaret(false)
   });

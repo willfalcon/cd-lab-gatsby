@@ -10,6 +10,18 @@ import theme, { media } from '../theme';
 import useSiteContext from '../SiteContext';
 import { roundToDecimal } from '../utils';
 
+const ServiceListItem = ({ id, slug, title }) => {
+  
+  const [hover, setHover] = useState(false);
+  
+  return (
+    <li className="service-list__item link" onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+      <Link to={`/service/${slug.current}`}>{title}</Link>
+      <Caret color={theme.offWhite} hover={hover} />
+    </li>
+  )
+}
+
 const ServiceList = ({ projects, titleRef }) => {
   let services = [];
   if (projects && projects.length > 0) {
@@ -44,12 +56,9 @@ const ServiceList = ({ projects, titleRef }) => {
       width: `${width}px`,
       top: titleHeight > 91 ? `${baseTop + titleHeight - 91}px` : `${baseTop}px`
     }}>
-      {uniqWith(services, isEqual).map(({ title, slug, id }) => {
+      {uniqWith(services, isEqual).map((service) => {
         return (
-          <li key={id} className="service-list__item link">
-            <Link to={`/service/${slug.current}`}>{title}</Link>
-            <Caret color={theme.offWhite} pulse />
-          </li>
+          <ServiceListItem key={service.id} {...service} />
         );
       })}
     </StyledServiceList>

@@ -1,29 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { Link } from 'gatsby';
+import classNames from 'classnames';
 
 import Caret from '../Caret';
 
 import theme from '../theme';
 
+const CatListItem = ({ className, service, inactive = false }) => {
+  
+  const [hover, setHover] = useState(false);
+  const { _id, title, slug } = service;
+  return (
+    <StyledCategory key={_id} className={classNames('cats-list-item', className)} onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+      {inactive ? (
+        <span>{title}</span>
+      ) : (
+        <Link to={`/service/${slug.current}`}>{title}</Link>
+      )}
+      {!inactive && <Caret color={theme.offWhite} hover={hover} />}
+    </StyledCategory>
+  )
+}
+
 const CatList = ({ categories }) => {
   const deactivated = categories.filter(cat => cat.deactivated);
   const active = categories.filter(cat => !cat.deactivated);
-  console.log({deactivated,active})
-
+  
   return (
     <StyledCatList className="cats">
-      {active.map(({ service: {_id, title, slug} }) => (
-        <StyledCategory key={_id} className="link">
-          <Link to={`/service/${slug.current}`}>{title}</Link>
-          <Caret color={theme.offWhite} />
-        </StyledCategory>
+      {active.map(({ service }) => (
+        <CatListItem key={service._id} className="link" service={service} />
       ))}
-      {deactivated.map(({ service: {_id, title} }) => (
-        <StyledCategory key={_id} className="no-link">
-          <span>{title}</span>
-        </StyledCategory>
+      {deactivated.map(({ service }) => (
+        <CatListItem key={service._id} className="no-link" service={service} inactive />
       ))}
     </StyledCatList>
   );
