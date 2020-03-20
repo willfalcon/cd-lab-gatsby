@@ -29,7 +29,6 @@ const BlogPage = ({
 };
 
 const StyledBlogPage = styled.div`
-  background-color: ${props => props.theme.offWhite};
   padding: 0.5rem 2rem;
   min-height: ${({ viewheight }) => viewheight - 65}px;
 
