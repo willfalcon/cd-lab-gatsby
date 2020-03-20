@@ -28,6 +28,7 @@ const ProjectTitle = ({ className, styles, titleStyles, children, modal = false,
         color="white" 
         styles={props}
         pulse
+        spin
         big
       />)}
     </StyledTitle>

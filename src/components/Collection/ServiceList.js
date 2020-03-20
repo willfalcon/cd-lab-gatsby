@@ -4,6 +4,8 @@ import uniqWith from 'lodash.uniqwith';
 import isEqual from 'lodash.isequal';
 import { Link } from 'gatsby';
 
+import Caret from '../Caret';
+
 import theme, { media } from '../theme';
 import useSiteContext from '../SiteContext';
 import { roundToDecimal } from '../utils';
@@ -46,6 +48,7 @@ const ServiceList = ({ projects, titleRef }) => {
         return (
           <li key={id} className="service-list__item link">
             <Link to={`/service/${slug.current}`}>{title}</Link>
+            <Caret color={theme.offWhite} pulse />
           </li>
         );
       })}
@@ -77,6 +80,9 @@ const StyledServiceList = styled.ul`
     padding: 1rem 0;
     border-bottom: 1px solid ${({ theme }) => theme.offWhite};
     font-size: 1.4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     &:last-child {
       border-bottom: 0px;
     }

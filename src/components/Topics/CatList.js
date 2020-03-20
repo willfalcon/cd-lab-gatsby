@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 import { Link } from 'gatsby';
 
+import Caret from '../Caret';
+
+import theme from '../theme';
+
 const CatList = ({ categories }) => {
   const deactivated = categories.filter(cat => cat.deactivated);
   const active = categories.filter(cat => !cat.deactivated);
@@ -13,6 +17,7 @@ const CatList = ({ categories }) => {
       {active.map(({ service: {_id, title, slug} }) => (
         <StyledCategory key={_id} className="link">
           <Link to={`/service/${slug.current}`}>{title}</Link>
+          <Caret color={theme.offWhite} />
         </StyledCategory>
       ))}
       {deactivated.map(({ service: {_id, title} }) => (
@@ -33,19 +38,22 @@ const StyledCategory = styled.li`
   border-bottom: 1px solid ${({ theme }) => theme.offWhite};
   text-align: center;
   padding: 0.5rem 0;
-  &.link::after {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* &.link::after {
     content: '';
     width: 0;
     transition: 0.15s;
     height: 2px;
     background: ${({ theme }) => theme.orange};
     display: block;
-  }
-  &.link:hover {
+  } */
+  /* &.link:hover {
     &::after {
       width: 100px;
     }
-  }
+  } */
   &:last-child {
     border-bottom: 0;
   }

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import theme from './theme';
 
-const Caret = ({ left = false, right = true, className, styles, color = theme.orange, pulse = false, big = false }) => {
+const Caret = ({ left = false, right = true, className, styles, color = theme.orange, pulse = false, spin = false, big = false }) => {
   if (left) {
     right = false;
   }
@@ -15,10 +15,10 @@ const Caret = ({ left = false, right = true, className, styles, color = theme.or
   
   const caretSpring = useSpring({
     from: {
-      transform: `rotate(2turn) translateX(0px)`
+      transform: spin ? `rotate(2turn) translateX(0px)` : `rotate(0turn) translateX(0px)`
     },
     to: {
-      transform: caretBumped ? `rotate(0turn) translateX(10px)` : `rotate(0turn) translateX(0px)`,
+      transform: pulse ? caretBumped ? `rotate(0turn) translateX(10px)` : `rotate(0turn) translateX(0px)` : 'rotate(0turn) translateX(0px)',
     },
     onRest: () => bumpCaret(false)
   });
