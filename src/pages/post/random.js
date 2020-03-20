@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { graphql, navigate } from 'gatsby';
 
-const random = ({ data }) => {
-  
+const RandomPost = ({ data }) => {
+
   const { allSanityPost: { edges } } = data;
 
   useEffect(() => {
@@ -31,4 +31,4 @@ export const AllPostQuery = graphql`
   }
 `;
 
-export default random;
+export default RandomPost;

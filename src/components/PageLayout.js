@@ -31,11 +31,11 @@ const PageLayout = styled.div.attrs(() => ({
       flex-flow: column;
       flex: 0 0 40%;
       overflow: scroll;
-      ${({ collection }) =>
+      /* ${({ collection }) =>
         collection &&
         `
         position: relative;
-      `}
+      `} */
 
       .heading {
         padding: 0;

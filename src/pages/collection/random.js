@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { graphql, navigate } from 'gatsby';
 
-const random = ({ data }) => {
+const RandomCollection = ({ data }) => {
   
   const { allSanityCollection: { edges } } = data;
   
   useEffect(() => {
-    const random = edges[Math.floor(Math.random() * edges.length)];
+    const eligibles = edges.filter(edge => !edge.node.hidden);
+    const random = eligibles[Math.floor(Math.random() * eligibles.length)];
     navigate(`/collection/${random.node.slug.current}`);
   });
   
@@ -25,10 +26,12 @@ export const SingleRandomCollectionQuery = graphql`
           slug {
             current
           }
+          hidden
+          title
         }
       }
     }
   }
 `;
 
-export default random;
+export default RandomCollection;

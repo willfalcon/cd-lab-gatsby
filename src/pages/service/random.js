@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { graphql, navigate } from 'gatsby';
 
-const random = ({ data }) => {
+const RandomService = ({ data }) => {
   
   const { allSanityCategory: { edges } } = data;
   
   useEffect(() => {
-    const random = edges[Math.floor(Math.random() * edges.length)]  
+    const random = edges[Math.floor(Math.random() * edges.length)];
     navigate(`/service/${random.node.slug.current}`);
   });
 
@@ -31,4 +31,4 @@ export const AllServiceQuery = graphql`
   }
 `;
 
-export default random;
+export default RandomService;
