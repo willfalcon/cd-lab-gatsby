@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import camelCase from 'camelcase';
 import classNames from 'classnames';
 
-// import Label from './Label';
+// import { StyledLabel } from './QuoteForm';
 import ErrorMessage from './ErrorMessage';
 
-const TextField = ({ name, register, fieldOptions, error, _type }) => {
+const TextArea = ({ name, register, fieldOptions, error }) => {
 
   const required = fieldOptions && fieldOptions.required ? fieldOptions.required : false;
   const halfWidth = fieldOptions && fieldOptions.halfWidth ? fieldOptions.halfWidth : false;
 
   const [focused, setFocus] = useState(false);
+
 
   const handleFocus = e => {
     setFocus(true);
@@ -24,18 +25,17 @@ const TextField = ({ name, register, fieldOptions, error, _type }) => {
 
   return (
     <>
-      <label 
-        className={classNames('field-text', { focused })}
+      <label
+        className={classNames('field-text field-textarea', { focused })}
         htmlFor={camelCase(name)}
         halfWidth={halfWidth}
       >
         <span className="label-text">
           {name}
-          {required && '*'}
+          {required && "*"}
         </span>
-        <input 
-          className="text-input"
-          type={_type === 'emailField' ? 'email' : 'text'}
+        <textarea
+          className="text-area"
           name={camelCase(name)}
           ref={register({ required })}
           onFocus={handleFocus}
@@ -47,4 +47,4 @@ const TextField = ({ name, register, fieldOptions, error, _type }) => {
   );
 };
 
-export default TextField;
+export default TextArea;

@@ -11,7 +11,7 @@ const ErrorMessage = ({ error }) => {
 }
 
 const StyledError = styled.p`
-  color: error;
+  color: red;
 `;
 
 export default ErrorMessage;
