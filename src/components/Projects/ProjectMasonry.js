@@ -12,6 +12,8 @@ import useModalTransition from './modalTransition';
 
 const ProjectMasonry = ({ projects, project, slug, service = false, workpage = false }) => {
 
+  // TODO: Feature: Carousel Controls to switch between images within the same project.
+
   const masonryOptions = {
     transitionDuration: 100,
   };

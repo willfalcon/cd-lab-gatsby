@@ -3,11 +3,20 @@ import BlockContent from '@sanity/block-content-to-react';
 import classNames from 'classnames';
 import ReactPlayer from 'react-player';
 
+import { InlineNote } from './Serializers';
+
 const serializers = {
   types: {
     video: ({node}) => {
       const { url } = node;
       return <ReactPlayer url={url} controls />
+    }
+  },
+  marks: {
+    note: (props) => {
+      const { marks, children } = props;
+      console.log(props);
+      return <InlineNote {...props} />;
     }
   }
 }

@@ -13,7 +13,7 @@ const VideoModal = ({ handleClose, expanded, videoRef, videoId, thumbnail,alt, a
   
   const { viewport } = useSiteContext();
 
-  console.log(mobile);
+  // console.log(mobile);
   
   const [videoLoaded, setVideoLoaded] = useState(false);
 

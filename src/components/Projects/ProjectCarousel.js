@@ -7,7 +7,7 @@ import Img from 'gatsby-image';
 import CarouselControls from '../CarouselControls';
 
 const ProjectCarousel = ({ projects }) => {
-  console.log(projects);
+  // console.log(projects);
 
   const [index, setIndex] = useState(0);
 

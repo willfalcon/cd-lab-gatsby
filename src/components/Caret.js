@@ -10,7 +10,7 @@ const Caret = ({ left = false, right = true, className, styles, color = theme.or
     right = false;
   }
 
-  console.log({hover})
+  // console.log({hover})
   
   const [caretBumped, bumpCaret] = useState(false);
   
