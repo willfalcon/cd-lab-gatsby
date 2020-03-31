@@ -10,55 +10,82 @@ import TextArea from './TextArea';
 import Button, { ButtonStyles } from '../Button';
 import Heading from '../Heading';
 
+import { encode } from '../utils';
 
-const Form = (props) => {
-  const { fields, successMessage, title, submitText = "Send", styles, children, modal, cancel = false, className } = props;
-  console.log(props);
+
+const Form = ({ fields, successMessage, title, submitText = "Send", styles, children, modal, cancel = false, className }) => {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const hookForm = useForm();
-  console.log(hookForm);
   const { register, handleSubmit, errors } = hookForm;
-  const onSubmit = async data => {
-    setSuccess(true);
+  const onSubmit = data => {
+    setLoading(true);
+    fetch('/not-real', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encode({ 'form-name': title, ...data }),
+    })
+      .then(res => {
+        console.log(res);
+        setSuccess(true);
+        setLoading(false);
+      })
+      .catch(error => {
+        setError(error);
+        setLoading(false);
+        console.error(error);
+      });
   }
 
-  return success ? (
-    <p>{successMessage}</p>
-  ) : (
-    <StyledForm className={classNames(className, 'form')} onSubmit={handleSubmit(onSubmit)} style={styles} modal={modal} data-netlify="true" name={title}>
-      {title && <Heading>{title}</Heading>}
-      <fieldset disabled={loading}>
-        {fields.map(field => {
-          if (field._type === 'textField' || field._type === 'emailField') {
-            return (
-              <TextField 
+  return (
+    <StyledForm 
+      className={classNames(className, 'form')} 
+      onSubmit={handleSubmit(onSubmit)} 
+      style={styles} 
+      modal={modal} 
+      data-netlify="true" 
+      name={title} 
+      netlify-honeypot="honeypotField"
+    >
+      {title && <Heading>{title}</Heading>} 
+      {success ? (
+        <p>{successMessage}</p>
+      ) : (
+        <fieldset disabled={loading}>
+          {fields.map(field => {
+            if (field._type === 'textField' || field._type === 'emailField') {
+              return (
+                <TextField 
+                  {...field}
+                  key={field._key}
+                  register={register}
+                  error={errors[camelCase(field.name)]}
+                />
+              );
+            }
+            if (field._type === 'textArea') {
+              return <TextArea 
                 {...field}
                 key={field._key}
                 register={register}
                 error={errors[camelCase(field.name)]}
               />
-            );
-          }
-          if (field._type === 'textArea') {
-            return <TextArea 
-              {...field}
-              key={field._key}
-              register={register}
-              error={errors[camelCase(field.name)]}
-            />
-          }
-          return null;
-        })}
-        <Submit type="submit" value={submitText} />
-        {cancel && (
-          <Button
-            handleClick={cancel}
-            className="cancel"
-          >Cancel</Button>
-        )}
-      </fieldset>
+            }
+            return null;
+          })}
+          <label className="honeypot">
+            Don't fill this out if you're human: <input name="honeypotField" />
+          </label>
+          <Submit type="submit" value={submitText} />
+          {cancel && (
+            <Button
+              handleClick={cancel}
+              className="cancel"
+            >Cancel</Button>
+          )}
+        </fieldset>
+      )}
       {children}
     </StyledForm>
   );

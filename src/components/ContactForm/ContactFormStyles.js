@@ -101,6 +101,9 @@ const StyledForm = styled(animated.form)`
       display: ${({ modal }) => (modal ? 'initial' : 'none')};
     }
   `}
+  .honeypot {
+    display: none;
+  }
 `;
 
 export { StyledForm };
