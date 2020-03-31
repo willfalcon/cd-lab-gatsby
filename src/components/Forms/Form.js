@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import {useForm} from 'react-hook-form';
 import camelCase from 'camelcase';
+import classNames from 'classnames';
 
 import { StyledForm } from '../ContactForm/ContactFormStyles';
 import TextField from './TextField';
@@ -11,7 +12,7 @@ import Heading from '../Heading';
 
 
 const Form = (props) => {
-  const { fields, successMessage, title, submitText = "Send", styles, children, modal, cancel = false } = props;
+  const { fields, successMessage, title, submitText = "Send", styles, children, modal, cancel = false, className } = props;
   console.log(props);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -26,7 +27,7 @@ const Form = (props) => {
   return success ? (
     <p>{successMessage}</p>
   ) : (
-    <StyledForm onSubmit={handleSubmit(onSubmit)} style={styles} modal={modal}>
+    <StyledForm className={classNames(className, 'form')} onSubmit={handleSubmit(onSubmit)} style={styles} modal={modal} data-netlify="true" name={title}>
       {title && <Heading>{title}</Heading>}
       <fieldset disabled={loading}>
         {fields.map(field => {
