@@ -6,12 +6,13 @@ import camelCase from 'camelcase';
 import { StyledForm } from '../ContactForm/ContactFormStyles';
 import TextField from './TextField';
 import TextArea from './TextArea';
-import { ButtonStyles } from '../Button';
+import Button, { ButtonStyles } from '../Button';
 import Heading from '../Heading';
 
 
-const Form = ({ fields, successMessage, heading, submitText = "Submit", styles, children }) => {
-
+const Form = (props) => {
+  const { fields, successMessage, title, submitText = "Send", styles, children, modal, cancel = false } = props;
+  console.log(props);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -25,8 +26,8 @@ const Form = ({ fields, successMessage, heading, submitText = "Submit", styles, 
   return success ? (
     <p>{successMessage}</p>
   ) : (
-    <StyledForm onSubmit={handleSubmit(onSubmit)} styles={styles}>
-      {heading && <Heading>{heading}</Heading>}
+    <StyledForm onSubmit={handleSubmit(onSubmit)} style={styles} modal={modal}>
+      {title && <Heading>{title}</Heading>}
       <fieldset disabled={loading}>
         {fields.map(field => {
           if (field._type === 'textField' || field._type === 'emailField') {
@@ -50,6 +51,12 @@ const Form = ({ fields, successMessage, heading, submitText = "Submit", styles, 
           return null;
         })}
         <Submit type="submit" value={submitText} />
+        {cancel && (
+          <Button
+            handleClick={cancel}
+            className="cancel"
+          >Cancel</Button>
+        )}
       </fieldset>
       {children}
     </StyledForm>
@@ -58,6 +65,7 @@ const Form = ({ fields, successMessage, heading, submitText = "Submit", styles, 
 
 const Submit = styled.input`
   ${ButtonStyles}
+  text-transform: none;
 `;
 
 export default Form;

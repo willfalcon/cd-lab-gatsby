@@ -2,77 +2,15 @@ import React, { useState, useRef } from 'react';
 import { useTransition } from 'react-spring';
 import { useStaticQuery, graphql } from 'gatsby';
 
-import useSiteContext from '../SiteContext';
 import Button from '../Button';
 import ContactForm from './ContactForm';
 import CloseButton from '../CloseButton';
 import BackgroundOverlay from '../BackgroundOverlay';
 import Form from '../Forms/Form';
 
+import useSiteContext from '../SiteContext';
+
 const ContactFormButton = ({ children }) => {
-
-  const FormData = useStaticQuery(graphql`
-    {
-      sanityForm {
-        id
-        title
-        successMessage
-        _rawDescription
-        formBuilder {
-          ... on SanityTextArea {
-            _key
-            _type
-            fieldOptions {
-              halfWidth
-              required
-            }
-            name
-          }
-          ... on SanityTextField {
-            _key
-            _type
-            fieldOptions {
-              halfWidth
-              required
-            }
-            name
-          }
-          ... on SanityCheckBoxes {
-            _key
-            _type
-            name
-            options
-            fieldOptions {
-              halfWidth
-              required
-            }
-          }
-          ... on SanityEmailField {
-            _key
-            _type
-            name
-            fieldOptions {
-              halfWidth
-              required
-            }
-          }
-          ... on SanityRadioButtons {
-            _key
-            _type
-            fieldOptions {
-              halfWidth
-              required
-            }
-            name
-            options
-          }
-        }
-      }
-    }
-  `);
-
-console.log(FormData);
-  const { sanityForm } = FormData;
 
   const buttonRef = useRef(null);
 
@@ -83,7 +21,7 @@ console.log(FormData);
 
   const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
 
-  const { viewport, mobile } = useSiteContext();
+  const { viewport, mobile, formOptions } = useSiteContext();
 
   const [open, setOpen] = useState(false);
 
@@ -100,7 +38,7 @@ console.log(FormData);
       paddingRight: '0%',
       o: 0,
       position: 'absolute',
-      zIndex: 8,
+      zIndex: 10,
     },
     enter: {
       width: `${mobile ? viewport.width : viewport.width / 2}px`,
@@ -169,8 +107,8 @@ console.log(FormData);
                 toggleForm={() => setOpen(!open)}
                 className="modal-contact-form"
                 styles={props}
-                fields={sanityForm.formBuilder}
-                {...sanityForm}
+                fields={formOptions.contactForm.formBuilder}
+                {...formOptions.contactForm}
               >
                 <CloseButton handleClick={() => setOpen(false)} />
               </Form>

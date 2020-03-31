@@ -44,6 +44,61 @@ const SiteContextProvider = ({ children, home }) => {
         formOptions {
           errorMessage
           successMessage
+          contactForm {
+            id
+            formBuilder {
+              ... on SanityCheckBoxes {
+                _key
+                _type
+                fieldOptions {
+                  halfWidth
+                  required
+                }
+                name
+                options
+              }
+              ... on SanityEmailField {
+                _key
+                _type
+                fieldOptions {
+                  halfWidth
+                  required
+                }
+                name
+              }
+              ... on SanityRadioButtons {
+                _key
+                _type
+                fieldOptions {
+                  halfWidth
+                  required
+                }
+                name
+                options
+              }
+              ... on SanityTextArea {
+                _key
+                _type
+                fieldOptions {
+                  halfWidth
+                  required
+                }
+                name
+              }
+              ... on SanityTextField {
+                _key
+                _type
+                name
+                fieldOptions {
+                  halfWidth
+                  required
+                }
+              }
+            }
+            title
+            successMessage
+            _rawDescription
+          }
         }
         redirects {
           _key
