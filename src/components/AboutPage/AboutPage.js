@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import Heading from '../Heading';
 import Content from '../Content';
-import ContactFormButton from '../ContactForm/ContactFormButton';
+import ContactFormButton from '../ContactFormButton';
 
 import People from './People';
 import Topics from '../Topics/Topics';

@@ -1,14 +1,16 @@
 import React, { useState, useRef } from 'react';
 import { useTransition } from 'react-spring';
 import { useStaticQuery, graphql } from 'gatsby';
+import styled from 'styled-components';
 
-import Button from '../Button';
-import ContactForm from './ContactForm';
-import CloseButton from '../CloseButton';
-import BackgroundOverlay from '../BackgroundOverlay';
-import Form from '../Forms/Form';
+import Button from './Button';
+// import ContactForm from './ContactForm';
+import CloseButton from './CloseButton';
+import BackgroundOverlay from './BackgroundOverlay';
+import Form from './Forms/Form';
 
-import useSiteContext from '../SiteContext';
+import useSiteContext from './SiteContext';
+import { media } from './theme';
 
 const ContactFormButton = ({ children }) => {
 
@@ -101,7 +103,7 @@ const ContactFormButton = ({ children }) => {
                 className="modal-contact-form"
                 styles={props}
               > */}
-              <Form
+              <ContactForm
                 modal
                 formOpen={true}
                 toggleForm={() => setOpen(!open)}
@@ -111,13 +113,26 @@ const ContactFormButton = ({ children }) => {
                 {...formOptions.contactForm}
               >
                 <CloseButton handleClick={() => setOpen(false)} />
-              </Form>
+              </ContactForm>
             </React.Fragment>
           )
       )}
     </>
   );
 };
+
+const ContactForm = styled(Form)`
+  overflow: hidden;
+  flex: 0 0 50%;
+  position: absolute;
+  left: 0;
+  bottom: 42px;
+  ${media.break`
+    max-height: 100vh;
+    position: static;
+    height: 100%;
+  `}
+`;
 
 
 

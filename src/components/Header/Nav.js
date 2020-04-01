@@ -5,7 +5,6 @@ import { rgba } from 'polished';
 import Menu from './Menu';
 import Button from '../Button';
 import MobileFooter from '../MobileFooter';
-import ContactForm from '../ContactForm/ContactForm';
 import useSiteContext from '../SiteContext';
 import theme, { media } from '../theme';
 import Form from '../Forms/Form';
@@ -91,7 +90,7 @@ const Nav = () => {
             {mobile && <MobileFooter />}
             {formTransition.map(({ item, key, props }) => (item || !mobile) && (
               <NavFormWrap key={key} className="nav-form-wrap" style={props} open={formOpen}>
-                <Form 
+                <ContactForm 
                   formOpen={formOpen} 
                   toggleForm={toggleForm} 
                   cancel={() => toggleForm(false)}
@@ -124,6 +123,19 @@ const NavFormWrap = styled(animated.div)`
     position: initial;
     max-height: 100% !important;
     flex: 0 0 50%;
+  `}
+`;
+
+const ContactForm = styled(Form)`
+  overflow: hidden;
+  flex: 0 0 50%;
+  position: absolute;
+  left: 0;
+  bottom: 42px;
+  ${media.break`
+    max-height: 100vh;
+    position: static;
+    height: 100%;
   `}
 `;
 

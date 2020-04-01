@@ -6,7 +6,7 @@ import Heading from '../Heading';
 import Content from '../Content';
 // import ServiceList from './ServiceList';
 import Topics from '../Topics/Topics';
-import ContactFormButton from '../ContactForm/ContactFormButton';
+import ContactFormButton from '../ContactFormButton';
 
 import useSiteContext from '../SiteContext';
 import theme from '../theme';

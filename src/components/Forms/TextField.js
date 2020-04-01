@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import camelCase from 'camelcase';
-import classNames from 'classnames';
 
-// import Label from './Label';
+import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 
 const TextField = ({ name, register, fieldOptions, error, _type }) => {
@@ -10,12 +9,11 @@ const TextField = ({ name, register, fieldOptions, error, _type }) => {
   const required = fieldOptions && fieldOptions.required ? fieldOptions.required : false;
   const halfWidth = fieldOptions && fieldOptions.halfWidth ? fieldOptions.halfWidth : false;
 
+  // Focus State
   const [focused, setFocus] = useState(false);
-
   const handleFocus = e => {
     setFocus(true);
   }
-
   const handleBlur = e => {
     if (!e.target.value) {
       setFocus(false);
@@ -24,8 +22,9 @@ const TextField = ({ name, register, fieldOptions, error, _type }) => {
 
   return (
     <>
-      <label 
-        className={classNames('field-text', { focused })}
+      <Label 
+        className="field-text"
+        isFocused={focused}
         htmlFor={camelCase(name)}
         halfWidth={halfWidth}
       >
@@ -41,7 +40,7 @@ const TextField = ({ name, register, fieldOptions, error, _type }) => {
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
-      </label>
+      </Label>
       {error && <ErrorMessage error={error} />}
     </>
   );

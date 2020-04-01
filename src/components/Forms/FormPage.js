@@ -4,7 +4,7 @@ import PageLayout from '../PageLayout';
 import Heading from '../Heading';
 import Content from '../Content';
 import Form from './Form';
-import ContactFormButton from '../ContactForm/ContactFormButton';
+import ContactFormButton from '../ContactFormButton';
 
 const FormPage = ({ title, id, formBuilder, _rawDescription, successMessage }) => {
 
@@ -12,9 +12,10 @@ const FormPage = ({ title, id, formBuilder, _rawDescription, successMessage }) =
   return (
     <PageLayout>
       <div className="main">
-        <Heading>{title}</Heading>
-        <Content>{_rawDescription}</Content>
-        <ContactFormButton>Let's Talk</ContactFormButton>
+        {/* <Heading>{title}</Heading> */}
+        {/* <Content>{_rawDescription}</Content> */}
+        <Form fields={formBuilder} title={title} _rawDescription={_rawDescription} successMessage={successMessage} />
+        {/* <ContactFormButton>Let's Talk</ContactFormButton> */}
       </div>
     </PageLayout>
   );

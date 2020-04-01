@@ -14,12 +14,41 @@ const Forms = ({ data: { sanityForm } }) => {
 
 export const formQuery = graphql`
   query formQuery {
-    sanityForm {
+    sanityForm(title: {eq: "Sample Form"}) {
       id
-      title
-      successMessage
       _rawDescription
+      successMessage
+      title
       formBuilder {
+        ... on SanityCheckBoxes {
+          _key
+          _type
+          fieldOptions {
+            halfWidth
+            required
+          }
+          name
+          options
+        }
+        ... on SanityEmailField {
+          _key
+          _type
+          fieldOptions {
+            halfWidth
+            required
+          }
+          name
+        }
+        ... on SanityRadioButtons {
+          _key
+          _type
+          fieldOptions {
+            halfWidth
+            required
+          }
+          name
+          options
+        }
         ... on SanityTextArea {
           _key
           _type
@@ -37,35 +66,6 @@ export const formQuery = graphql`
             required
           }
           name
-        }
-        ... on SanityCheckBoxes {
-          _key
-          _type
-          name
-          options
-          fieldOptions {
-            halfWidth
-            required
-          }
-        }
-        ... on SanityEmailField {
-          _key
-          _type
-          name
-          fieldOptions {
-            halfWidth
-            required
-          }
-        }
-        ... on SanityRadioButtons {
-          _key
-          _type
-          fieldOptions {
-            halfWidth
-            required
-          }
-          name
-          options
         }
       }
     }
