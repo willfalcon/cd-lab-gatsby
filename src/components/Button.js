@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import classNames from 'classnames';
 import { Link } from 'gatsby';
 
@@ -48,7 +48,7 @@ const Button = React.forwardRef(
   }
 );
 
-const StyledButton = styled.button`
+const ButtonStyles = css`
   background: ${props => props.theme.orange};
   padding: ${({ big }) => (big ? '.75rem 5rem' : '.25rem 1.5rem')};
   color: white;
@@ -61,16 +61,17 @@ const StyledButton = styled.button`
   cursor: pointer;
 `;
 
+
+const StyledButton = styled.button`
+  ${ButtonStyles}
+`;
+
 const StyledLink = styled(Link)`
-  background: ${props => props.theme.orange};
-  padding: ${({ big }) => (big ? '.75rem 5rem' : '.25rem 1.5rem')};
-  color: white;
-  font-size: 3rem;
-  cursor: pointer;
-  line-height: 1.5;
+  ${ButtonStyles}
   text-decoration: none;
   display: block;
   align-self: flex-start;
 `;
 
+export { ButtonStyles };
 export default Button;

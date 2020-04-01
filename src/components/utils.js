@@ -107,7 +107,11 @@ function roundToDecimal(number,decimal) {
     { number += increment; }
   return Math.round(number * mul_div) / mul_div;
 }
-  
 
+const encode = data => {
+  return Object.keys(data)
+    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+    .join('&');
+}
   
-export { getViewport, getCurrentBreakpoint, unique, debounce, useWindowSize, getThumb, roundToDecimal };
+export { getViewport, getCurrentBreakpoint, unique, debounce, useWindowSize, getThumb, roundToDecimal, encode };

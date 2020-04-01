@@ -8,9 +8,10 @@ import MobileFooter from '../MobileFooter';
 import ContactForm from '../ContactForm/ContactForm';
 import useSiteContext from '../SiteContext';
 import theme, { media } from '../theme';
+import Form from '../Forms/Form';
 
 const Nav = () => {
-  const { viewport, menuOpen, toggleMenu } = useSiteContext();
+  const { viewport, menuOpen, toggleMenu, formOptions } = useSiteContext();
   const [formOpen, toggleForm] = useState(false);
 
   const navTransitionObject = {
@@ -31,7 +32,21 @@ const Nav = () => {
     }
   };
 
+  const mobile = viewport.width < theme.sizes.break;
+
   const navTransition = useTransition(menuOpen, null, navTransitionObject);
+
+  const formTransition = useTransition(formOpen, null, {
+     from: {
+       maxHeight: '0%',
+     },
+     enter: {
+       maxHeight: '100%',
+     },
+     leave: {
+       maxHeight: '0%'
+     }
+  })
 
   return navTransition.map(
     ({ item, key, props: { scale, translate, o } }) =>
@@ -73,32 +88,41 @@ const Nav = () => {
             >
               Contact Us
             </Button>
-            {viewport.width < theme.sizes.break && <MobileFooter />}
-            <NavFormWrap className="nav-form-wrap" open={formOpen}>
-              <ContactForm toggleForm={toggleForm} formOpen={formOpen} />
-            </NavFormWrap>
+            {mobile && <MobileFooter />}
+            {formTransition.map(({ item, key, props }) => (item || !mobile) && (
+              <NavFormWrap key={key} className="nav-form-wrap" style={props} open={formOpen}>
+                <Form 
+                  formOpen={formOpen} 
+                  toggleForm={toggleForm} 
+                  cancel={() => toggleForm(false)}
+                  className="nav-form"
+                  fields={formOptions.contactForm.formBuilder}
+                  {...formOptions.contactForm}
+                />
+              </NavFormWrap>
+            ))}
           </StyledNav>
         </React.Fragment>
       )
   );
 };
 
-const NavFormWrap = styled.div`
+const NavFormWrap = styled(animated.div)`
   position: absolute;
   bottom: 0;
   left: 0;
-  overflow: hidden;
+  overflow: scroll;
   height: 100%;
   width: 100%;
-  max-height: ${({ open }) => (open ? '100%' : '0')};
-  transition: 0.15s;
+  /* max-height: ${({ open }) => (open ? '100%' : '0')}; */
+  /* transition: 0.15s; */
   .contact-form {
     height: 100%;
     bottom: 0;
   }
   ${media.break`
     position: initial;
-    max-height: 100%;
+    max-height: 100% !important;
     flex: 0 0 50%;
   `}
 `;

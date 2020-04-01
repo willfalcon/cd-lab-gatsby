@@ -1,33 +1,27 @@
 import React, { useState, useRef } from 'react';
 import { useTransition } from 'react-spring';
+import { useStaticQuery, graphql } from 'gatsby';
 
-import useSiteContext from '../SiteContext';
 import Button from '../Button';
 import ContactForm from './ContactForm';
 import CloseButton from '../CloseButton';
 import BackgroundOverlay from '../BackgroundOverlay';
+import Form from '../Forms/Form';
+
+import useSiteContext from '../SiteContext';
 
 const ContactFormButton = ({ children }) => {
-  const buttonRef = useRef(null);
 
-  // const [location, setLocation] = useState({ width: 0, height: 0, x: 0, y: 0 });
+  const buttonRef = useRef(null);
 
   const buttonRect = buttonRef.current
     ? buttonRef.current.getBoundingClientRect()
     : { width: 0, height: 0, x: 0, y: 0 };
   const { width, height, y, x } = buttonRect;
 
-  // useEffect(() => {
-  //   if (buttonRef.current) {
-  //     setLocation(buttonRect);
-  //   }
-  // }, [width, height, y, x]);
-
   const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
 
-  const { viewport, mobile } = useSiteContext();
-
-  // const mobile = viewport.width >= theme.sizes.break;
+  const { viewport, mobile, formOptions } = useSiteContext();
 
   const [open, setOpen] = useState(false);
 
@@ -42,10 +36,9 @@ const ContactFormButton = ({ children }) => {
       paddingBottom: '0rem',
       paddingLeft: '0%',
       paddingRight: '0%',
-      // opacity: 1,
       o: 0,
       position: 'absolute',
-      zIndex: 8,
+      zIndex: 10,
     },
     enter: {
       width: `${mobile ? viewport.width : viewport.width / 2}px`,
@@ -94,20 +87,6 @@ const ContactFormButton = ({ children }) => {
         ({ item, key, props }) =>
           item && (
             <React.Fragment key={key}>
-              {/* <ContactFormModal
-                style={props}
-                viewheight={viewport.height}
-                className="contact-form-modal"
-                onClick={() => setOpen(false)}
-              >
-                <ContactForm
-                  modal
-                  formOpen={true}
-                  toggleForm={() => setOpen(!open)}
-                  className="modal-contact-form"
-                />
-                <CloseButton handleClose={() => setOpen(false)} />
-              </ContactFormModal> */}
               <BackgroundOverlay
                 onClick={() => setOpen(false)}
                 style={{
@@ -115,15 +94,24 @@ const ContactFormButton = ({ children }) => {
                 }}
                 className="contact-form-bg-overlay"
               />
-              <ContactForm
+              {/* <ContactForm
                 modal
                 formOpen={true}
                 toggleForm={() => setOpen(!open)}
                 className="modal-contact-form"
                 styles={props}
+              > */}
+              <Form
+                modal
+                formOpen={true}
+                toggleForm={() => setOpen(!open)}
+                className="modal-contact-form"
+                styles={props}
+                fields={formOptions.contactForm.formBuilder}
+                {...formOptions.contactForm}
               >
                 <CloseButton handleClick={() => setOpen(false)} />
-              </ContactForm>
+              </Form>
             </React.Fragment>
           )
       )}

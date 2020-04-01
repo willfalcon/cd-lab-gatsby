@@ -12,9 +12,7 @@ const StyledForm = styled(animated.form)`
   bottom: 42px;
   width: 100%;
   height: calc(100% - 42px);
-  /* transition: 0.25s ease-out; */
   padding: ${props => (props.formOpen ? '0rem 2rem 4rem' : '0 2rem')};
-  /* max-height: ${props => (props.formOpen ? '100vh' : '0')}; */
   h1 {
     padding-left: 1.2rem;
     padding-right: 1.2rem;
@@ -45,6 +43,15 @@ const StyledForm = styled(animated.form)`
       &.message-span {
         top: 0;
         transform: translateY(0);
+      }
+    }
+    &.field-textarea {
+      span {
+        top: 0;
+        transform: translateY(0);
+      }
+      &.focused span {
+        transform: translateY(-0%);
       }
     }
     &.focused {
@@ -94,6 +101,9 @@ const StyledForm = styled(animated.form)`
       display: ${({ modal }) => (modal ? 'initial' : 'none')};
     }
   `}
+  .honeypot {
+    display: none;
+  }
 `;
 
 export { StyledForm };

@@ -14,13 +14,16 @@ const MobileFooter = () => {
 const StyledMobileFooter = styled.div`
   width: 100%;
   /* height: 50px; */
+  height: 50px;
   .social-list {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
     background: ${({ theme }) => theme.orange};
     padding-top: 0;
     padding-bottom: 0;
+    height: 100%;
     li {
       padding-top: 1rem;
       padding-bottom: 1rem;
