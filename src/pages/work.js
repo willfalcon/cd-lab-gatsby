@@ -19,7 +19,7 @@ export const WorkQuery = graphql`
   query workQuery {
     sanityWorkPage(_id: { eq: "workPage" }) {
       id
-      _rawBody
+      _rawBody(resolveReferences: {maxDepth: 10})
       title
       seoSettings {
         canonicalUrl

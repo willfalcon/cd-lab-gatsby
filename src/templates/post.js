@@ -17,7 +17,7 @@ export const PostQuery = graphql`
     sanityPost(slug: { current: { eq: $slug } }) {
       id
       title
-      _rawBody
+      _rawBody(resolveReferences: {maxDepth: 10})
       mainImage {
         alt
         asset {

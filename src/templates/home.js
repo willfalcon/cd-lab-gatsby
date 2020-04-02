@@ -26,7 +26,7 @@ export const HomeQuery = graphql`
           }
         }
       }
-      _rawBody
+      _rawBody(resolveReferences: {maxDepth: 10})
       mainImage {
         asset {
           url

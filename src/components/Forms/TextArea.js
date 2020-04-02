@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
 import camelCase from 'camelcase';
-import classNames from 'classnames';
 
-// import { StyledLabel } from './QuoteForm';
+import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 
 const TextArea = ({ name, register, fieldOptions, error }) => {
 
   const required = fieldOptions && fieldOptions.required ? fieldOptions.required : false;
   const halfWidth = fieldOptions && fieldOptions.halfWidth ? fieldOptions.halfWidth : false;
-
+  
+  // Focus State
   const [focused, setFocus] = useState(false);
-
-
   const handleFocus = e => {
     setFocus(true);
   }
-
   const handleBlur = e => {
     if (!e.target.value) {
       setFocus(false);
@@ -25,8 +22,9 @@ const TextArea = ({ name, register, fieldOptions, error }) => {
 
   return (
     <>
-      <label
-        className={classNames('field-text field-textarea', { focused })}
+      <Label
+        className="field-text field-textarea"
+        isFocused={focused}
         htmlFor={camelCase(name)}
         halfWidth={halfWidth}
       >
@@ -41,7 +39,7 @@ const TextArea = ({ name, register, fieldOptions, error }) => {
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
-      </label>
+      </Label>
       {error && <ErrorMessage error={error} />}
     </>
   );

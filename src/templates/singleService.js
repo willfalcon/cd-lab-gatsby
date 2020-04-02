@@ -24,7 +24,7 @@ export const SingleServiceQuery = graphql`
   query SingleServiceQuery($slug: String!) {
     sanityCategory(slug: { current: { eq: $slug } }) {
       id
-      _rawDescription
+      _rawDescription(resolveReferences: {maxDepth: 10})
       seoSettings {
         canonicalUrl
         metaDescription
@@ -68,7 +68,7 @@ export const SingleServiceQuery = graphql`
             }
             id
           }
-          _rawDescription
+          _rawDescription(resolveReferences: {maxDepth: 10})
           videoID
           slug {
             current

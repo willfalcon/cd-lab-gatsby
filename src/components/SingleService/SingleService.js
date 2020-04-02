@@ -6,7 +6,7 @@ import Heading from '../Heading';
 import Content from '../Content';
 import ServicePagination from './ServicePagination';
 import ServiceCoverImage from './ServiceCoverImage';
-import ContactFormButton from '../ContactForm/ContactFormButton';
+import ContactFormButton from '../ContactFormButton';
 import Topics from '../Topics/Topics';
 
 import useSiteContext from '../SiteContext';

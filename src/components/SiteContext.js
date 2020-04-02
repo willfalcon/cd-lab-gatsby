@@ -132,7 +132,7 @@ const SiteContextProvider = ({ children, home }) => {
           node {
             id
             title
-            _rawContent
+            _rawContent(resolveReferences: {maxDepth: 10})
             image {
               alt
               asset {

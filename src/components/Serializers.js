@@ -7,7 +7,6 @@ const InlineNote = (props) => {
 
   const [noteOpen, toggleNote] = useState(false);
 
-  console.log({props})
   return (
     <NoteHighlight className="note-highlight" onClick={() => toggleNote(!noteOpen)}>
       {children}

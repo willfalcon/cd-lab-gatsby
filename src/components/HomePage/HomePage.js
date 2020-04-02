@@ -5,7 +5,7 @@ import Img from 'gatsby-image';
 
 import Content from '../Content';
 import Topics from '../Topics/Topics';
-import ContactFormButton from '../ContactForm/ContactFormButton';
+import ContactFormButton from '../ContactFormButton';
 import Loader from '../Loader';
 
 import { media } from '../theme';
