@@ -15,7 +15,7 @@ const error = ({ data }) => {
 export const ErrorQuery = graphql`
   query ErrorQuery {
     sanityHomePage(_id: { eq: "homePage" }) {
-      _rawBody
+      _rawBody(resolveReferences: {maxDepth: 10})
     }
   }
 `;

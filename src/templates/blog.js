@@ -27,7 +27,7 @@ export const BlogQuery = graphql`
         node {
           id
           title
-          _rawBody
+          _rawBody(resolveReferences: {maxDepth: 10})
           mainImage {
             alt
             asset {
@@ -54,7 +54,7 @@ export const BlogQuery = graphql`
         title
       }
       title
-      _rawBody
+      _rawBody(resolveReferences: {maxDepth: 10})
     }
   }
 `;

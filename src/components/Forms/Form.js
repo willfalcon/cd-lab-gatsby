@@ -9,12 +9,13 @@ import { animated } from 'react-spring';
 import TextField from './TextField';
 import TextArea from './TextArea';
 import CheckBoxes from './CheckBoxes';
+import RadioButtons from './RadioButtons';
 import Button, { ButtonStyles } from '../Button';
 import Heading from '../Heading';
 import Content from '../Content';
 
 import { encode } from '../utils';
-import { media } from '../theme';
+import { media, grid } from '../theme';
 
 const Form = ({ fields, successMessage, title, submitText = "Send", styles, children, modal, cancel = false, className, _rawDescription }) => {
   const [success, setSuccess] = useState(false);
@@ -58,47 +59,59 @@ const Form = ({ fields, successMessage, title, submitText = "Send", styles, chil
         <>
           {_rawDescription && <Content>{_rawDescription}</Content>}
           <fieldset disabled={loading}>
-            {fields.map(field => {
-              if (field._type === 'textField' || field._type === 'emailField') {
-                return (
-                  <TextField 
+            <div className="fieldset-flex-fix">
+              {fields.map(field => {
+                if (field._type === 'textField' || field._type === 'emailField') {
+                  return (
+                    <TextField 
+                      {...field}
+                      key={field._key}
+                      register={register}
+                      error={errors[camelCase(field.name)]}
+                    />
+                  );
+                }
+                if (field._type === 'textArea') {
+                  return <TextArea 
                     {...field}
                     key={field._key}
                     register={register}
                     error={errors[camelCase(field.name)]}
                   />
-                );
-              }
-              if (field._type === 'textArea') {
-                return <TextArea 
-                  {...field}
-                  key={field._key}
-                  register={register}
-                  error={errors[camelCase(field.name)]}
-                />
-              }
-              if (field._type === 'checkBoxes') {
-                return (
-                  <CheckBoxes
-                    {...field}
-                    key={field._key}
-                    register={register}
-                    error={errors[camelCase(field.name)]}
-                  />
-                );
-              }
-              return null;
-            })}
-            <label className="honeypot">
-              Don't fill this out if you're human: <input name="honeypotField" />
-            </label>
-            <Submit type="submit" value={submitText} />
-            {cancel && (
-              <Button
-                handleClick={cancel}
-                className="cancel"
-              >Cancel</Button>
-            )}
+                }
+                if (field._type === 'checkBoxes') {
+                  return (
+                    <CheckBoxes
+                      {...field}
+                      key={field._key}
+                      register={register}
+                      error={errors[camelCase(field.name)]}
+                    />
+                  );
+                }
+                if (field._type === 'radioButtons') {
+                  return (
+                    <RadioButtons
+                      {...field}
+                      key={field._key}
+                      register={register}
+                      error={errors[camelCase(field.name)]}
+                    />
+                  );
+                }
+                return null;
+              })}
+              <label className="honeypot">
+                Don't fill this out if you're human: <input name="honeypotField" />
+              </label>
+              <Submit type="submit" value={submitText} />
+              {cancel && (
+                <Button
+                  handleClick={cancel}
+                  className="cancel"
+                >Cancel</Button>
+              )}
+            </div>
           </fieldset>
         </>
       )}
@@ -133,8 +146,13 @@ const StyledForm = styled(animated.form)`
   }
   fieldset {
     border: 0;
-    display: flex;
-    flex-direction: column;
+  }
+  .fieldset-flex-fix {
+    ${grid.enabled`
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 1rem;
+    `}
   }
   button[type="submit"] {
     margin-right: 1rem;

@@ -18,7 +18,7 @@ export const SingleCollectionQuery = graphql`
     sanityCollection(slug: { current: { eq: $slug } }) {
       id
       title
-      _rawDescription
+      _rawDescription(resolveReferences: {maxDepth: 10})
       seoSettings {
         metaDescription
         title
@@ -53,7 +53,7 @@ export const SingleCollectionQuery = graphql`
             }
           }
         }
-        _rawDescription
+        _rawDescription(resolveReferences: {maxDepth: 10})
         videoID
       }
     }

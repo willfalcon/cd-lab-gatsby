@@ -16,7 +16,7 @@ export const formQuery = graphql`
   query formQuery {
     sanityForm(title: {eq: "Sample Form"}) {
       id
-      _rawDescription
+      _rawDescription(resolveReferences: {maxDepth: 10})
       successMessage
       title
       formBuilder {

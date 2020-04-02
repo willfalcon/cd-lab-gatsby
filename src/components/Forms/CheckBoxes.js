@@ -120,13 +120,13 @@ const CheckboxesContainer = styled.div`
     }
   }
   .checkbox:focus + span {
-    outline-color: ${({ theme }) => theme.red};
+    outline-color: ${({ theme }) => theme.orange};
     outline-offset: -2px;
     outline-style: auto;
     outline-width: 5px;
   }
   .checkbox:checked + span::before {
-    background: ${({ theme }) => theme.red};
+    background: ${({ theme }) => theme.orange};
   }
 `;
 

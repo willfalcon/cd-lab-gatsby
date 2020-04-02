@@ -25,13 +25,13 @@ export const AboutQuery = graphql`
         metaDescription
         title
       }
-      _rawBody
+      _rawBody(resolveReferences: {maxDepth: 10})
     }
     allSanityPerson(sort: { order: ASC, fields: _createdAt }) {
       edges {
         node {
           id
-          _rawBio
+          _rawBio(resolveReferences: {maxDepth: 10})
           name
           primary
           position

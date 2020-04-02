@@ -1,14 +1,18 @@
 import styled from 'styled-components';
 
+import { grid } from '../theme';
+
 const Label = styled.label.attrs(() => ({
   className: 'field-label',
 }))`
   position: relative;
   transition: .15s;
-  width: 100%;
   border: ${({ isFocused, theme }) => `${isFocused ? '3px' : '2px'} solid ${theme.orange}`};
   margin: ${({ isFocused }) => isFocused ? '0px 0px 5px 1px' : '1px 1px 6px'}; 
-
+  width: 100%;
+  ${grid.enabled`
+    grid-column: ${({ halfWidth }) => halfWidth ? 'span 1' : 'span 2'};
+  `}
   .label-text {
     position: absolute;
     top: 50%;
@@ -44,7 +48,8 @@ const Label = styled.label.attrs(() => ({
     }
   }
 
-  &.checkboxes {
+  &.checkboxes,
+  &.radiobuttons {
     .label-text {
       position: relative;
     }
