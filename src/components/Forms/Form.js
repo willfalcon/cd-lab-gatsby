@@ -4,7 +4,7 @@ import {useForm} from 'react-hook-form';
 import camelCase from 'camelcase';
 import classNames from 'classnames';
 import { animated } from 'react-spring';
-
+import { trackCustomEvent } from 'gatsby-plugin-google-analytics'
 
 import TextField from './TextField';
 import TextArea from './TextArea';
@@ -34,13 +34,30 @@ const Form = ({ fields, successMessage, title, submitText = "Send", styles, chil
         console.log(res);
         setSuccess(true);
         setLoading(false);
+
+        trackCustomEvent({
+          // string - required - The object that was interacted with (e.g.video)
+          category: "Forms",
+          // string - required - Type of interaction (e.g. 'play')
+          action: "Form Submit",
+          // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
+          label: title,
+          // number - optional - Numeric value associated with the event. (e.g. A product ID)
+          // value: 43
+        });
       })
       .catch(error => {
         setError(error);
         setLoading(false);
         console.error(error);
       });
-  }
+
+        // gtag('event', 'Form Submit', {
+        //   'event_category': 'Form',
+        //   'event_label': title,
+        // });
+      // Lets track that custom click
+    }
 
   return (
     <StyledForm 
