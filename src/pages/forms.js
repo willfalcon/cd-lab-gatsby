@@ -67,6 +67,24 @@ export const formQuery = graphql`
           }
           name
         }
+        ... on SanityPhoneField {
+          _key
+          _type
+          fieldOptions {
+            halfWidth
+            required
+          }
+          name
+        }
+        ... on SanityAddressField {
+          _key
+          _type
+          fieldOptions {
+            halfWidth
+            required
+          }
+          name
+        }
       }
     }
   }

@@ -43,6 +43,7 @@
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
     "react-hook-form": "^5.1.1",
+    "react-input-mask": "^2.0.4",
     "react-masonry-component": "^6.2.1",
     "react-player": "^1.14.2",
     "react-spring": "^8.0.27",

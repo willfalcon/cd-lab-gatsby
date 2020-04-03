@@ -6,16 +6,27 @@ import classNames from 'classnames';
 import { animated } from 'react-spring';
 import { trackCustomEvent } from 'gatsby-plugin-google-analytics'
 
-import TextField from './TextField';
-import TextArea from './TextArea';
-import CheckBoxes from './CheckBoxes';
-import RadioButtons from './RadioButtons';
 import Button, { ButtonStyles } from '../Button';
 import Heading from '../Heading';
 import Content from '../Content';
 
+import TextField from './TextField';
+import TextArea from './TextArea';
+import CheckBoxes from './CheckBoxes';
+import RadioButtons from './RadioButtons';
+import PhoneField from './PhoneField';
+import AddressField from './AddressField';
+
 import { encode } from '../utils';
 import { media, grid } from '../theme';
+
+/**
+ * Field TODOS
+ * ✅1. Phone
+ * 2. Date/Time
+ * 3. Address
+ * 4. File Upload
+ */
 
 const Form = ({ fields, successMessage, title, submitText = "Send", styles, children, modal, cancel = false, className, _rawDescription }) => {
   const [success, setSuccess] = useState(false);
@@ -36,13 +47,9 @@ const Form = ({ fields, successMessage, title, submitText = "Send", styles, chil
         setLoading(false);
 
         trackCustomEvent({
-          // string - required - The object that was interacted with (e.g.video)
           category: "Forms",
-          // string - required - Type of interaction (e.g. 'play')
           action: "Form Submit",
-          // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
           label: title,
-          // number - optional - Numeric value associated with the event. (e.g. A product ID)
           // value: 43
         });
       })
@@ -51,13 +58,9 @@ const Form = ({ fields, successMessage, title, submitText = "Send", styles, chil
         setLoading(false);
         console.error(error);
       });
-
-        // gtag('event', 'Form Submit', {
-        //   'event_category': 'Form',
-        //   'event_label': title,
-        // });
-      // Lets track that custom click
     }
+
+    console.log(fields);
 
   return (
     <StyledForm 
@@ -88,6 +91,14 @@ const Form = ({ fields, successMessage, title, submitText = "Send", styles, chil
                     />
                   );
                 }
+                if (field._type === 'phoneField') {
+                  return <PhoneField
+                    {...field}
+                    key={field._key}
+                    register={register}
+                    error={errors[camelCase(field.name)]}
+                  />
+                }
                 if (field._type === 'textArea') {
                   return <TextArea 
                     {...field}
@@ -109,6 +120,16 @@ const Form = ({ fields, successMessage, title, submitText = "Send", styles, chil
                 if (field._type === 'radioButtons') {
                   return (
                     <RadioButtons
+                      {...field}
+                      key={field._key}
+                      register={register}
+                      error={errors[camelCase(field.name)]}
+                    />
+                  );
+                }
+                if (field._type === 'addressField') {
+                  return (
+                    <AddressField
                       {...field}
                       key={field._key}
                       register={register}
@@ -171,8 +192,16 @@ const StyledForm = styled(animated.form)`
       grid-column-gap: 1rem;
     `}
   }
-  button[type="submit"] {
+  .field-address {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 1rem;
+  }
+  input[type="submit"] {
     margin-right: 1rem;
+    grid-column: span 2;
+    justify-self: start;
   }
   .buttons {
     display: flex;
