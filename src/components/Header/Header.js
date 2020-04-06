@@ -78,6 +78,7 @@ const HomeLogoWrap = styled(Link)`
         ${theme.offWhite} 60%,
         ${rgba(theme.offWhite, 0)}
       )`};
+      z-index: 1;
   `}
 `;
 
