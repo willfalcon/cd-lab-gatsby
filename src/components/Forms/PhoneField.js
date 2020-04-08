@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 // import camelCase from 'camelcase';
+import MaskedInput from "react-input-mask";
 
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 
-const TextField = ({ name, register, fieldOptions, error, _type }) => {
+const PhoneField = ({ name, register, fieldOptions, error, _type }) => {
 
   const required = fieldOptions && fieldOptions.required ? fieldOptions.required : false;
   const halfWidth = fieldOptions && fieldOptions.halfWidth ? fieldOptions.halfWidth : false;
-  const adminLabel = fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
 
   // Focus State
   const [focused, setFocus] = useState(false);
@@ -21,23 +21,32 @@ const TextField = ({ name, register, fieldOptions, error, _type }) => {
     }
   }
 
+  const isNotFilledTel = v => v && v.indexOf("_") === -1 ? undefined : "Please enter a valid 10 digit phone number.";
+
   return (
     <>
       <Label 
-        className="field-text"
+        className="field-text field-phone"
         isFocused={focused}
-        htmlFor={adminLabel ? adminLabel : name}
+        htmlFor={name}
         halfWidth={halfWidth}
       >
         <span className="label-text">
           {name}
           {required && '*'}
         </span>
-        <input 
+        <MaskedInput
           className="text-input"
-          type={_type === 'emailField' ? 'email' : 'text'}
-          name={adminLabel ? adminLabel : name}
-          ref={register({ required })}
+          type="tel"
+          name={name}
+          inputRef={register({ 
+            required, 
+            validate: {
+              inputTelRequired: isNotFilledTel
+            }
+          })}
+          mask="(999) 999-9999"
+          // alwaysShowMask
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
@@ -47,4 +56,4 @@ const TextField = ({ name, register, fieldOptions, error, _type }) => {
   );
 };
 
-export default TextField;
+export default PhoneField;

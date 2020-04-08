@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import camelCase from 'camelcase';
+// import camelCase from 'camelcase';
 
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
@@ -41,7 +41,7 @@ const CheckBoxes = ({ name, options, register, fieldOptions, error }) => {
     <>
       <Label
         className="checkboxes"
-        htmlFor={camelCase(name)}
+        htmlFor={name}
         halfWidth={halfWidth}
       >
         <span className="label-text">
@@ -55,7 +55,7 @@ const CheckBoxes = ({ name, options, register, fieldOptions, error }) => {
           {options.map((option, i) => (
             <span
               className="checkbox-wrapper"
-              key={camelCase(option)}
+              key={option}
               onClick={() => toggleChecked(i)}
             >
               <input
@@ -63,8 +63,8 @@ const CheckBoxes = ({ name, options, register, fieldOptions, error }) => {
                 className="checkbox"
                 type="checkbox"
                 checked={checked.includes(i)}
-                name={camelCase(name)}
-                value={camelCase(option)}
+                name={name}
+                value={option}
                 ref={register({
                   required
                 })}

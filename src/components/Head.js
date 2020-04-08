@@ -32,7 +32,7 @@ const Head = ({ canonicalUrl, metaDescription, title, pageTitle, home }) => {
         title={titleTag}
       >
         <link rel="stylesheet" href="https://use.typekit.net/vcl0nfa.css" />
-        <style type="text/css">{customCSS.code}</style>
+        <style type="text/css" data-custom-css>{customCSS.code}</style>
         {metaDescription && (
           <meta name="description" content={metaDescription} />
         )}

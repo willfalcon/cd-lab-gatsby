@@ -8,7 +8,9 @@ const Label = styled.label.attrs(() => ({
   position: relative;
   transition: .15s;
   border: ${({ isFocused, theme }) => `${isFocused ? '3px' : '2px'} solid ${theme.orange}`};
-  margin: ${({ isFocused }) => isFocused ? '0px 0px 5px 1px' : '1px 1px 6px'}; 
+  &:not(.field-file) {
+    margin: ${({ isFocused }) => isFocused ? '0px 0px 5px 1px' : '1px 1px 6px'}; 
+  }
   width: 100%;
   ${grid.enabled`
     grid-column: ${({ halfWidth }) => halfWidth ? 'span 1' : 'span 2'};
@@ -18,8 +20,10 @@ const Label = styled.label.attrs(() => ({
     top: 50%;
     left: 0.5rem;
     transition: .15s;
-    transform: ${({ isFocused }) => isFocused ? 'translateY(-115%)' : 'translateY(-50%)'};
-    font-size: ${({ isFocused }) => isFocused && '1.2rem'};
+    &:not(.label-text--file) {
+      transform: ${({ isFocused }) => isFocused ? 'translateY(-115%)' : 'translateY(-50%)'};
+      font-size: ${({ isFocused }) => isFocused && '1.2rem'};
+    }
     pointer-events: none;
     &.message-span {
       top: 0;
@@ -31,6 +35,13 @@ const Label = styled.label.attrs(() => ({
     .label-text {
       top: 0;
       transform: translateY(0);
+    }
+  }
+
+  &.field-file {
+    /* border: none; */
+    .label-text {
+      /* position: static; */
     }
   }
 
