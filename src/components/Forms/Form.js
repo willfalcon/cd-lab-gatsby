@@ -19,6 +19,7 @@ import AddressField from './AddressField';
 import FileUpload from './FileUpload';
 import DateField from './DateField';
 import TimeField from './TimeField';
+import DateTimeField from './DateTimeField';
 
 import { encode } from '../utils';
 import { media, grid } from '../theme';
@@ -188,6 +189,18 @@ const Form = ({
                       key={field._key}
                       register={register}
                       error={errors[field.name]}
+                      control={control}
+                    />
+                  );
+                }
+                if (field._type === 'dateTimeField') {
+                  return (
+                    <DateTimeField
+                      {...field}
+                      key={field._key}
+                      register={register}
+                      error={errors[field.name]}
+                      control={control}
                     />
                   );
                 }

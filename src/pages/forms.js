@@ -122,6 +122,16 @@ export const formQuery = graphql`
           }
           name
         }
+        ... on SanityDateTimeField {
+          _key
+          _type
+          fieldOptions {
+            adminLabel
+            halfWidth
+            required
+          }
+          name
+        }
       }
     }
   }

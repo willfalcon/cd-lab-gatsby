@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DatePicker from 'react-date-picker';
+import DateTimePicker from 'react-datetime-picker';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,7 +16,7 @@ import ErrorMessage from './ErrorMessage';
 
 import theme from '../theme';
 
-const DateField = ({ name, fieldOptions, error, control }) => {
+const DateTimeField = ({ name, fieldOptions, error, control }) => {
   const required =
     fieldOptions && fieldOptions.required ? fieldOptions.required : false;
   const halfWidth =
@@ -51,7 +51,7 @@ const DateField = ({ name, fieldOptions, error, control }) => {
           {required && '*'}
         </span>
         <Controller
-          as={DatePicker}
+          as={DateTimePicker}
           control={control}
           className="text-input date-field"
           name={adminLabel ? adminLabel : name}
@@ -93,7 +93,7 @@ const DateField = ({ name, fieldOptions, error, control }) => {
 };
 
 const DateTimeLabel = styled(Label)`
-  .react-date-picker {
+  .react-datetime-picker {
     width: 100%;
     height: 100%;
     display: flex;
@@ -108,7 +108,7 @@ const DateTimeLabel = styled(Label)`
       transition: 0.25s;
       opacity: ${({ isFocused }) => (isFocused ? 1 : 0)};
       &__input {
-        flex: 1 0 auto;
+        /* flex: 1 0 auto; */
         padding: 0;
         :invalid {
           background: transparent;
@@ -121,13 +121,13 @@ const DateTimeLabel = styled(Label)`
         margin: .5rem;
       }
       &__year {
-        flex: 2 0 auto;
+        /* flex: 2 0 auto; */
         /* padding: 0 .5rem; */
       }
     }
     &__button {
-      :enabled:hover .react-date-picker__button__icon,
-      :enabled:focus .react-date-picker__button__icon {
+      :enabled:hover .react-datetime-picker__button__icon,
+      :enabled:focus .react-datetime-picker__button__icon {
         stroke: ${({ theme }) => theme.orange};
       }
     }
@@ -212,4 +212,4 @@ const DateTimeLabel = styled(Label)`
   
 `;
 
-export default DateField;
+export default DateTimeField;
