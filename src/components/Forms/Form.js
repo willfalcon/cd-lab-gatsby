@@ -47,7 +47,7 @@ const Form = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const hookForm = useForm();
-  const { register, handleSubmit, errors } = hookForm;
+  const { register, handleSubmit, errors, control } = hookForm;
   // console.log({ hookForm });
   const onSubmit = data => {
     setLoading(true);
@@ -177,6 +177,7 @@ const Form = ({
                       key={field._key}
                       register={register}
                       error={errors[field.name]}
+                      control={control}
                     />
                   );
                 }

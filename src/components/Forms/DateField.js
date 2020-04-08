@@ -1,6 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
-// import camelCase from 'camelcase';
-// import DatePicker from 'react-datepicker';
+import React, { useState } from 'react';
 import DatePicker from 'react-date-picker';
 import styled from 'styled-components';
 import { rgba } from 'polished';
@@ -13,14 +11,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Controller } from 'react-hook-form';
 
-// import 'react-datepicker/dist/react-datepicker.css';
-
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 
 import theme from '../theme';
 
-const DateField = ({ name, register, fieldOptions, error, _type }) => {
+const DateField = ({ name, fieldOptions, error, control }) => {
   const required =
     fieldOptions && fieldOptions.required ? fieldOptions.required : false;
   const halfWidth =
@@ -34,24 +30,13 @@ const DateField = ({ name, register, fieldOptions, error, _type }) => {
     setFocus(true);
   };
   const handleBlur = e => {
-    if (!e.target.value) {
-      setFocus(false);
+    if (e[0].target.tagName === 'INPUT') {
+      if (!e[0].target.value) {
+        setFocus(false);
+      }
     }
+    console.dir(e[0].target);
   };
-
-  const [date, setDate] = useState();
-
-  const pickerRef = useRef(null);
-
-  useEffect(() => {
-    // if (pickerRef.current) {
-    //   // console.log(pickerRef.current.wrapper);
-    //   const dividers = pickerRef.current.wrapper.querySelectorAll(
-    //     '.react-date-picker__inputGroup__divider'
-    //   );
-    //   dividers.forEach(self => self.remove());
-    // }
-  });
 
   return (
     <>
@@ -65,18 +50,13 @@ const DateField = ({ name, register, fieldOptions, error, _type }) => {
           {name}
           {required && '*'}
         </span>
-        <DatePicker
+        <Controller
+          as={DatePicker}
+          control={control}
           className="text-input date-field"
           name={adminLabel ? adminLabel : name}
-          ref={register({ required })}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          value={date}
-          onChange={date => setDate(date)}
-          dayPlaceholder={false}
-          monthPlaceholder={false}
-          yearPlaceholder={false}
-          ref={pickerRef}
           prevLabel={
             <FontAwesomeIcon
               icon={faAngleLeft}
