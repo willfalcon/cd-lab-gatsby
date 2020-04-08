@@ -11,6 +11,7 @@ const CloseButton = ({
   label = 'Close',
   className,
   styles,
+  tiny = false,
 }) => {
   const positions = {
     top: position && position.top ? position.top : 0,
@@ -25,6 +26,7 @@ const CloseButton = ({
       id="close-button"
       aria-label={label}
       style={styles}
+      tiny={tiny}
     >
       <span />
       <span />
@@ -33,15 +35,20 @@ const CloseButton = ({
 };
 
 const StyledCloseButton = styled(animated.button)`
-  background-color: ${({ theme }) => theme.orange};
+  background-color: ${({ theme, tiny }) =>
+    tiny ? 'transparent' : theme.orange};
   outline: none;
   border: 0;
   width: 30px;
+  /* width: ${({ tiny }) => (tiny ? '15px' : '30px')}; */
   height: 30px;
+  /* height: ${({ tiny }) => (tiny ? '15px' : '30px')}; */
   cursor: pointer;
   ${media.break`
-    width: 40px;
-    height: 40px;
+    /* width: 40px; */
+    width: ${({ tiny }) => (tiny ? '20px' : '40px')};
+    /* height: 40px; */
+    height: ${({ tiny }) => (tiny ? '20px' : '40px')};
   `}
   position: absolute;
   top: ${({ position }) => position.top};
@@ -50,7 +57,8 @@ const StyledCloseButton = styled(animated.button)`
   span {
     width: 16px;
     height: 2px;
-    background: white;
+    /* background: white; */
+    background: ${({ theme, tiny }) => (tiny ? theme.dark : 'white')};
     display: border;
     position: absolute;
     top: 50%;
