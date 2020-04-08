@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import camelCase from 'camelcase';
+// import camelCase from 'camelcase';
 
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
@@ -12,7 +12,7 @@ const halfWidth = fieldOptions && fieldOptions.halfWidth ? fieldOptions.halfWidt
   return (
     <Label
       className="radiobuttons"
-      htmlFor={camelCase(name)}
+      htmlFor={name}
       halfWidth={halfWidth}
     >
       <span className="label-text">
@@ -26,7 +26,7 @@ const halfWidth = fieldOptions && fieldOptions.halfWidth ? fieldOptions.halfWidt
         {options.map((option, i) => (
           <span
             className="radio-button-wrapper"
-            key={camelCase(option)}
+            key={option}
             onClick={() => setChecked(i)}
           >
             <input
@@ -34,8 +34,8 @@ const halfWidth = fieldOptions && fieldOptions.halfWidth ? fieldOptions.halfWidt
               className="radio-button"
               type="radio"
               checked={checked === i}
-              name={camelCase(name)}
-              value={camelCase(option)}
+              name={name}
+              value={option}
               ref={register({
                 required
               })}

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import {useForm} from 'react-hook-form';
-import camelCase from 'camelcase';
+import { useForm } from 'react-hook-form';
+// import camelCase from 'camelcase';
 import classNames from 'classnames';
 import { animated } from 'react-spring';
-import { trackCustomEvent } from 'gatsby-plugin-google-analytics'
+import { trackCustomEvent } from 'gatsby-plugin-google-analytics';
 
 import Button, { ButtonStyles } from '../Button';
 import Heading from '../Heading';
@@ -16,6 +16,9 @@ import CheckBoxes from './CheckBoxes';
 import RadioButtons from './RadioButtons';
 import PhoneField from './PhoneField';
 import AddressField from './AddressField';
+import FileUpload from './FileUpload';
+import DateField from './DateField';
+import TimeField from './TimeField';
 
 import { encode } from '../utils';
 import { media, grid } from '../theme';
@@ -24,18 +27,31 @@ import { media, grid } from '../theme';
  * Field TODOS
  * ✅1. Phone
  * 2. Date/Time
- * 3. Address
- * 4. File Upload
+ * ✅3. Address
+ * ✅4. File Upload
  */
 
-const Form = ({ fields, successMessage, title, submitText = "Send", styles, children, modal, cancel = false, className, _rawDescription }) => {
+const Form = ({
+  fields,
+  successMessage,
+  title,
+  submitText = 'Send',
+  styles,
+  children,
+  modal,
+  cancel = false,
+  className,
+  _rawDescription,
+}) => {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const hookForm = useForm();
   const { register, handleSubmit, errors } = hookForm;
+  // console.log({ hookForm });
   const onSubmit = data => {
     setLoading(true);
+    console.log({ data });
     fetch('/not-real', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -47,8 +63,8 @@ const Form = ({ fields, successMessage, title, submitText = "Send", styles, chil
         setLoading(false);
 
         trackCustomEvent({
-          category: "Forms",
-          action: "Form Submit",
+          category: 'Forms',
+          action: 'Form Submit',
           label: title,
           // value: 43
         });
@@ -58,21 +74,21 @@ const Form = ({ fields, successMessage, title, submitText = "Send", styles, chil
         setLoading(false);
         console.error(error);
       });
-    }
+  };
 
-    console.log(fields);
+  console.log(fields);
 
   return (
-    <StyledForm 
-      className={classNames(className, 'form')} 
-      onSubmit={handleSubmit(onSubmit)} 
-      style={styles} 
-      modal={modal} 
-      data-netlify="true" 
-      name={title} 
+    <StyledForm
+      className={classNames(className, 'form')}
+      onSubmit={handleSubmit(onSubmit)}
+      style={styles}
+      modal={modal}
+      data-netlify="true"
+      name={title}
       netlify-honeypot="honeypotField"
     >
-      {title && <Heading>{title}</Heading>} 
+      {title && <Heading>{title}</Heading>}
       {success ? (
         <p>{successMessage}</p>
       ) : (
@@ -81,31 +97,38 @@ const Form = ({ fields, successMessage, title, submitText = "Send", styles, chil
           <fieldset disabled={loading}>
             <div className="fieldset-flex-fix">
               {fields.map(field => {
-                if (field._type === 'textField' || field._type === 'emailField') {
+                if (
+                  field._type === 'textField' ||
+                  field._type === 'emailField'
+                ) {
                   return (
-                    <TextField 
+                    <TextField
                       {...field}
                       key={field._key}
                       register={register}
-                      error={errors[camelCase(field.name)]}
+                      error={errors[field.name]}
                     />
                   );
                 }
                 if (field._type === 'phoneField') {
-                  return <PhoneField
-                    {...field}
-                    key={field._key}
-                    register={register}
-                    error={errors[camelCase(field.name)]}
-                  />
+                  return (
+                    <PhoneField
+                      {...field}
+                      key={field._key}
+                      register={register}
+                      error={errors[field.name]}
+                    />
+                  );
                 }
                 if (field._type === 'textArea') {
-                  return <TextArea 
-                    {...field}
-                    key={field._key}
-                    register={register}
-                    error={errors[camelCase(field.name)]}
-                  />
+                  return (
+                    <TextArea
+                      {...field}
+                      key={field._key}
+                      register={register}
+                      error={errors[field.name]}
+                    />
+                  );
                 }
                 if (field._type === 'checkBoxes') {
                   return (
@@ -113,7 +136,7 @@ const Form = ({ fields, successMessage, title, submitText = "Send", styles, chil
                       {...field}
                       key={field._key}
                       register={register}
-                      error={errors[camelCase(field.name)]}
+                      error={errors[field.name]}
                     />
                   );
                 }
@@ -123,7 +146,7 @@ const Form = ({ fields, successMessage, title, submitText = "Send", styles, chil
                       {...field}
                       key={field._key}
                       register={register}
-                      error={errors[camelCase(field.name)]}
+                      error={errors[field.name]}
                     />
                   );
                 }
@@ -133,21 +156,51 @@ const Form = ({ fields, successMessage, title, submitText = "Send", styles, chil
                       {...field}
                       key={field._key}
                       register={register}
-                      error={errors[camelCase(field.name)]}
+                      error={errors[field.name]}
+                    />
+                  );
+                }
+                if (field._type === 'fileUpload') {
+                  return (
+                    <FileUpload
+                      {...field}
+                      key={field._key}
+                      register={register}
+                      error={errors[field.name]}
+                    />
+                  );
+                }
+                if (field._type === 'dateField') {
+                  return (
+                    <DateField
+                      {...field}
+                      key={field._key}
+                      register={register}
+                      error={errors[field.name]}
+                    />
+                  );
+                }
+                if (field._type === 'timeField') {
+                  return (
+                    <TimeField
+                      {...field}
+                      key={field._key}
+                      register={register}
+                      error={errors[field.name]}
                     />
                   );
                 }
                 return null;
               })}
               <label className="honeypot">
-                Don't fill this out if you're human: <input name="honeypotField" />
+                Don't fill this out if you're human:{' '}
+                <input name="honeypotField" />
               </label>
               <Submit type="submit" value={submitText} />
               {cancel && (
-                <Button
-                  handleClick={cancel}
-                  className="cancel"
-                >Cancel</Button>
+                <Button handleClick={cancel} className="cancel">
+                  Cancel
+                </Button>
               )}
             </div>
           </fieldset>
@@ -165,11 +218,6 @@ const Submit = styled.input`
 
 const StyledForm = styled(animated.form)`
   background: ${props => props.theme.offWhite};
-  /* overflow: hidden; */
-  /* flex: 0 0 50%; */
-  /* position: absolute; */
-  /* left: 0; */
-  /* bottom: 42px; */
   width: 100%;
   height: calc(100% - 42px);
   padding: ${props => (props.formOpen ? '0rem 2rem 4rem' : '0 2rem')};
@@ -185,20 +233,40 @@ const StyledForm = styled(animated.form)`
   fieldset {
     border: 0;
   }
-  .fieldset-flex-fix {
-    ${grid.enabled`
+  ${grid.enabled`
+    .fieldset-flex-fix {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-column-gap: 1rem;
-    `}
-  }
+    }
+  `}
   .field-address {
     grid-column: span 2;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 1rem;
   }
-  input[type="submit"] {
+  .complex-field-label {
+    font-family: synthese, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 2px;
+    line-height: 2.15;
+    margin: 0 0 0.5rem;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    display: block;
+    grid-column: span 2;
+    width: 50%;
+    ::after {
+      content: '';
+      width: 100%;
+      height: 1px;
+      background: ${({ theme }) => theme.orange};
+      display: block;
+    }
+  }
+  input[type='submit'] {
     margin-right: 1rem;
     grid-column: span 2;
     justify-self: start;

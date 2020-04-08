@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import camelCase from 'camelcase';
+// import camelCase from 'camelcase';
 
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
@@ -25,7 +25,7 @@ const TextArea = ({ name, register, fieldOptions, error }) => {
       <Label
         className="field-text field-textarea"
         isFocused={focused}
-        htmlFor={camelCase(name)}
+        htmlFor={name}
         halfWidth={halfWidth}
       >
         <span className="label-text">
@@ -34,7 +34,7 @@ const TextArea = ({ name, register, fieldOptions, error }) => {
         </span>
         <textarea
           className="text-area"
-          name={camelCase(name)}
+          name={name}
           ref={register({ required })}
           onFocus={handleFocus}
           onBlur={handleBlur}

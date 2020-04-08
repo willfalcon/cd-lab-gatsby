@@ -4,27 +4,29 @@ import React, { useState } from 'react';
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 
-const TextField = ({ name, register, fieldOptions, error, _type }) => {
-
-  const required = fieldOptions && fieldOptions.required ? fieldOptions.required : false;
-  const halfWidth = fieldOptions && fieldOptions.halfWidth ? fieldOptions.halfWidth : false;
-  const adminLabel = fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
+const TimeField = ({ name, register, fieldOptions, error, _type }) => {
+  const required =
+    fieldOptions && fieldOptions.required ? fieldOptions.required : false;
+  const halfWidth =
+    fieldOptions && fieldOptions.halfWidth ? fieldOptions.halfWidth : false;
+  const adminLabel =
+    fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
 
   // Focus State
   const [focused, setFocus] = useState(false);
   const handleFocus = e => {
     setFocus(true);
-  }
+  };
   const handleBlur = e => {
     if (!e.target.value) {
       setFocus(false);
     }
-  }
+  };
 
   return (
     <>
-      <Label 
-        className="field-text"
+      <Label
+        className="field-text field-time"
         isFocused={focused}
         htmlFor={adminLabel ? adminLabel : name}
         halfWidth={halfWidth}
@@ -33,9 +35,9 @@ const TextField = ({ name, register, fieldOptions, error, _type }) => {
           {name}
           {required && '*'}
         </span>
-        <input 
+        <input
           className="text-input"
-          type={_type === 'emailField' ? 'email' : 'text'}
+          type="text"
           name={adminLabel ? adminLabel : name}
           ref={register({ required })}
           onFocus={handleFocus}
@@ -47,4 +49,4 @@ const TextField = ({ name, register, fieldOptions, error, _type }) => {
   );
 };
 
-export default TextField;
+export default TimeField;

@@ -14,9 +14,9 @@ const Forms = ({ data: { sanityForm } }) => {
 
 export const formQuery = graphql`
   query formQuery {
-    sanityForm(title: {eq: "Sample Form"}) {
+    sanityForm(title: { eq: "Sample Form" }) {
       id
-      _rawDescription(resolveReferences: {maxDepth: 10})
+      _rawDescription(resolveReferences: { maxDepth: 10 })
       successMessage
       title
       formBuilder {
@@ -26,6 +26,7 @@ export const formQuery = graphql`
           fieldOptions {
             halfWidth
             required
+            adminLabel
           }
           name
           options
@@ -36,6 +37,7 @@ export const formQuery = graphql`
           fieldOptions {
             halfWidth
             required
+            adminLabel
           }
           name
         }
@@ -45,6 +47,7 @@ export const formQuery = graphql`
           fieldOptions {
             halfWidth
             required
+            adminLabel
           }
           name
           options
@@ -55,6 +58,7 @@ export const formQuery = graphql`
           fieldOptions {
             halfWidth
             required
+            adminLabel
           }
           name
         }
@@ -64,6 +68,7 @@ export const formQuery = graphql`
           fieldOptions {
             halfWidth
             required
+            adminLabel
           }
           name
         }
@@ -73,6 +78,7 @@ export const formQuery = graphql`
           fieldOptions {
             halfWidth
             required
+            adminLabel
           }
           name
         }
@@ -80,6 +86,37 @@ export const formQuery = graphql`
           _key
           _type
           fieldOptions {
+            halfWidth
+            required
+            adminLabel
+          }
+          name
+        }
+        ... on SanityFileUpload {
+          _key
+          _type
+          fieldOptions {
+            halfWidth
+            adminLabel
+            required
+          }
+          name
+        }
+        ... on SanityDateField {
+          _key
+          _type
+          fieldOptions {
+            adminLabel
+            halfWidth
+            required
+          }
+          name
+        }
+        ... on SanityTimeField {
+          _key
+          _type
+          fieldOptions {
+            adminLabel
             halfWidth
             required
           }

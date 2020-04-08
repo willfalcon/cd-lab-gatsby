@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import camelCase from 'camelcase';
+// import camelCase from 'camelcase';
 import MaskedInput from "react-input-mask";
 
 import Label from './Label';
@@ -28,7 +28,7 @@ const PhoneField = ({ name, register, fieldOptions, error, _type }) => {
       <Label 
         className="field-text field-phone"
         isFocused={focused}
-        htmlFor={camelCase(name)}
+        htmlFor={name}
         halfWidth={halfWidth}
       >
         <span className="label-text">
@@ -38,7 +38,7 @@ const PhoneField = ({ name, register, fieldOptions, error, _type }) => {
         <MaskedInput
           className="text-input"
           type="tel"
-          name={camelCase(name)}
+          name={name}
           inputRef={register({ 
             required, 
             validate: {
