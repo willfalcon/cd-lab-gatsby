@@ -6,36 +6,36 @@ import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 
 const FileUpload = ({ name, register, fieldOptions, error, _type }) => {
-
-  const required = fieldOptions && fieldOptions.required ? fieldOptions.required : false;
-  const halfWidth = fieldOptions && fieldOptions.halfWidth ? fieldOptions.halfWidth : false;
-  const adminLabel = fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
+  const required =
+    fieldOptions && fieldOptions.required ? fieldOptions.required : false;
+  const halfWidth =
+    fieldOptions && fieldOptions.halfWidth ? fieldOptions.halfWidth : false;
+  const adminLabel =
+    fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
 
   // Focus State
   const [focused, setFocus] = useState(false);
   const [fileName, setFileName] = useState(false);
 
-  console.log({focused, fileName});
   const handleFocus = e => {
     setFocus(true);
-  }
+  };
   const handleBlur = e => {
-      setFocus(false);
-  }
+    setFocus(false);
+  };
 
   const handleChange = e => {
     const filePath = e.target.value;
-    const splitFile = filePath.split("\\");
+    const splitFile = filePath.split('\\');
     const file = splitFile[splitFile.length - 1];
     if (file) {
       setFocus(true);
       setFileName(file);
     }
-
-  }
+  };
   return (
     <>
-      <FileInputLabel 
+      <FileInputLabel
         className="field-file"
         isFocused={focused}
         fileName={fileName}
@@ -46,7 +46,7 @@ const FileUpload = ({ name, register, fieldOptions, error, _type }) => {
           {name}
           {required && '*'}
         </span>
-        <FileInput 
+        <FileInput
           className="file-input"
           type="file"
           name={adminLabel ? adminLabel : name}
@@ -76,11 +76,14 @@ const FileInputLabel = styled(Label)`
     left: .5rem;
   }
   &.field-file {
-    /* margin: ${({ isFocused }) => isFocused ? '0px 1px 5px 1px' : '1px 1px 6px'};  */
-    border: ${({ isFocused, theme }) => `${isFocused ? '3px' : '2px'} solid ${theme.orange}`};
+    /* margin: ${({ isFocused }) =>
+      isFocused ? '0px 1px 5px 1px' : '1px 1px 6px'};  */
+    border: ${({ isFocused, theme }) =>
+      `${isFocused ? '3px' : '2px'} solid ${theme.orange}`};
     border-right: ${({ isFocused, theme }) => `2px solid ${theme.orange}`};
     .label-text--file {
-      transform: ${({ fileName }) => fileName ? 'translateY(-115%)' : 'translateY(-50%)'};
+      transform: ${({ fileName }) =>
+        fileName ? 'translateY(-115%)' : 'translateY(-50%)'};
       font-size: ${({ fileName }) => fileName && '1.2rem'};
     }
   }
@@ -89,7 +92,7 @@ const FileInputLabel = styled(Label)`
     height: 100%;
     position: absolute;
     right: 0;
-    right: ${({ isFocused }) => isFocused ? '-1px' : '0'};
+    right: ${({ isFocused }) => (isFocused ? '-1px' : '0')};
     top: 0;
     display: flex;
     align-items: center;
