@@ -17,18 +17,18 @@ const Nav = () => {
     from: {
       scale: 0,
       translate: -75,
-      o: 0
+      o: 0,
     },
     enter: {
       scale: 1,
       translate: 0,
-      o: 1
+      o: 1,
     },
     leave: {
       scale: 0,
       translate: -75,
-      o: 0
-    }
+      o: 0,
+    },
   };
 
   const mobile = viewport.width < theme.sizes.break;
@@ -36,16 +36,16 @@ const Nav = () => {
   const navTransition = useTransition(menuOpen, null, navTransitionObject);
 
   const formTransition = useTransition(formOpen, null, {
-     from: {
-       maxHeight: '0%',
-     },
-     enter: {
-       maxHeight: '100%',
-     },
-     leave: {
-       maxHeight: '0%'
-     }
-  })
+    from: {
+      maxHeight: '0%',
+    },
+    enter: {
+      maxHeight: '100%',
+    },
+    leave: {
+      maxHeight: '0%',
+    },
+  });
 
   return navTransition.map(
     ({ item, key, props: { scale, translate, o } }) =>
@@ -76,7 +76,7 @@ const Nav = () => {
                       [scale, translate],
                       (scale, translate) =>
                         `translateY(${translate}px) scale(${scale})`
-                    )
+                    ),
             }}
           >
             <Menu />
@@ -88,18 +88,26 @@ const Nav = () => {
               Contact Us
             </Button>
             {mobile && <MobileFooter />}
-            {formTransition.map(({ item, key, props }) => (item || !mobile) && (
-              <NavFormWrap key={key} className="nav-form-wrap" style={props} open={formOpen}>
-                <ContactForm 
-                  formOpen={formOpen} 
-                  toggleForm={toggleForm} 
-                  cancel={() => toggleForm(false)}
-                  className="nav-form"
-                  fields={formOptions.contactForm.formBuilder}
-                  {...formOptions.contactForm}
-                />
-              </NavFormWrap>
-            ))}
+            {formTransition.map(
+              ({ item, key, props }) =>
+                (item || !mobile) && (
+                  <NavFormWrap
+                    key={key}
+                    className="nav-form-wrap"
+                    style={props}
+                    open={formOpen}
+                  >
+                    <ContactForm
+                      formOpen={formOpen}
+                      toggleForm={toggleForm}
+                      cancel={() => toggleForm(false)}
+                      className="nav-form"
+                      fields={formOptions.contactForm.formBuilder}
+                      {...formOptions.contactForm}
+                    />
+                  </NavFormWrap>
+                )
+            )}
           </StyledNav>
         </React.Fragment>
       )
@@ -198,7 +206,7 @@ const StyledNav = styled(animated.nav)`
     padding-bottom: 0;
     display: flex;
     flex-direction: row;
-    position: absolute;
+    position: fixed;
     transform-origin: 0 100px;
     ul {
       flex: 0 0 50%;
@@ -209,7 +217,7 @@ const StyledNav = styled(animated.nav)`
 
 const NavBackdrop = styled(animated.div)`
   display: none;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   background: ${({ theme }) => rgba(theme.dark, 0.65)};
