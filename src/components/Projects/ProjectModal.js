@@ -44,7 +44,9 @@ const ProjectModal = ({
           opacity: 1,
         }}
         viewport={viewport}
-        videoThumb={item.thumbnail.childImageSharp.fluid.src}
+        videoThumb={
+          item.thumbnail ? item.thumbnail.childImageSharp.fluid.src : false
+        }
       >
         {item.image && item.image.asset.extension === 'gif' && (
           <img
