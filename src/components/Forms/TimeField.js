@@ -25,7 +25,6 @@ const TimeField = ({ name, register, fieldOptions, error, control }) => {
         setFocus(false);
       }
     }
-    console.dir(e[0].target);
   };
 
   return (
@@ -80,9 +79,10 @@ const TimeFieldLabel = styled(Label)`
       }
     }
     &__button {
-    :enabled:hover .react-time-picker__button__icon,
-    :enabled:focus .react-time-picker__button__icon {
-      stroke: ${({ theme }) => theme.orange};
+      :enabled:hover .react-time-picker__button__icon,
+      :enabled:focus .react-time-picker__button__icon {
+        stroke: ${({ theme }) => theme.orange};
+      }
     }
   }
   select {

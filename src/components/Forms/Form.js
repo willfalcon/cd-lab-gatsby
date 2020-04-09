@@ -10,27 +10,10 @@ import Button, { ButtonStyles } from '../Button';
 import Heading from '../Heading';
 import Content from '../Content';
 
-import TextField from './TextField';
-import TextArea from './TextArea';
-import CheckBoxes from './CheckBoxes';
-import RadioButtons from './RadioButtons';
-import PhoneField from './PhoneField';
-import AddressField from './AddressField';
-import FileUpload from './FileUpload';
-import DateField from './DateField';
-import TimeField from './TimeField';
-import DateTimeField from './DateTimeField';
+import FieldSwitcher from './FieldSwitcher';
 
 import { encode } from '../utils';
 import { media, grid } from '../theme';
-
-/**
- * Field TODOS
- * ✅1. Phone
- * 2. Date/Time
- * ✅3. Address
- * ✅4. File Upload
- */
 
 const Form = ({
   fields,
@@ -49,10 +32,12 @@ const Form = ({
   const [error, setError] = useState(null);
   const hookForm = useForm();
   const { register, handleSubmit, errors, control } = hookForm;
-  // console.log({ hookForm });
+
+  const FormContext = React.createContext();
+
   const onSubmit = data => {
     setLoading(true);
-    console.log({ data });
+
     fetch('/not-real', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -77,8 +62,6 @@ const Form = ({
       });
   };
 
-  console.log(fields);
-
   return (
     <StyledForm
       className={classNames(className, 'form')}
@@ -95,129 +78,45 @@ const Form = ({
       ) : (
         <>
           {_rawDescription && <Content>{_rawDescription}</Content>}
-          <fieldset disabled={loading}>
-            <div className="fieldset-flex-fix">
-              {fields.map(field => {
-                if (
-                  field._type === 'textField' ||
-                  field._type === 'emailField'
-                ) {
+          <FormContext.Provider
+            value={{
+              error,
+              setError,
+              success,
+              setSuccess,
+              loading,
+              setLoading,
+              register,
+              errors,
+              control,
+            }}
+          >
+            <fieldset disabled={loading}>
+              <div className="fieldset-flex-fix">
+                {fields.map(field => {
                   return (
-                    <TextField
-                      {...field}
+                    <FieldSwitcher
                       key={field._key}
+                      field={field}
                       register={register}
-                      error={errors[field.name]}
-                    />
-                  );
-                }
-                if (field._type === 'phoneField') {
-                  return (
-                    <PhoneField
-                      {...field}
-                      key={field._key}
-                      register={register}
-                      error={errors[field.name]}
-                    />
-                  );
-                }
-                if (field._type === 'textArea') {
-                  return (
-                    <TextArea
-                      {...field}
-                      key={field._key}
-                      register={register}
-                      error={errors[field.name]}
-                    />
-                  );
-                }
-                if (field._type === 'checkBoxes') {
-                  return (
-                    <CheckBoxes
-                      {...field}
-                      key={field._key}
-                      register={register}
-                      error={errors[field.name]}
-                    />
-                  );
-                }
-                if (field._type === 'radioButtons') {
-                  return (
-                    <RadioButtons
-                      {...field}
-                      key={field._key}
-                      register={register}
-                      error={errors[field.name]}
-                    />
-                  );
-                }
-                if (field._type === 'addressField') {
-                  return (
-                    <AddressField
-                      {...field}
-                      key={field._key}
-                      register={register}
-                      error={errors[field.name]}
-                    />
-                  );
-                }
-                if (field._type === 'fileUpload') {
-                  return (
-                    <FileUpload
-                      {...field}
-                      key={field._key}
-                      register={register}
-                      error={errors[field.name]}
-                    />
-                  );
-                }
-                if (field._type === 'dateField') {
-                  return (
-                    <DateField
-                      {...field}
-                      key={field._key}
-                      register={register}
-                      error={errors[field.name]}
+                      errors={errors}
                       control={control}
                     />
                   );
-                }
-                if (field._type === 'timeField') {
-                  return (
-                    <TimeField
-                      {...field}
-                      key={field._key}
-                      register={register}
-                      error={errors[field.name]}
-                      control={control}
-                    />
-                  );
-                }
-                if (field._type === 'dateTimeField') {
-                  return (
-                    <DateTimeField
-                      {...field}
-                      key={field._key}
-                      register={register}
-                      error={errors[field.name]}
-                      control={control}
-                    />
-                  );
-                }
-                return null;
-              })}
-              <label className="honeypot">
-                Don't fill this out if you're human:{' '}
-                <input name="honeypotField" />
-              </label>
-              <Submit type="submit" value={submitText} />
-              {cancel && (
-                <Button handleClick={cancel} className="cancel">
-                  Cancel
-                </Button>
-              )}
-            </div>
-          </fieldset>
+                })}
+                <label className="honeypot">
+                  Don't fill this out if you're human:{' '}
+                  <input name="honeypotField" />
+                </label>
+                <Submit type="submit" value={submitText} />
+                {cancel && (
+                  <Button handleClick={cancel} className="cancel">
+                    Cancel
+                  </Button>
+                )}
+              </div>
+            </fieldset>
+          </FormContext.Provider>
         </>
       )}
       {children}

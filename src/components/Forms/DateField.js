@@ -35,7 +35,6 @@ const DateField = ({ name, fieldOptions, error, control }) => {
         setFocus(false);
       }
     }
-    console.dir(e[0].target);
   };
 
   return (
