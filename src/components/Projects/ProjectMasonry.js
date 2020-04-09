@@ -10,19 +10,26 @@ import useSiteContext from '../SiteContext';
 import getDimensions from './getDimensions';
 import useModalTransition from './modalTransition';
 
-const ProjectMasonry = ({ projects, project, slug, service = false, workpage = false }) => {
-
+const ProjectMasonry = ({
+  projects,
+  project,
+  slug,
+  service = false,
+  workpage = false,
+}) => {
   // TODO: Feature: Carousel Controls to switch between images within the same project.
 
   const masonryOptions = {
     transitionDuration: 100,
   };
 
-  const firstImage = workpage ? { _key: null} : projects[0] 
-    ? projects[0].images.length 
-      ? projects[0].images[0]._key 
-      : {_key: null}
-    : {_key: null};
+  const firstImage = workpage
+    ? { _key: null }
+    : projects[0]
+    ? projects[0].images.length
+      ? projects[0].images[0]._key
+      : { _key: null }
+    : { _key: null };
 
   const [hoverState, setHoverState] = useState(firstImage._key);
 
@@ -30,7 +37,8 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
 
   const { viewport } = useSiteContext();
 
-  const initialProject = projects[projects.findIndex(proj => proj.slug.current === project)];
+  const initialProject =
+    projects[projects.findIndex(proj => proj.slug.current === project)];
 
   const [expandedProject, setExpandedProject] = useState(null);
 
@@ -42,7 +50,12 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
   });
 
   const dimensions = expandedProject
-    ? getDimensions(expandedProject.videoAspect ? expandedProject.videoAspect : expandedProject.image.asset.fluid.aspectRatio, viewport)
+    ? getDimensions(
+        expandedProject.videoAspect
+          ? expandedProject.videoAspect
+          : expandedProject.image.asset.fluid.aspectRatio,
+        viewport
+      )
     : { width: 0, height: 0 };
 
   useEffect(() => {
@@ -52,18 +65,24 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
         exitHeight: expandedProject.location.height,
         exitTop: expandedProject.location.top,
         exitLeft: expandedProject.location.left,
-      })
+      });
     }
   }, [expandedProject]);
 
   const serviceOrCollection = service ? 'service' : 'collection';
 
-  const modalTransition = useModalTransition(expandedProject, dimensions, exitSizes, viewport, setHoverState);
+  const modalTransition = useModalTransition(
+    expandedProject,
+    dimensions,
+    exitSizes,
+    viewport,
+    setHoverState
+  );
 
   const handleCloseProject = () => {
     setExpandedProject(null);
     window.history.pushState({}, '', `/${serviceOrCollection}/${slug}`);
-  }
+  };
 
   return (
     <StyledProjectMasonry
@@ -74,20 +93,22 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
       <Masonry options={masonryOptions}>
         {projects.map((project, index) => {
           if (workpage) {
-            return <Project
-              project={project}
-              key={project.id}
-              id={project.id}
-              image={project.images[0]}
-              hoverState={hoverState}
-              setHoverState={setHoverState}
-              index={index}
-              slug={project.slug}
-              workpage
-            />
+            return (
+              <Project
+                project={project}
+                key={project.id}
+                id={project.id}
+                image={project.images[0]}
+                hoverState={hoverState}
+                setHoverState={setHoverState}
+                index={index}
+                slug={project.slug}
+                workpage
+              />
+            );
           }
-          const {images, videoID} = project;
-          
+          const { images, videoID } = project;
+
           if (videoID) {
             return (
               <Project
@@ -95,6 +116,7 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
                 key={project.id}
                 id={project.id}
                 video={videoID}
+                thumbnail={project.videoThumbnail}
                 hoverState={hoverState}
                 setHoverState={setHoverState}
                 index={index}
@@ -104,7 +126,7 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
                 slug={slug}
                 expandedProject={expandedProject}
               />
-            )
+            );
           }
           if (images.length) {
             return images.map((image, index) => {
@@ -124,25 +146,27 @@ const ProjectMasonry = ({ projects, project, slug, service = false, workpage = f
                   expandedProject={expandedProject}
                 />
               );
-            })
+            });
           }
           return null;
         })}
       </Masonry>
       <DownArrow containerRef={containerRef} viewport={viewport} />
-      {modalTransition.map(
-        ({ item, key, props }) => {
-          return item && <ProjectModal 
-            key={key} 
-            viewport={viewport} 
-            item={item} 
-            styles={props} 
-            handleCloseProject={handleCloseProject} 
-            dimensions={dimensions} 
-            initialProject={initialProject} 
-          />
-        }
-      )}
+      {modalTransition.map(({ item, key, props }) => {
+        return (
+          item && (
+            <ProjectModal
+              key={key}
+              viewport={viewport}
+              item={item}
+              styles={props}
+              handleCloseProject={handleCloseProject}
+              dimensions={dimensions}
+              initialProject={initialProject}
+            />
+          )
+        );
+      })}
     </StyledProjectMasonry>
   );
 };

@@ -33,6 +33,7 @@
     "gatsby-plugin-styled-components": "^3.1.16",
     "gatsby-source-filesystem": "^2.1.42",
     "gatsby-source-sanity": "^5.0.4",
+    "gatsby-source-vimeo": "^1.1.8",
     "gatsby-transformer-sharp": "^2.3.9",
     "lodash.isequal": "^4.5.0",
     "lodash.uniqwith": "^4.5.0",

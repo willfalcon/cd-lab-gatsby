@@ -10,11 +10,19 @@ import ProjectTitle from './ProjectTitle';
 import CloseButton from '../CloseButton';
 import ProjectContent from './ProjectContent';
 
-
-const ProjectModal = ({ viewport, item, styles, handleCloseProject, dimensions, initialProject }) => {
+const ProjectModal = ({
+  viewport,
+  item,
+  styles,
+  handleCloseProject,
+  dimensions,
+  initialProject,
+}) => {
   const canonicalService = item ? item.categories[0] : null;
   const origin = window.location.origin;
-  const canonicalUrl = canonicalService ? `${origin}/service/${canonicalService.slug.current}/${item.slug.current}` : false;
+  const canonicalUrl = canonicalService
+    ? `${origin}/service/${canonicalService.slug.current}/${item.slug.current}`
+    : false;
 
   const [contentOpen, toggleContent] = useState(false);
 
@@ -24,10 +32,10 @@ const ProjectModal = ({ viewport, item, styles, handleCloseProject, dimensions, 
     }
   }, [initialProject, item.id]);
 
-  
   return (
     <>
-      <BackgroundOverlay style={{ opacity: styles.opacity }}
+      <BackgroundOverlay
+        style={{ opacity: styles.opacity }}
         onClick={handleCloseProject}
       />
       <ExpandedProject
@@ -36,13 +44,27 @@ const ProjectModal = ({ viewport, item, styles, handleCloseProject, dimensions, 
           opacity: 1,
         }}
         viewport={viewport}
-        videoThumb={item.videoThumb}
+        videoThumb={item.thumbnail.childImageSharp.fluid.src}
       >
         {item.image && item.image.asset.extension === 'gif' && (
-          <img src={item.image.asset.fluid.src} sizes={item.image.asset.fluid.sizes} srcSet={item.image.asset.fluid.srcSet} alt={item.title} />
+          <img
+            src={item.image.asset.fluid.src}
+            sizes={item.image.asset.fluid.sizes}
+            srcSet={item.image.asset.fluid.srcSet}
+            alt={item.title}
+          />
         )}
-        {item.image && item.image.asset.extension !== 'gif' && <Img fluid={item.image.asset.fluid} alt={item.title} />}
-        {item.videoID && <ReactPlayer url={`https://vimeo.com/${item.videoID}`} controls width={dimensions.width} height={dimensions.height} />}
+        {item.image && item.image.asset.extension !== 'gif' && (
+          <Img fluid={item.image.asset.fluid} alt={item.title} />
+        )}
+        {item.videoID && (
+          <ReactPlayer
+            url={`https://vimeo.com/${item.videoID}`}
+            controls
+            width={dimensions.width}
+            height={dimensions.height}
+          />
+        )}
         <CloseButton
           handleClick={handleCloseProject}
           styles={{ opacity: styles.opacity }}
@@ -55,7 +77,7 @@ const ProjectModal = ({ viewport, item, styles, handleCloseProject, dimensions, 
             content={item._rawDescription}
             title={item.title}
             transitionStyles={{ opacity: styles.opacity }}
-            contentOpen={contentOpen} 
+            contentOpen={contentOpen}
             toggleContent={toggleContent}
             dimensions={dimensions}
           />
@@ -74,7 +96,9 @@ const ExpandedProject = styled(animated.div)`
   position: absolute;
   background: white;
   z-index: 8;
-  ${({ videoThumb }) => videoThumb && `
+  ${({ videoThumb }) =>
+    videoThumb &&
+    `
     background-image: url(${videoThumb});
     background-position: center;
     background-size: contain;

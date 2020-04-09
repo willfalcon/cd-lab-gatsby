@@ -8,7 +8,10 @@ const singleService = ({ data, pageContext }) => {
   const project = pageContext.project;
   const slug = pageContext.slug;
   return (
-    <Wrapper seo={data.sanityCategory.seoSettings} pageTitle={data.sanityCategory.title}>
+    <Wrapper
+      seo={data.sanityCategory.seoSettings}
+      pageTitle={data.sanityCategory.title}
+    >
       <SingleService
         {...data.sanityCategory}
         projects={data.allSanityProject.edges.map(edge => ({ ...edge.node }))}
@@ -24,7 +27,7 @@ export const SingleServiceQuery = graphql`
   query SingleServiceQuery($slug: String!) {
     sanityCategory(slug: { current: { eq: $slug } }) {
       id
-      _rawDescription(resolveReferences: {maxDepth: 10})
+      _rawDescription(resolveReferences: { maxDepth: 10 })
       seoSettings {
         canonicalUrl
         metaDescription
@@ -68,8 +71,16 @@ export const SingleServiceQuery = graphql`
             }
             id
           }
-          _rawDescription(resolveReferences: {maxDepth: 10})
+          _rawDescription(resolveReferences: { maxDepth: 10 })
           videoID
+          videoThumbnail {
+            id
+            childImageSharp {
+              fluid(maxWidth: 1000) {
+                ...GatsbyImageSharpFluid
+              }
+            }
+          }
           slug {
             current
           }

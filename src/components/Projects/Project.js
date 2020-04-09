@@ -8,7 +8,6 @@ import { useSpring } from 'react-spring';
 import PlayButton from '../PlayButton';
 import ProjectTitle from './ProjectTitle';
 
-
 import { getThumb } from '../utils';
 import theme from '../theme';
 
@@ -23,17 +22,23 @@ const Project = ({
   serviceOrCollection,
   expandedProject,
   video,
-  workpage = false
+  thumbnail,
+  workpage = false,
 }) => {
+  console.log(thumbnail);
 
   const { id } = project;
 
   const ref = useRef(null);
-  
+
   const [videoThumb, setVideoThumb] = useState(null);
-  const [videoAspect, setVideoAspect] = useState(null);
+  // const [videoAspect, setVideoAspect] = useState(null);
   const [height, setHeight] = useState(0);
   const [titleHeight, setTitleHeight] = useState(0);
+
+  const aspect = thumbnail
+    ? thumbnail.childImageSharp.fluid.aspectRatio
+    : false;
 
   useEffect(() => {
     if (ref.current) {
@@ -47,22 +52,22 @@ const Project = ({
 
   const titleSpring = useSpring({
     height: hovering ? `${titleHeight + 10}px` : `${height}px`,
-    background: hovering ? theme.orange : rgba('white', .65),
+    background: hovering ? theme.orange : rgba('white', 0.65),
     titleOpacity: hovering ? 1 : 0,
   });
 
-  useEffect(() => {
-    async function getThumbnail() {
-      const thumb = await getThumb(video);
-      setVideoThumb(thumb);
-      const tempImg = new Image();
-      tempImg.src = thumb;
-      setVideoAspect(tempImg.width/tempImg.height);
-    }
-    if (video) {
-      getThumbnail();
-    }
-  }, [video]);
+  // useEffect(() => {
+  //   async function getThumbnail() {
+  //     const thumb = await getThumb(video);
+  //     setVideoThumb(thumb);
+  //     const tempImg = new Image();
+  //     tempImg.src = thumb;
+  //     setVideoAspect(tempImg.width / tempImg.height);
+  //   }
+  //   if (video) {
+  //     getThumbnail();
+  //   }
+  // }, [video]);
 
   useEffect(() => {
     if (initialProject && initialProject.id === id) {
@@ -71,17 +76,28 @@ const Project = ({
         location,
         ...project,
         image,
-        videoAspect: video ? videoAspect ? videoAspect : 16/9 : false,
+        videoAspect: aspect,
         video,
-        videoThumb
+        videoThumb,
+        thumbnail,
       });
     }
-  }, [videoThumb, id, image, initialProject, project, setExpandedProject, video, videoAspect]);
+  }, [
+    videoThumb,
+    id,
+    image,
+    initialProject,
+    project,
+    setExpandedProject,
+    video,
+    // videoAspect,
+    thumbnail,
+  ]);
 
   return (
     <StyledProject
       onMouseEnter={() => setHoverState(id)}
-      onMouseMove={() => setHoverState(id)} 
+      onMouseMove={() => setHoverState(id)}
       as={workpage ? Link : 'button'}
       to={`/service/${slug.current}`}
       ref={ref}
@@ -95,29 +111,44 @@ const Project = ({
                 ...project,
                 image,
                 video,
-                videoAspect: video ? videoAspect ? videoAspect : 16/9 : false,
-                videoThumb
+                videoAspect: aspect,
+                videoThumb,
+                thumbnail,
               });
               if (!expandedProject) {
-                window.history.pushState({}, '', `/${serviceOrCollection}/${slug}/${project.slug.current}`);
+                window.history.pushState(
+                  {},
+                  '',
+                  `/${serviceOrCollection}/${slug}/${project.slug.current}`
+                );
               }
             }
       }
     >
-      {videoThumb && (
+      {thumbnail && (
         <>
-          <img src={videoThumb} alt={project.title} />
-          <PlayButton as='div' />
+          <ProjectImage
+            fluid={thumbnail.childImageSharp.fluid}
+            alt={project.title}
+          />
+          <PlayButton as="div" />
         </>
       )}
       {image && image.asset.extension === 'gif' && (
-        <img src={image.asset.fluid.src} sizes={image.asset.fluid.sizes} srcSet={image.asset.fluid.srcSet} alt={project.title} />
+        <img
+          src={image.asset.fluid.src}
+          sizes={image.asset.fluid.sizes}
+          srcSet={image.asset.fluid.srcSet}
+          alt={project.title}
+        />
       )}
-      {image && image.asset.extension !== 'gif' && (<ProjectImage fluid={image.asset.fluid} alt={project.title} />)}
-      <ProjectTitle 
-        className="project__title" 
-        styles={titleSpring} 
-        titleStyles={{opacity: titleSpring.titleOpacity}}
+      {image && image.asset.extension !== 'gif' && (
+        <ProjectImage fluid={image.asset.fluid} alt={project.title} />
+      )}
+      <ProjectTitle
+        className="project__title"
+        styles={titleSpring}
+        titleStyles={{ opacity: titleSpring.titleOpacity }}
         hovering={hovering}
       >
         {project.title}
