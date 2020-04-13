@@ -63,6 +63,7 @@ const FeaturedProjects = ({ projects, makeReady }) => {
           next={nextSlide}
           index={slideIndex}
           length={len}
+          setIndex={setIndex}
         />
       </CarouselProvider>
     </StyledFeaturedProjects>
