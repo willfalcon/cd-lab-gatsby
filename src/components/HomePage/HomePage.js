@@ -8,7 +8,7 @@ import Topics from '../Topics/Topics';
 import ContactFormButton from '../ContactFormButton';
 import Loader from '../Loader';
 
-import HomeAside from './HomeAside';
+// import HomeAside from './HomeAside';
 
 import { media } from '../theme';
 import useSiteContext from '../SiteContext';
@@ -27,9 +27,9 @@ const AsideLoader = styled(Loader)`
   align-items: center;
 `;
 
-// const HomeAside = loadable(() => import('./HomeAside'), {
-//   fallback: <AsideLoader />,
-// });
+const HomeAside = loadable(() => import('./HomeAside'), {
+  fallback: <AsideLoader />,
+});
 
 const HomePage = ({
   _rawBody,

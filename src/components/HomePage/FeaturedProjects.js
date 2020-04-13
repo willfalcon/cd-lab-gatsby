@@ -43,7 +43,6 @@ const FeaturedProjects = ({ projects, makeReady }) => {
         naturalSlideHeight={viewport.height / 3}
         currentSlide={slideIndex}
         totalSlides={len}
-        infinite={true}
       >
         <Slider>
           {projects.map(({ _key, project, service }, index) => {
@@ -76,7 +75,7 @@ const StyledFeaturedProjects = styled.div`
   height: ${({ viewport }) => viewport.width * 0.75}px;
   ${media.break`
     flex: 0 0 33.333%;
-    /* max-height: 33.333%; */
+    max-height: 33.333%;
     height: ${({ viewport }) => viewport.height / 3}px;
     max-height: ${({ viewport }) => viewport.height / 3}px;
     .slider {
