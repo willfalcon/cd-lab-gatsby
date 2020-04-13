@@ -39,15 +39,20 @@ const FeaturedProjects = ({ projects, makeReady }) => {
         })}
       </Carousel> */}
       <CarouselProvider
+        className="featured-projects__carousel"
         naturalSlideWidth={viewport.width * 0.4}
         naturalSlideHeight={viewport.height / 3}
         currentSlide={slideIndex}
         totalSlides={len}
       >
-        <Slider>
+        <Slider className="featured-projects__slider">
           {projects.map(({ _key, project, service }, index) => {
             return (
-              <Slide key={_key} index={index}>
+              <Slide
+                key={_key}
+                index={index}
+                className="featured-projects__slide"
+              >
                 <FeaturedProject
                   key={_key}
                   project={project}
@@ -58,6 +63,7 @@ const FeaturedProjects = ({ projects, makeReady }) => {
           })}
         </Slider>
         <CarouselControls
+          className="featured-projects__controls"
           prev={prevSlide}
           next={nextSlide}
           index={slideIndex}
