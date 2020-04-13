@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Carousel from 'nuka-carousel';
-import {
-  CarouselProvider,
-  Slider,
-  Slide,
-  ButtonBack,
-  ButtonNext,
-} from 'pure-react-carousel';
+import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
 import FeaturedProject from './FeaturedProject';
@@ -26,18 +19,6 @@ const FeaturedProjects = ({ projects, makeReady }) => {
   console.log(slideIndex);
   return (
     <StyledFeaturedProjects className="featured-projects" viewport={viewport}>
-      {/* <Carousel
-        withoutControls={true}
-        wrapAround={true}
-        slideIndex={index}
-        afterSlide={index => setIndex(index)}
-      >
-        {projects.map(({ _key, project, service }) => {
-          return (
-            <FeaturedProject key={_key} project={project} service={service} />
-          );
-        })}
-      </Carousel> */}
       <CarouselProvider
         className="featured-projects__carousel"
         naturalSlideWidth={viewport.width * 0.4}

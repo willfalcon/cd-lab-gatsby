@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import Carousel from 'nuka-carousel';
+import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
+import 'pure-react-carousel/dist/react-carousel.es.css';
 import Img from 'gatsby-image';
 
 import CarouselControls from '../CarouselControls';
 
-const ProjectCarousel = ({ projects }) => {
-  // console.log(projects);
+// TODO: Make projects openable in project carousel
 
+const ProjectCarousel = ({ projects }) => {
   const [index, setIndex] = useState(0);
 
   const filteredProjects = projects.filter(project => project.images.length);
@@ -17,28 +18,43 @@ const ProjectCarousel = ({ projects }) => {
   const nextSlide = () => setIndex((index + 1) % len);
   return (
     <StyledProjectCarousel>
-      <Carousel
-        withoutControls
-        wrapAround
-        slideIndex={index}
-        afterSlide={index => setIndex(index)}
+      <CarouselProvider
+        className="projects-carousel"
+        naturalSlideWidth={768}
+        naturalSlideHeight={280}
+        currentSlide={index}
+        totalSlides={len}
       >
-        {filteredProjects.map(project => {
-          return (
-            <StyledProjectCell key={project.id}>
-              <Img fluid={project.images[0].asset.fluid} />
-              <h2 className="project-cell__link">{project.title}</h2>
-            </StyledProjectCell>
-          );
-        })}
-      </Carousel>
-      <CarouselControls
-        prev={prevSlide}
-        next={nextSlide}
-        index={index}
-        length={len}
-        className="controls"
-      />
+        <Slider className="projects-carousel__slider">
+          {filteredProjects.map((project, i) => {
+            return (
+              <Slide
+                className="projects-carousel__slide"
+                key={project.id}
+                index={i}
+              >
+                <StyledProjectCell className="projects-carousel__project carousel-project">
+                  <Img
+                    className="carousel-project__image"
+                    fluid={project.images[0].asset.fluid}
+                  />
+                  <h2 className="carousel-project__title project-cell__link">
+                    {project.title}
+                  </h2>
+                </StyledProjectCell>
+              </Slide>
+            );
+          })}
+        </Slider>
+        <CarouselControls
+          prev={prevSlide}
+          next={nextSlide}
+          index={index}
+          length={len}
+          setIndex={setIndex}
+          className="controls"
+        />
+      </CarouselProvider>
     </StyledProjectCarousel>
   );
 };
@@ -47,18 +63,27 @@ const StyledProjectCarousel = styled.div`
   width: 100%;
   height: 80vw;
   position: relative;
+  .carousel {
+    height: 100%;
+    &__slider {
+      height: 100%;
+    }
+    &__slider-tray-wrapper {
+      height: 100%;
+    }
+    &__slider-tray {
+      height: 100%;
+    }
+    &__slide {
+      height: 100%;
+    }
+  }
   .gatsby-image-wrapper {
     height: 100% !important;
     width: 100% !important;
     > div {
       height: 100%;
     }
-  }
-  .slider-list {
-    height: 100% !important;
-  }
-  .slider-slide {
-    height: 100% !important;
   }
   .controls {
     background: ${({ theme }) => rgba(theme.orange, 0.75)};
