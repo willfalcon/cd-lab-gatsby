@@ -1,31 +1,49 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import classNames from 'classnames';
+import { ButtonBack, ButtonNext, CarouselContext } from 'pure-react-carousel';
 
 import { media } from './theme';
 
-const CarouselControls = ({ prev, next, index, length, className }) => {
+const CarouselControls = ({
+  prev,
+  next,
+  index,
+  length,
+  setIndex,
+  className,
+}) => {
+  const carouselContext = useContext(CarouselContext);
+
+  useEffect(() => {
+    function onChange() {
+      setIndex(carouselContext.state.currentSlide);
+    }
+    carouselContext.subscribe(onChange);
+    return () => carouselContext.unsubscribe(onChange);
+  }, [carouselContext]);
+
   return (
     <StyledControls className={classNames('carousel-controls', className)}>
-      <button
+      <ButtonBack
         className="controls__button previous"
         onClick={prev}
         aria-label="View Previous"
       >
         <span />
         <span />
-      </button>
+      </ButtonBack>
       <span className="controls__numbers">
         {('0' + (index + 1)).slice(-2)} / {('0' + length).slice(-2)}
       </span>
-      <button
+      <ButtonNext
         className="controls__button next"
         onClick={next}
         aria-label="View Next"
       >
         <span />
         <span />
-      </button>
+      </ButtonNext>
     </StyledControls>
   );
 };
