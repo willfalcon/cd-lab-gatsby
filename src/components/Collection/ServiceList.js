@@ -94,7 +94,7 @@ const StyledServiceList = styled.ul`
     color: ${({ theme }) => theme.offWhite};
   }
   li {
-    text-align: center;
+    text-align: left;
     display: block;
     text-transform: uppercase;
     font-family: ${({ theme }) => theme.fontFamily};
