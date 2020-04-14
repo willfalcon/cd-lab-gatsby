@@ -1,24 +1,64 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import Img from 'gatsby-image';
 
 const CarouselProject = props => {
-  // console.log(props);
+  console.log(props);
   const {
     id,
     images,
     title,
     _rawDescription,
-    slug,
     setExpandedProject,
+    slug,
+    initialProject,
+    serviceOrCollection,
+    expandedProject,
+    setModalOpen,
+    mainSlug,
+    categories,
   } = props;
+
+  useEffect(() => {
+    if (initialProject && initialProject.id === id) {
+      // const location = ref.current.getBoundingClientRect();
+      setExpandedProject({
+        // location,
+        // ...project,
+        id,
+        images,
+        title,
+        _rawDescription,
+        categories,
+        // videoAspect: aspect,
+        // video,
+        // videoThumb,
+        // thumbnail,
+      });
+      setModalOpen(true);
+    }
+  }, [id, images, title, _rawDescription, categories]);
+
   return (
     <StyledProjectCell
       className="projects-carousel__project carousel-project"
-      onClick={() =>
-        setExpandedProject({ id, images, title, _rawDescription, slug })
-      }
+      onClick={() => {
+        setExpandedProject({
+          id,
+          images,
+          title,
+          _rawDescription,
+          slug,
+          categories,
+        });
+        setModalOpen(true);
+        window.history.pushState(
+          {},
+          '',
+          `/${serviceOrCollection}/${mainSlug}/${slug.current}`
+        );
+      }}
     >
       {images[0].asset.extension === 'gif' ? (
         <img

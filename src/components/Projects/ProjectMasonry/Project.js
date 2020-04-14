@@ -5,11 +5,10 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 import { useSpring } from 'react-spring';
 
-import PlayButton from '../PlayButton';
+import PlayButton from '../../PlayButton';
 import ProjectTitle from './ProjectTitle';
 
-import { getThumb } from '../utils';
-import theme from '../theme';
+import theme from '../../theme';
 
 const Project = ({
   project,
@@ -25,8 +24,6 @@ const Project = ({
   thumbnail,
   workpage = false,
 }) => {
-  console.log(thumbnail);
-
   const { id } = project;
 
   const ref = useRef(null);

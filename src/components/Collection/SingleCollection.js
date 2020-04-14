@@ -11,8 +11,12 @@ import ContactFormButton from '../ContactFormButton';
 import useSiteContext from '../SiteContext';
 import theme from '../theme';
 
-const ProjectCarousel = Loadable(() => import('../Projects/ProjectCarousel'));
-const ProjectMasonry = Loadable(() => import('../Projects/ProjectMasonry'));
+const ProjectCarousel = Loadable(() =>
+  import('../Projects/ProjectCarousel/ProjectCarousel')
+);
+const ProjectMasonry = Loadable(() =>
+  import('../Projects/ProjectMasonry/ProjectMasonry')
+);
 const ServiceList = Loadable(() => import('./ServiceList'));
 
 const SingleCollection = ({
@@ -32,7 +36,9 @@ const SingleCollection = ({
       <div className="main">
         <Heading ref={titleRef}>{title}</Heading>
         <ServiceList projects={projects} titleRef={titleRef} />
-        {mobile && <ProjectCarousel projects={projects} />}
+        {mobile && (
+          <ProjectCarousel projects={projects} project={project} slug={slug} />
+        )}
         <div className="content">
           {_rawDescription && <Content>{_rawDescription}</Content>}
           <ContactFormButton>Let's Talk</ContactFormButton>

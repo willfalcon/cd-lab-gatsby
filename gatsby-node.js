@@ -82,7 +82,7 @@ exports.createPages = async ({
     createPage({
       path: `/service/${service.node.slug.current}`,
       component: require.resolve('./src/templates/singleService.js'),
-      context: { slug: service.node.slug.current },
+      context: { slug: service.node.slug.current, project: false },
     });
     console.log(`Created single service page for ${service.node.title}`);
 

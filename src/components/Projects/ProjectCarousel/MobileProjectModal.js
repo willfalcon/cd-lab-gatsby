@@ -2,20 +2,38 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Img from 'gatsby-image/withIEPolyfill';
 import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
+import { animated } from 'react-spring';
 
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
-import Heading from '../Heading';
-import Content from '../Content';
-import CloseButton from '../CloseButton';
-import CarouselControls from '../CarouselControls';
+import Heading from '../../Heading';
+import Content from '../../Content';
+import CloseButton from '../../CloseButton';
+import CarouselControls from '../../CarouselControls';
 
-import useSiteContext from '../SiteContext';
+import useSiteContext from '../../SiteContext';
 
 const MobileProjectModal = props => {
-  // console.log(props);
+  console.log(props);
   const { viewport } = useSiteContext();
-  const { images, title, _rawDescription, setExpandedProject } = props;
+  const {
+    images,
+    title,
+    _rawDescription,
+    setExpandedProject,
+    setModalOpen,
+    style,
+    categories,
+    slug,
+    handleCloseProject,
+  } = props;
+
+  // const canonicalService = categories ? categories[0] : false;
+  // const origin = window.location.origin;
+  // const canonicalUrl = canonicalService
+  //   ? `${origin}/service/${canonicalService.slug.current}/${slug.current}`
+  //   : false;
+
   const [slideIndex, setIndex] = useState(0);
   const len = images.length;
   const prevSlide = () => setIndex((slideIndex + len - 1) % len);
@@ -35,7 +53,7 @@ const MobileProjectModal = props => {
   });
   console.log(sliderHeight);
   return (
-    <StyledModal className="mobile-project-modal">
+    <StyledModal className="mobile-project-modal" style={style}>
       <Heading className="mobile-project-modal__title" h2>
         {title}
       </Heading>
@@ -103,12 +121,12 @@ const MobileProjectModal = props => {
       <Content className="mobile-project-modal__content">
         {_rawDescription}
       </Content>
-      <CloseButton handleClick={() => setExpandedProject(false)} />
+      <CloseButton handleClick={handleCloseProject} />
     </StyledModal>
   );
 };
 
-const StyledModal = styled.div`
+const StyledModal = styled(animated.div)`
   position: absolute;
   top: 0;
   left: 0;

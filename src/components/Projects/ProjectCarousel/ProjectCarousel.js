@@ -2,26 +2,44 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
+import { useTransition, animated } from 'react-spring';
 
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
-import CarouselControls from '../CarouselControls';
+import CarouselControls from '../../CarouselControls';
 import CarouselProject from './CarouselProject';
 import MobileProjectModal from './MobileProjectModal';
 
-// TODO: Make projects openable in project carousel
+const ProjectCarousel = ({ projects, project, service = false, slug }) => {
+  console.log({ project });
+  // console.log(filteredProjects);
 
-const ProjectCarousel = ({ projects }) => {
-  const [index, setIndex] = useState(0);
+  const [expandedProject, setExpandedProject] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const initialProjectIndex = project
+    ? projects.findIndex(proj => proj.slug.current === project)
+    : 0;
+  const initialProject = project ? projects[initialProjectIndex] : false;
+  const [index, setIndex] = useState(initialProjectIndex);
 
   const filteredProjects = projects.filter(project => project.images.length);
   const len = filteredProjects.length;
   const prevSlide = () => setIndex((index + len - 1) % len);
   const nextSlide = () => setIndex((index + 1) % len);
 
-  // console.log(filteredProjects);
+  const modalTransition = useTransition(modalOpen, null, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+  });
 
-  const [expandedProject, setExpandedProject] = useState(false);
+  const serviceOrCollection = service ? 'service' : 'collection';
+
+  const handleCloseProject = () => {
+    setModalOpen(null);
+    window.history.pushState({}, '', `/${serviceOrCollection}/${slug}`);
+  };
 
   return (
     <>
@@ -30,7 +48,7 @@ const ProjectCarousel = ({ projects }) => {
           className="projects-carousel"
           naturalSlideWidth={768}
           naturalSlideHeight={280}
-          currentSlide={index}
+          currentSlide={initialProjectIndex}
           totalSlides={len}
         >
           <Slider className="projects-carousel__slider">
@@ -44,6 +62,11 @@ const ProjectCarousel = ({ projects }) => {
                   <CarouselProject
                     {...project}
                     setExpandedProject={setExpandedProject}
+                    setModalOpen={setModalOpen}
+                    initialProject={initialProject}
+                    serviceOrCollection={serviceOrCollection}
+                    mainSlug={slug}
+                    expandedProject={expandedProject}
                   />
                 </Slide>
               );
@@ -58,11 +81,18 @@ const ProjectCarousel = ({ projects }) => {
             className="controls"
           />
         </CarouselProvider>
-        {expandedProject && (
-          <MobileProjectModal
-            {...expandedProject}
-            setExpandedProject={setExpandedProject}
-          />
+        {modalTransition.map(
+          ({ item, key, props }) =>
+            item && (
+              <MobileProjectModal
+                key={key}
+                style={props}
+                {...expandedProject}
+                setExpandedProject={setExpandedProject}
+                setModalOpen={setModalOpen}
+                handleCloseProject={handleCloseProject}
+              />
+            )
         )}
       </StyledProjectCarousel>
     </>

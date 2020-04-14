@@ -3,13 +3,20 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 import { useSpring, animated } from 'react-spring';
 
-import Heading from '../Heading';
-import Content from '../Content';
+import Heading from '../../Heading';
+import Content from '../../Content';
 
-import theme from '../theme';
-import useSiteContext from '../SiteContext';
+import theme from '../../theme';
+import useSiteContext from '../../SiteContext';
 
-const ProjectContent = ({ content, title, transitionStyles, contentOpen, toggleContent, dimensions }) => {
+const ProjectContent = ({
+  content,
+  title,
+  transitionStyles,
+  contentOpen,
+  toggleContent,
+  dimensions,
+}) => {
   const { viewport } = useSiteContext();
 
   const width = Math.round(viewport.width * 0.3);
@@ -17,21 +24,22 @@ const ProjectContent = ({ content, title, transitionStyles, contentOpen, toggleC
   const openSpaceRight = (viewport.width - dimensions.width - width) / 2;
   const closedSpaceRight = (viewport.width - dimensions.width) / 2;
   // console.log({width, spaceRight});
-  
+
   const contentSpring = useSpring({
     width: contentOpen ? `${width}px` : '40px',
     maxHeight: contentOpen ? `${Math.round(viewport.height * 0.5)}px` : '40px',
     padding: contentOpen ? '2.5rem' : '0rem',
     overflow: contentOpen ? 'scroll' : 'hidden',
     color: contentOpen ? theme.offWhite : rgba(theme.offWhite, 0),
-    transform: `translateX(${contentOpen 
-      ? openSpaceRight < 30 
-        ? `${closedSpaceRight - 30}px` 
-        : `${width / 2}px` 
-      : `${40 / 2}px`})`
+    transform: `translateX(${
+      contentOpen
+        ? openSpaceRight < 30
+          ? `${closedSpaceRight - 30}px`
+          : `${width / 2}px`
+        : `${40 / 2}px`
+    })`,
     // transform: contentOpen ? `${width / 2}px` : `${width / 2}px`,
   });
-
 
   return (
     <StyledProjectContent

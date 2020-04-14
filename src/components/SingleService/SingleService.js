@@ -10,12 +10,26 @@ import ContactFormButton from '../ContactFormButton';
 import Topics from '../Topics/Topics';
 
 import useSiteContext from '../SiteContext';
-import theme from '../theme'
+import theme from '../theme';
 
-const ProjectCarousel = Loadable(() => import('../Projects/ProjectCarousel'));
-const ProjectMasonry = Loadable(() => import('../Projects/ProjectMasonry'));
+const ProjectCarousel = Loadable(() =>
+  import('../Projects/ProjectCarousel/ProjectCarousel')
+);
+const ProjectMasonry = Loadable(() =>
+  import('../Projects/ProjectMasonry/ProjectMasonry')
+);
 
-const SingleService = ({ title, _rawDescription, services, id, slug, projects, project, forceCoverImage, mainImage }) => {
+const SingleService = ({
+  title,
+  _rawDescription,
+  services,
+  id,
+  slug,
+  projects,
+  project,
+  forceCoverImage,
+  mainImage,
+}) => {
   const { viewport } = useSiteContext();
   const mobile = viewport.width < theme.sizes.break;
 
@@ -28,7 +42,14 @@ const SingleService = ({ title, _rawDescription, services, id, slug, projects, p
     <PageLayout className="single-service">
       <div className="main">
         <Heading>{title}</Heading>
-        {mobile && <ProjectCarousel projects={projects} />}
+        {mobile && (
+          <ProjectCarousel
+            projects={projects}
+            project={project}
+            slug={slug}
+            service
+          />
+        )}
         <div className="content">
           {_rawDescription && <Content>{_rawDescription}</Content>}
           <ContactFormButton>Let's Talk</ContactFormButton>
@@ -37,12 +58,16 @@ const SingleService = ({ title, _rawDescription, services, id, slug, projects, p
       </div>
       <Topics />
       {(forceCoverImage || !projects.length) && mainImage ? (
-        <ServiceCoverImage
-          className="service-cover-image"
-          image={mainImage}
-        />
+        <ServiceCoverImage className="service-cover-image" image={mainImage} />
       ) : (
-        !mobile && <ProjectMasonry projects={projects} project={project} slug={slug} service />
+        !mobile && (
+          <ProjectMasonry
+            projects={projects}
+            project={project}
+            slug={slug}
+            service
+          />
+        )
       )}
     </PageLayout>
   );

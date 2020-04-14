@@ -6,7 +6,7 @@ import Project from './Project';
 import ProjectModal from './ProjectModal';
 import DownArrow from './DownArrow';
 
-import useSiteContext from '../SiteContext';
+import useSiteContext from '../../SiteContext';
 import getDimensions from './getDimensions';
 import useModalTransition from './modalTransition';
 
