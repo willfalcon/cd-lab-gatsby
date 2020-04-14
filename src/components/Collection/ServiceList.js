@@ -11,16 +11,19 @@ import useSiteContext from '../SiteContext';
 import { roundToDecimal } from '../utils';
 
 const ServiceListItem = ({ id, slug, title }) => {
-  
   const [hover, setHover] = useState(false);
-  
+
   return (
-    <li className="service-list__item link" onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+    <li
+      className="service-list__item link"
+      onMouseOver={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
       <Link to={`/service/${slug.current}`}>{title}</Link>
       <Caret color={theme.offWhite} hover={hover} />
     </li>
-  )
-}
+  );
+};
 
 const ServiceList = ({ projects, titleRef }) => {
   let services = [];
@@ -45,21 +48,32 @@ const ServiceList = ({ projects, titleRef }) => {
   const { viewport } = useSiteContext();
   const mobile = viewport.width < theme.sizes.break;
 
-  const right = roundToDecimal((viewport.width - 100) * 0.6 - (viewport.width - 100) * 0.4 * 0.1, 2);
+  const right = roundToDecimal(
+    (viewport.width - 100) * 0.6 - (viewport.width - 100) * 0.4 * 0.1,
+    2
+  );
   const width = roundToDecimal(((viewport.width - 100) * 0.4) / 2, 2);
 
-  const baseTop = viewport.height * .05 + 120;
+  const baseTop = viewport.height * 0.05 + 120;
 
   return (
-    <StyledServiceList className="service-list" style={mobile ? {} : {
-      right: `${right}px`,
-      width: `${width}px`,
-      top: titleHeight > 91 ? `${baseTop + titleHeight - 91}px` : `${baseTop}px`
-    }}>
-      {uniqWith(services, isEqual).map((service) => {
-        return (
-          <ServiceListItem key={service.id} {...service} />
-        );
+    <StyledServiceList
+      className="service-list"
+      style={
+        mobile
+          ? {}
+          : {
+              right: `${right}px`,
+              width: `${width}px`,
+              top:
+                titleHeight > 91
+                  ? `${baseTop + titleHeight - 91}px`
+                  : `${baseTop}px`,
+            }
+      }
+    >
+      {uniqWith(services, isEqual).map(service => {
+        return <ServiceListItem key={service.id} {...service} />;
       })}
     </StyledServiceList>
   );
@@ -71,7 +85,7 @@ const StyledServiceList = styled.ul`
   background: ${({ theme }) => theme.orange};
   display: block;
   padding: 0 2rem;
-  margin: 3rem 3rem -2rem;
+  margin: 3rem 3rem 3rem;
   position: relative;
   z-index: 1;
   a,
