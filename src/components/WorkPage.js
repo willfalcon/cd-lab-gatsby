@@ -10,8 +10,12 @@ import Topics from './Topics/Topics';
 import useSiteContext from './SiteContext';
 import theme from './theme';
 
-const ProjectCarousel = Loadable(() => import('./Projects/ProjectCarousel'));
-const ProjectMasonry = Loadable(() => import('./Projects/ProjectMasonry'));
+const ProjectCarousel = Loadable(() =>
+  import('./Projects/ProjectCarousel/ProjectCarousel')
+);
+const ProjectMasonry = Loadable(() =>
+  import('./Projects/ProjectMasonry/ProjectMasonry')
+);
 
 const WorkPage = ({ title, _rawBody, id, seoSettings, services }) => {
   const allStuff = useSiteContext();

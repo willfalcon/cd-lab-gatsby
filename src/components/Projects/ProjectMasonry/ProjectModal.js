@@ -5,9 +5,9 @@ import Img from 'gatsby-image';
 import Helmet from 'react-helmet';
 import ReactPlayer from 'react-player';
 
-import BackgroundOverlay from '../BackgroundOverlay';
+import BackgroundOverlay from '../../BackgroundOverlay';
 import ProjectTitle from './ProjectTitle';
-import CloseButton from '../CloseButton';
+import CloseButton from '../../CloseButton';
 import ProjectContent from './ProjectContent';
 
 const ProjectModal = ({

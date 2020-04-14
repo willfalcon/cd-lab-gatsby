@@ -16,7 +16,6 @@ const FeaturedProjects = ({ projects, makeReady }) => {
   const prevSlide = () => setIndex((slideIndex + len - 1) % len);
   const nextSlide = () => setIndex((slideIndex + 1) % len);
 
-  console.log(slideIndex);
   return (
     <StyledFeaturedProjects className="featured-projects" viewport={viewport}>
       <CarouselProvider
