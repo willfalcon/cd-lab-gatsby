@@ -15,20 +15,23 @@ const ProjectCarousel = Loadable(() => import('../Projects/ProjectCarousel'));
 const ProjectMasonry = Loadable(() => import('../Projects/ProjectMasonry'));
 const ServiceList = Loadable(() => import('./ServiceList'));
 
-const SingleCollection = ({ title, _rawDescription, projects, project, slug }) => {
-  const viewport = useSiteContext();
+const SingleCollection = ({
+  title,
+  _rawDescription,
+  projects,
+  project,
+  slug,
+}) => {
+  const { viewport } = useSiteContext();
   const mobile = viewport.width < theme.sizes.break;
 
   const titleRef = useRef(null);
-  
+
   return (
     <PageLayout collection className="single-collection">
       <div className="main">
         <Heading ref={titleRef}>{title}</Heading>
-        <ServiceList
-          projects={projects}
-          titleRef={titleRef}
-        />
+        <ServiceList projects={projects} titleRef={titleRef} />
         {mobile && <ProjectCarousel projects={projects} />}
         <div className="content">
           {_rawDescription && <Content>{_rawDescription}</Content>}
@@ -36,7 +39,9 @@ const SingleCollection = ({ title, _rawDescription, projects, project, slug }) =
         </div>
       </div>
       <Topics />
-      {!mobile && <ProjectMasonry projects={projects} project={project} slug={slug} />}
+      {!mobile && (
+        <ProjectMasonry projects={projects} project={project} slug={slug} />
+      )}
     </PageLayout>
   );
 };
