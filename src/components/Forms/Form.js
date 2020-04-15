@@ -127,6 +127,8 @@ const Form = ({
 const Submit = styled.input`
   ${ButtonStyles}
   text-transform: none;
+  -webkit-appearance: none;
+  border-radius: 0px;
 `;
 
 const StyledForm = styled(animated.form)`
