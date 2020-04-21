@@ -4,6 +4,7 @@ import PageLayout from './PageLayout';
 import Content from './Content';
 import Topics from './Topics/Topics';
 import Button from './Button';
+import ContactFormButton from './ContactFormButton';
 
 const ErrorPage = ({ _rawBody }) => {
   return (
@@ -14,6 +15,7 @@ const ErrorPage = ({ _rawBody }) => {
         <Button className="error-page__home-link" href="/">
           Go Home
         </Button>
+        <ContactFormButton />
       </main>
       <Topics error />
     </PageLayout>

@@ -12,8 +12,7 @@ import Form from './Forms/Form';
 import useSiteContext from './SiteContext';
 import { media } from './theme';
 
-const ContactFormButton = ({ children }) => {
-
+const ContactFormButton = ({ children = 'Start a Project' }) => {
   const buttonRef = useRef(null);
 
   const buttonRect = buttonRef.current
@@ -133,7 +132,5 @@ const ContactForm = styled(Form)`
     height: 100%;
   `}
 `;
-
-
 
 export default ContactFormButton;

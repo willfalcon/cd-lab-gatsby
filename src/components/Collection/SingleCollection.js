@@ -41,7 +41,7 @@ const SingleCollection = ({
         )}
         <div className="content">
           {_rawDescription && <Content>{_rawDescription}</Content>}
-          <ContactFormButton>Let's Talk</ContactFormButton>
+          <ContactFormButton>Start a Project</ContactFormButton>
         </div>
       </div>
       <Topics />

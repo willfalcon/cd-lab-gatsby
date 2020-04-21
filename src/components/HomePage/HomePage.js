@@ -49,7 +49,7 @@ const HomePage = ({
         bg={mainImage ? mainImage.asset.url : null}
       >
         <Content>{_rawBody}</Content>
-        <ContactFormButton>Let's Talk</ContactFormButton>
+        <ContactFormButton>Start a Project</ContactFormButton>
         <NewsletterButton>Join our Newsletter</NewsletterButton>
         {logoBadge && (
           <Img

@@ -19,7 +19,7 @@ const AboutPage = ({ title, _rawBody, people }) => {
       <AboutMain className="about-main">
         <Heading className="about__heading">{title}</Heading>
         <Content className="about__content">{_rawBody}</Content>
-        <ContactFormButton>Contact Us</ContactFormButton>
+        <ContactFormButton>Start a Project</ContactFormButton>
       </AboutMain>
       <Topics />
       <AboutAside className="about-aside" viewport={viewport}>
