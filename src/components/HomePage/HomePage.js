@@ -7,6 +7,7 @@ import Content from '../Content';
 import Topics from '../Topics/Topics';
 import ContactFormButton from '../ContactFormButton';
 import Loader from '../Loader';
+import NewsletterButton from '../NewsletterButton';
 
 import { media } from '../theme';
 import useSiteContext from '../SiteContext';
@@ -49,6 +50,7 @@ const HomePage = ({
       >
         <Content>{_rawBody}</Content>
         <ContactFormButton>Let's Talk</ContactFormButton>
+        <NewsletterButton>Join our Newsletter</NewsletterButton>
         {logoBadge && (
           <Img
             className="logo-badge"
@@ -69,7 +71,6 @@ const HomePage = ({
     </StyledHomePage>
   );
 };
-
 const StyledHomeAside = styled.aside`
   ${media.break`
     flex: 0 0 40%;

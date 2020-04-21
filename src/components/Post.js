@@ -5,6 +5,7 @@ import Img from 'gatsby-image';
 import Heading from './Heading';
 import Content from './Content';
 import Topics from './Topics/Topics';
+import NewsletterButton from './NewsletterButton';
 
 import { media } from './theme';
 
@@ -21,6 +22,7 @@ const Post = ({ id, _rawBody, mainImage, title, author, publishedAt }) => {
       <span className="date">{publishedAt}</span>
       <Heading>{title}</Heading>
       <Content>{_rawBody}</Content>
+      <NewsletterButton>Join our Newsletter</NewsletterButton>
       <Topics />
     </Article>
   );
