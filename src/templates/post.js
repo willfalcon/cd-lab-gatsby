@@ -6,7 +6,10 @@ import Post from '../components/Post';
 
 const post = ({ data }) => {
   return (
-    <Wrapper seo={data.sanityPost.seoSettings} pageTitle={data.sanityPost.title}>
+    <Wrapper
+      seo={data.sanityPost.seoSettings}
+      pageTitle={data.sanityPost.title}
+    >
       <Post {...data.sanityPost} />
     </Wrapper>
   );
@@ -17,7 +20,7 @@ export const PostQuery = graphql`
     sanityPost(slug: { current: { eq: $slug } }) {
       id
       title
-      _rawBody(resolveReferences: {maxDepth: 10})
+      _rawBody(resolveReferences: { maxDepth: 10 })
       mainImage {
         alt
         asset {
@@ -28,6 +31,14 @@ export const PostQuery = graphql`
       }
       author {
         name
+        _rawBio
+        image {
+          asset {
+            fixed(width: 300) {
+              ...GatsbySanityImageFixed
+            }
+          }
+        }
       }
       publishedAt(formatString: "MM.DD.YY")
       seoSettings {

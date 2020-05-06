@@ -3,7 +3,8 @@ import { css } from 'styled-components';
 const theme = {
   orange: '#F5591F',
   lightOrange: '#F5911F',
-  offWhite: '#FFF9EF',
+  // offWhite: '#FFF9EF',
+  offWhite: 'white',
   dark: '#4E4D39',
   grey: '#979797',
   break: '768px',
