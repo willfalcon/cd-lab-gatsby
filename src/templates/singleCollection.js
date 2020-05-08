@@ -7,8 +7,15 @@ import SingleCollection from '../components/Collection/SingleCollection';
 const singleCollection = ({ data, pageContext }) => {
   const { project, slug } = pageContext;
   return (
-    <Wrapper seo={data.sanityCollection.seoSettings} pageTitle={data.sanityCollection.title}>
-      <SingleCollection {...data.sanityCollection} project={project} slug={slug} />
+    <Wrapper
+      seo={data.sanityCollection.seoSettings}
+      pageTitle={data.sanityCollection.title}
+    >
+      <SingleCollection
+        {...data.sanityCollection}
+        project={project}
+        slug={slug}
+      />
     </Wrapper>
   );
 };
@@ -18,7 +25,7 @@ export const SingleCollectionQuery = graphql`
     sanityCollection(slug: { current: { eq: $slug } }) {
       id
       title
-      _rawDescription(resolveReferences: {maxDepth: 10})
+      _rawDescription(resolveReferences: { maxDepth: 10 })
       seoSettings {
         metaDescription
         title
@@ -48,13 +55,22 @@ export const SingleCollectionQuery = graphql`
         images {
           _key
           asset {
+            extension
             fluid(maxWidth: 1000) {
               ...GatsbySanityImageFluid
             }
           }
         }
-        _rawDescription(resolveReferences: {maxDepth: 10})
+        _rawDescription(resolveReferences: { maxDepth: 10 })
         videoID
+        videoThumbnail {
+          id
+          childImageSharp {
+            fluid(maxWidth: 1000) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
       }
     }
   }

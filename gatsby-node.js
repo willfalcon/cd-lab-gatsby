@@ -165,6 +165,72 @@ exports.createPages = async ({
   });
 
   /**
+   * Create Latest Projects Collection
+   */
+
+  const {
+    data: { sanityLatestCollection },
+  } = await graphql(`
+    {
+      sanityLatestCollection {
+        title
+        slug {
+          current
+        }
+        numberProjects
+      }
+    }
+  `);
+
+  createPage({
+    path: `/collection/${sanityLatestCollection.slug.current}`,
+    component: require.resolve('./src/templates/latestCollection.js'),
+    context: {
+      numProjects: sanityLatestCollection.numberProjects,
+      slug: sanityLatestCollection.slug.current,
+    },
+  });
+  console.log(
+    `Created Latest Projects Collection at: ${sanityLatestCollection.slug.current}`
+  );
+
+  const {
+    data: { allSanityProject: latestProjects },
+  } = await graphql(`{
+  allSanityProject(
+    limit: ${sanityLatestCollection.numberProjects}
+    sort: { fields: _createdAt, order: DESC }
+  ) {
+    edges {
+      node {
+    id
+    slug {
+      current
+    }
+    title
+    video
+  }
+}}
+}
+  `);
+
+  latestProjects.edges.forEach(({ node: project }) => {
+    createPage({
+      path: `/collection/${sanityLatestCollection.slug.current}/${project.slug.current}`,
+      component: require.resolve('./src/templates/latestCollection.js'),
+      context: {
+        numProjects: sanityLatestCollection.numberProjects,
+        slug: sanityLatestCollection.slug.current,
+        project: project.slug.current,
+        video: project.video,
+      },
+    });
+    console.log(
+      `Created single Project page for ${project.title} on top of Latest Projects Collection`
+    );
+  });
+
+  /**
    * Get Blog posts and create pages
    */
 
