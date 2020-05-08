@@ -196,22 +196,24 @@ exports.createPages = async ({
 
   const {
     data: { allSanityProject: latestProjects },
-  } = await graphql(`{
-  allSanityProject(
-    limit: ${sanityLatestCollection.numberProjects}
-    sort: { fields: _createdAt, order: DESC }
-  ) {
-    edges {
-      node {
-    id
-    slug {
-      current
+  } = await graphql(`
+    {
+      allSanityProject(
+        limit: ${sanityLatestCollection.numberProjects}
+        sort: { fields: _createdAt, order: DESC }
+      ) {
+        edges {
+          node {
+            id
+            slug {
+              current
+            }
+            title
+            video
+          }
+        }
+      }
     }
-    title
-    video
-  }
-}}
-}
   `);
 
   latestProjects.edges.forEach(({ node: project }) => {
