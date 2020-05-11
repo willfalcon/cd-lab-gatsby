@@ -20,11 +20,11 @@ const MobileProjectModal = props => {
     images,
     title,
     _rawDescription,
-    setExpandedProject,
-    setModalOpen,
+    // setExpandedProject,
+    // setModalOpen,
     style,
-    categories,
-    slug,
+    // categories,
+    // slug,
     handleCloseProject,
   } = props;
 

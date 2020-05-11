@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
-import { useTransition, animated } from 'react-spring';
+import { useTransition } from 'react-spring';
 
 import 'pure-react-carousel/dist/react-carousel.es.css';
 

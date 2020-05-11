@@ -25,25 +25,19 @@ const CheckBoxes = ({ name, options, register, fieldOptions, error }) => {
   };
 
   // Focus State
-  const [focused, setFocus] = useState(false);
-  const handleFocus = e => {
-    setFocus(true);
-  }
-  const handleBlur = e => {
-    if (!e.target.value) {
-      setFocus(false);
-    }
-  }
-
-
+  // const [focused, setFocus] = useState(false);
+  // const handleFocus = e => {
+  //   setFocus(true);
+  // }
+  // const handleBlur = e => {
+  //   if (!e.target.value) {
+  //     setFocus(false);
+  //   }
+  // }
 
   return (
     <>
-      <Label
-        className="checkboxes"
-        htmlFor={name}
-        halfWidth={halfWidth}
-      >
+      <Label className="checkboxes" htmlFor={name} halfWidth={halfWidth}>
         <span className="label-text">
           {name}
           {required && '*'}
@@ -66,7 +60,7 @@ const CheckBoxes = ({ name, options, register, fieldOptions, error }) => {
                 name={name}
                 value={option}
                 ref={register({
-                  required
+                  required,
                 })}
               />
               <span className="checkbox-option-label">{option}</span>

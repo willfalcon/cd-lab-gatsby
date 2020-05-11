@@ -18,7 +18,7 @@ const ExpandedTopic = ({
   style,
   className,
   toggledFromMenu,
-  scrollY
+  scrollY,
 }) => {
   const { viewport, setTopicToggledFromMenu } = useSiteContext();
 
@@ -31,9 +31,14 @@ const ExpandedTopic = ({
 
   useEffect(() => {
     setTopicProps({
-      ...topics[topics.findIndex(topic => topic.node.id === expandedTopic)].node,
+      ...topics[topics.findIndex(topic => topic.node.id === expandedTopic)]
+        .node,
     });
+    // Don't include expandedTopic in dependency array, it breaks when you close the topics modal.
+    // Don't remove the dependency array, it locks the site up.
+    /*eslint-disable */
   }, [topics]);
+  /*eslint-enable */
 
   return (
     <StyledExpandedTopic
@@ -43,11 +48,13 @@ const ExpandedTopic = ({
       toggledFromMenu={toggledFromMenu}
       scrollY={scrollY}
     >
-      <CloseButton handleClick={() => {
-        setTopicProps(emptyTopicProps);
-        setExpandedTopic(null);
-        setTopicToggledFromMenu(false);
-      }} />
+      <CloseButton
+        handleClick={() => {
+          setTopicProps(emptyTopicProps);
+          setExpandedTopic(null);
+          setTopicToggledFromMenu(false);
+        }}
+      />
       <Heading className="expanded-topic-title" h2>
         {topicProps.title}
       </Heading>
@@ -70,9 +77,11 @@ const StyledExpandedTopic = styled(animated.div)`
     text-align: center;
     font-size: 3.6rem;
   }
-  ${({ toggledFromMenu, scrollY, viewport }) => toggledFromMenu && `
+  ${({ toggledFromMenu, scrollY, viewport }) =>
+    toggledFromMenu &&
+    `
     position: absolute;
-    top: ${viewport.width * .3333 + scrollY}px;
+    top: ${viewport.width * 0.3333 + scrollY}px;
     left: 0px;
   `}
   ${media.break`

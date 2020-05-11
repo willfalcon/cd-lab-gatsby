@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 
 import CloseButton from './CloseButton';

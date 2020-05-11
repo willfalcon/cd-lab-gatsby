@@ -14,7 +14,7 @@ const CarouselProject = props => {
     slug,
     initialProject,
     serviceOrCollection,
-    expandedProject,
+    // expandedProject,
     setModalOpen,
     mainSlug,
     categories,

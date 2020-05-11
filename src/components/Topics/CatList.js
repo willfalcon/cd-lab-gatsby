@@ -9,11 +9,21 @@ import Caret from '../Caret';
 import theme from '../theme';
 
 const CatListItem = ({ className, service, inactive = false }) => {
-  
   const [hover, setHover] = useState(false);
   const { _id, title, slug } = service;
+
+  const focus = () => setHover(true);
+  const blur = () => setHover(false);
+
   return (
-    <StyledCategory key={_id} className={classNames('cats-list-item', className)} onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+    <StyledCategory
+      key={_id}
+      className={classNames('cats-list-item', className)}
+      onMouseOver={focus}
+      onFocus={focus}
+      onMouseLeave={blur}
+      onBlur={blur}
+    >
       {inactive ? (
         <span>{title}</span>
       ) : (
@@ -21,20 +31,25 @@ const CatListItem = ({ className, service, inactive = false }) => {
       )}
       {!inactive && <Caret color={theme.offWhite} hover={hover} />}
     </StyledCategory>
-  )
-}
+  );
+};
 
 const CatList = ({ categories }) => {
   const deactivated = categories.filter(cat => cat.deactivated);
   const active = categories.filter(cat => !cat.deactivated);
-  
+
   return (
     <StyledCatList className="cats">
       {active.map(({ service }) => (
         <CatListItem key={service._id} className="link" service={service} />
       ))}
       {deactivated.map(({ service }) => (
-        <CatListItem key={service._id} className="no-link" service={service} inactive />
+        <CatListItem
+          key={service._id}
+          className="no-link"
+          service={service}
+          inactive
+        />
       ))}
     </StyledCatList>
   );

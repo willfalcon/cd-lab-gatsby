@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useTransition } from 'react-spring';
-import { useStaticQuery, graphql } from 'gatsby';
+// import { useStaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
 
 import Button from './Button';
