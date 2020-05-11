@@ -16,6 +16,16 @@ const theme = {
   bookWeight: '300',
   regularWeight: '400',
   boldWeight: '700',
+  font: {
+    family: 'synthese, sans-serif',
+    familySans: 'granville, serif',
+    newHeading: 'degular, sans-serif',
+    newSerif: 'span, serif',
+    book: 300,
+    regular: 400,
+    bold: 700,
+    black: 900,
+  },
   // grid: true,
   timeout: 400,
   grid: {
