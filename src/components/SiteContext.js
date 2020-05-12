@@ -132,7 +132,8 @@ const SiteContextProvider = ({ children, home }) => {
           node {
             id
             title
-            _rawContent(resolveReferences: {maxDepth: 10})
+            _rawContent(resolveReferences: { maxDepth: 10 })
+            _rawShortContent(resolveReferences: { maxDepth: 10 })
             image {
               alt
               asset {
@@ -140,7 +141,7 @@ const SiteContextProvider = ({ children, home }) => {
                   ...GatsbySanityImageFixed
                 }
               }
-            } 
+            }
             slug {
               current
             }

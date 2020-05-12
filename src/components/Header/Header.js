@@ -29,28 +29,45 @@ const Header = () => {
           }
         }
       }
+      fullLogo: file(relativePath: { eq: "cd-logo-h.png" }) {
+        id
+        childImageSharp {
+          fixed(width: 800) {
+            base64
+            width
+            height
+            src
+            srcSet
+            srcWebp
+            srcSetWebp
+          }
+        }
+      }
     }
   `);
   const { menuOpen, home, expandedTopic } = useSiteContext();
   return (
     <>
-      <HomeLogoWrap to="/" className="home-wrap">
-        <Img
-          fixed={images.homeLogo.childImageSharp.fixed}
-          alt="Creative Distillery"
-          className="home-logo"
-          fadeIn={false}
-        />
-      </HomeLogoWrap>
+      {!home && (
+        <HomeLogoWrap to="/" className="home-wrap">
+          <Img
+            fixed={images.homeLogo.childImageSharp.fixed}
+            alt="Creative Distillery"
+            className="home-logo"
+            fadeIn={false}
+          />
+        </HomeLogoWrap>
+      )}
       <StyledHeader
         topicsOpen={expandedTopic}
         menuOpen={menuOpen}
         className="header"
+        home={home}
       >
         <SiteLogo home={home} />
         <MenuToggle />
-        <SocialList />
-        <Nav />
+        <SocialList className="header-social-list" />
+        <Nav home={home} />
       </StyledHeader>
     </>
   );
@@ -94,6 +111,20 @@ const StyledHeader = styled.header`
     background: transparent;
     z-index: ${({ topicsOpen, menuOpen }) => (topicsOpen && !menuOpen ? 8 : 9)};
     z-index: ${({ topicsOpen, menuOpen }) => (topicsOpen ? 8 : 10)};
+    ${({ home }) =>
+      home &&
+      `
+      position: relative;
+      width: 100%;
+      .menu-toggle {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .header-social-list {
+        display: none;
+      }
+    `}
   `}
 `;
 

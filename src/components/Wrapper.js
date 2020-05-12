@@ -45,7 +45,7 @@ const PageWrapper = styled.div`
     ${({ home, viewport }) =>
       home &&
       `
-      height: ${viewport.height ? `${viewport.height}px` : `100vh`};
+      // height: ${viewport.height ? `${viewport.height}px` : `100vh`};
     `}
     main {
       padding-left:90px;

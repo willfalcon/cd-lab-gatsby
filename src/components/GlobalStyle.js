@@ -22,6 +22,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     font-family: granville, serif;
+    font-family: ${({ theme }) => theme.font.family};
     font-weight: 400;
     font-style: normal;
     font-size: 1.6rem;
@@ -67,7 +68,7 @@ const GlobalStyle = createGlobalStyle`
   }
   p {
     margin: 0 0 1rem;
-    font-family: granville, serif;
+    /* font-family: granville, serif; */
     font-size: 1.6rem;
   }
   .text-center {
