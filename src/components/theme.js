@@ -9,6 +9,7 @@ const theme = {
   grey: '#979797',
   light: '#F7F7F3',
   black: '#3C3837',
+  darkBlue: '#31363B',
   break: '768px',
   bigBreak: '1024px',
   maxWidth: '1000px',

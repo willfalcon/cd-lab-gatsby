@@ -11,7 +11,7 @@ const HomeTopics = () => {
   return (
     <TopicsContainer className="home-topics">
       {topics.map((topic, index) => (
-        <HomeTopic {...topic.node} index={index} />
+        <HomeTopic {...topic.node} index={index} key={topic.node.id} />
       ))}
     </TopicsContainer>
   );

@@ -4,10 +4,7 @@ import styled from 'styled-components';
 import Content from '../Content';
 import Button from '../Button';
 
-const HomeTopic = props => {
-  console.log(props);
-  const { index, title, _rawShortContent } = props;
-
+const HomeTopic = ({ index, title, _rawShortContent }) => {
   return (
     <Topic>
       <Label>

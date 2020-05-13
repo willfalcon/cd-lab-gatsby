@@ -7,6 +7,7 @@ import Button from '../Button';
 import ContactFormButton from '../ContactFormButton';
 import WhatWeDo from './WhatWeDo';
 import AboutSection from './AboutSection';
+import InsightsSection from './InsightsSection';
 import HomeFooter from './HomeFooter';
 
 const NewHomePage = ({
@@ -44,12 +45,14 @@ const NewHomePage = ({
         thumbnail={thumbnail}
         video={homeVideoId}
       />
+      <InsightsSection />
       <HomeFooter />
     </HomeContainer>
   );
 };
 
 const HomeContainer = styled.div`
+  position: relative;
   .home-main {
     padding: 1rem;
     width: ${({ theme }) => theme.sizes.content}px;
