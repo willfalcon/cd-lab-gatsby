@@ -7,6 +7,7 @@ import Button from '../Button';
 import ContactFormButton from '../ContactFormButton';
 import WhatWeDo from './WhatWeDo';
 import AboutSection from './AboutSection';
+import HomeFooter from './HomeFooter';
 
 const NewHomePage = ({
   _rawBody,
@@ -43,6 +44,7 @@ const NewHomePage = ({
         thumbnail={thumbnail}
         video={homeVideoId}
       />
+      <HomeFooter />
     </HomeContainer>
   );
 };

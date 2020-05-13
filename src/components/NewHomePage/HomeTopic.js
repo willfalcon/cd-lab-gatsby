@@ -6,7 +6,7 @@ import Button from '../Button';
 
 const HomeTopic = props => {
   console.log(props);
-  const { index, title, _rawContent, _rawShortContent } = props;
+  const { index, title, _rawShortContent } = props;
 
   return (
     <Topic>

@@ -2,7 +2,6 @@ import React from 'react';
 import { graphql } from 'gatsby';
 
 import Wrapper from '../components/Wrapper';
-import HomeWrapper from '../components/NewHomePage/HomeWrapper';
 // import HomePage from '../components/HomePage/HomePage';
 import NewHomePage from '../components/NewHomePage/NewHomePage';
 

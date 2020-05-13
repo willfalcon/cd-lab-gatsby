@@ -29,9 +29,10 @@ exports.createPages = async ({
     }
   );
   const thumbnails = await thumbnailsRes.json();
+  console.log(thumbnails.data[0].sizes);
   const thumbnail =
     thumbnails.data[0].sizes[
-      thumbnails.data[0].sizes.findIndex(size => size.width === 640)
+      thumbnails.data[0].sizes.findIndex(size => size.width === 1920)
     ].link;
   createPage({
     path: `/`,
