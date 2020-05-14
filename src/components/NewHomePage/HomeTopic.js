@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Content from '../Content';
 import Button from '../Button';
 
-const HomeTopic = ({ index, title, _rawShortContent }) => {
+const HomeTopic = ({ index, title, _rawShortContent, collection }) => {
   return (
     <Topic>
       <Label>
@@ -12,7 +12,12 @@ const HomeTopic = ({ index, title, _rawShortContent }) => {
         <h3 className="topic__title">{title}</h3>
       </Label>
       <Content className="topic__content">{_rawShortContent}</Content>
-      <Button className="topic__button">{title} Services</Button>
+      <Button
+        className="topic__button"
+        href={`/collection/${collection.slug.current}`}
+      >
+        {title} Services
+      </Button>
     </Topic>
   );
 };

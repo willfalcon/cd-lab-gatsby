@@ -134,6 +134,11 @@ const SiteContextProvider = ({ children, home }) => {
             title
             _rawContent(resolveReferences: { maxDepth: 10 })
             _rawShortContent(resolveReferences: { maxDepth: 10 })
+            collection {
+              slug {
+                current
+              }
+            }
             image {
               alt
               asset {
