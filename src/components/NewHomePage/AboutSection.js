@@ -18,7 +18,7 @@ const AboutSection = ({ copy, thumbnail, video }) => {
         <Button className="about-section__button" href="/about">
           Our Team
         </Button>
-        <Button className="about-section__button" href="/about">
+        <Button className="about-section__button" href="/post/manifesto">
           Our Mission
         </Button>
       </div>

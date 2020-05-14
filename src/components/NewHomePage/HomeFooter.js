@@ -3,9 +3,13 @@ import styled from 'styled-components';
 import { Link, useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
+import useSiteContext from '../SiteContext';
 import { media, grid } from '../theme';
 
 const HomeFooter = () => {
+  const { topics } = useSiteContext();
+  console.log(topics);
+
   const { file, sanityHomePage } = useStaticQuery(graphql`
     {
       file(relativePath: { eq: "cd-icon-reverse.png" }) {
@@ -25,35 +29,37 @@ const HomeFooter = () => {
       sanityHomePage {
         footerMenuHeading
         footerMenu {
-          ... on SanityCategory {
-            id
-            title
-            slug {
-              current
+          label
+          link {
+            ... on SanityCategory {
+              id
+              title
+              slug {
+                current
+              }
+              _type
             }
-            _type
-          }
-          ... on SanityCollection {
-            id
-            _type
-            title
-            slug {
-              current
+            ... on SanityCollection {
+              id
+              _type
+              title
+              slug {
+                current
+              }
             }
-          }
-          ... on SanityPost {
-            id
-            title
-            slug {
-              current
+            ... on SanityPost {
+              id
+              title
+              slug {
+                current
+              }
+              _type
             }
-            _type
           }
         }
       }
     }
   `);
-  console.log(sanityHomePage);
   return (
     <Footer className="home-footer">
       <Img
@@ -85,18 +91,20 @@ const HomeFooter = () => {
           {sanityHomePage.footerMenuHeading}
         </h4>
         <nav className="home-footer__nav">
-          {sanityHomePage.footerMenu.map(({ _type, title, slug, id }) => {
-            const path = _type === 'category' ? 'service' : _type;
-            return (
-              <Link
-                className="home-footer__nav-item"
-                key={id}
-                to={`/${path}/${slug.current}`}
-              >
-                {title}
-              </Link>
-            );
-          })}
+          {sanityHomePage.footerMenu.map(
+            ({ label, link: { _type, title, slug, id } }) => {
+              const path = _type === 'category' ? 'service' : _type;
+              return (
+                <Link
+                  className="home-footer__nav-item"
+                  key={id}
+                  to={`/${path}/${slug.current}`}
+                >
+                  {label || title}
+                </Link>
+              );
+            }
+          )}
         </nav>
       </div>
       <div className="home-footer__column home-footer__topics">
@@ -104,21 +112,16 @@ const HomeFooter = () => {
           What We Do
         </h4>
         <ul className="home-footer__topics-list">
-          <li className="home-footer__topic">
-            <Link className="home-footer__topic-link" to="/">
-              Strategy >
-            </Link>
-          </li>
-          <li className="home-footer__topic">
-            <Link className="home-footer__topic-link" to="/">
-              Creative >
-            </Link>
-          </li>
-          <li className="home-footer__topic">
-            <Link className="home-footer__topic-link" to="/">
-              Marketing >
-            </Link>
-          </li>
+          {topics.map(({ node: { title, collection, id } }) => (
+            <li className="home-footer__topic" key={id}>
+              <Link
+                className="home-footer__topic-link"
+                to={`/collection/${collection.slug.current}`}
+              >
+                {title} >
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </Footer>
