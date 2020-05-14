@@ -38,8 +38,13 @@ const GlobalStyle = createGlobalStyle`
   img {
     ${imgStyle}
   }
+  h1 {
+    font-family: ${({ theme }) => theme.font.heading};
+    font-weight: ${({ theme }) => theme.font.black};
+  }
   h2 {
-    font-family: granville, serif;
+    /* font-family: granville, serif; */
+    font-family: ${({ theme }) => theme.font.heading};
     font-weight: 400;
     font-style: normal;
     line-height: 1.25;

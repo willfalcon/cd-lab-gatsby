@@ -5,13 +5,13 @@ import classNames from 'classnames';
 import { ButtonStyles } from './Button';
 import { media } from './theme';
 
-const NewsletterButton = ({ children, className, plain = false }) => {
+const WebinarButton = ({ children, className, plain = false }) => {
   return (
     <StyledNewsletterButton
       plain={plain}
-      className={classNames('button', 'newsletter-button', className)}
+      className={classNames('button', 'webinar-button', className)}
       dangerouslySetInnerHTML={{
-        __html: `<button onclick="ml_account('webforms', '1988854', 'p0m6j3', 'show')">
+        __html: `<button onclick="ml_account('webforms', '2092696', 'y6g5z1', 'show')">
           ${children}
         </button>`,
       }}
@@ -41,4 +41,4 @@ const StyledNewsletterButton = styled.span`
   }
 `;
 
-export default NewsletterButton;
+export default WebinarButton;

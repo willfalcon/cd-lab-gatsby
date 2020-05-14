@@ -6,7 +6,7 @@ import BlockTitle from './BlockTitle';
 import Content from '../Content';
 import Button from '../Button';
 import NewsletterButton from '../NewsletterButton';
-import FormModalButton from '../FormModalButton';
+import WebinarButton from '../WebinarButton';
 
 const InsightsSection = () => {
   const props = useStaticQuery(graphql`
@@ -40,17 +40,23 @@ const InsightsSection = () => {
         <Insight className="insight">
           <h4 className="insight__heading">{articlesHeading}</h4>
           <Content className="insight__content">{articlesContent}</Content>
-          <Button href="/blog">Read Articles</Button>
+          <Button href="/blog" className="insight__button">
+            Read Articles
+          </Button>
         </Insight>
         <Insight className="insight">
           <h4 className="insight__heading">{newsletterHeading}</h4>
           <Content className="insight__content">{newsletterContent}</Content>
-          <NewsletterButton>Join the List</NewsletterButton>
+          <NewsletterButton className="insight__button">
+            Join the List
+          </NewsletterButton>
         </Insight>
         <Insight className="insight">
           <h4 className="insight__heading">{webinarHeading}</h4>
           <Content className="insight__content">{webinarContent}</Content>
-          <FormModalButton form={webinarForm}>Sign up FREE</FormModalButton>
+          <WebinarButton className="insight__button">
+            Sign up FREE
+          </WebinarButton>
         </Insight>
       </Columns>
     </Insights>
