@@ -7,10 +7,11 @@ import Img from 'gatsby-image';
 import MenuToggle from './MenuToggle';
 import SocialList from '../SocialList';
 import Nav from './Nav';
+import SiteLogo from './SiteLogo';
+import NewsletterButton from '../NewsletterButton';
+
 import useSiteContext from '../SiteContext';
 import { media } from '../theme';
-
-import SiteLogo from './SiteLogo';
 
 const Header = () => {
   const images = useStaticQuery(graphql`
@@ -65,6 +66,11 @@ const Header = () => {
         home={home}
       >
         <SiteLogo home={home} />
+        {home && (
+          <NewsletterButton className="header-subscribe" plain>
+            Subscribe
+          </NewsletterButton>
+        )}
         <MenuToggle />
         <SocialList className="header-social-list" />
         <Nav home={home} />
@@ -103,7 +109,6 @@ const StyledHeader = styled.header`
   display: flex;
   z-index: 33;
   background: white;
-
   ${media.break`
     position: relative;
     flex-flow: column nowrap;
@@ -126,6 +131,24 @@ const StyledHeader = styled.header`
       }
     `}
   `}
+
+  .header-subscribe {
+    display: none;
+    ${media.break`
+      position: absolute;
+      right: 0;
+      top: 0;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 2rem;
+      button {
+        margin-bottom: 0;
+        width: 100%;
+      }
+    `}
+  }
 `;
 
 export default Header;
