@@ -26,7 +26,7 @@ const PageLayout = styled.div.attrs(() => ({
     .main {
       padding: 0;
       padding-right: 2rem;
-      padding-top: 5%;
+      /* padding-top: 5%; */
       display: flex;
       flex-flow: column;
       flex: 0 0 40%;
@@ -40,6 +40,7 @@ const PageLayout = styled.div.attrs(() => ({
       .main-container {
         position: sticky;
         top: 0;
+        z-index: 1;
       }
 
       .heading {

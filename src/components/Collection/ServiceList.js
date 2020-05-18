@@ -5,25 +5,11 @@ import isEqual from 'lodash.isequal';
 import { Link } from 'gatsby';
 
 import Caret from '../Caret';
+import ServiceListItem from './ServiceListItem';
 
 import theme, { media } from '../theme';
 import useSiteContext from '../SiteContext';
 import { roundToDecimal } from '../utils';
-
-const ServiceListItem = ({ id, slug, title }) => {
-  const [hover, setHover] = useState(false);
-
-  return (
-    <li
-      className="service-list__item link"
-      onMouseOver={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
-      <Link to={`/service/${slug.current}`}>{title}</Link>
-      <Caret color={theme.offWhite} hover={hover} />
-    </li>
-  );
-};
 
 const ServiceList = ({ projects, titleRef }) => {
   let services = [];
@@ -49,7 +35,8 @@ const ServiceList = ({ projects, titleRef }) => {
   const mobile = viewport.width < theme.sizes.break;
 
   const right = roundToDecimal(
-    (viewport.width - 100) * 0.6 - (viewport.width - 100) * 0.4 * 0.1,
+    // (viewport.width - 100) * 0.6 - (viewport.width - 100) * 0.4 * 0.1,
+    -(viewport.width - 100) * 0.4 * 0.1 - 10,
     2
   );
   const width = roundToDecimal(((viewport.width - 100) * 0.4) / 2, 2);
@@ -117,7 +104,8 @@ const StyledServiceList = styled.ul`
     order: 3;
     margin: 0;
     /* width: ${({ width }) => width}px; */
-    position: fixed;
+    /* position: fixed; */
+    position: absolute;
     /* right: ${({ right }) => right}px; */
     top: 16rem;
     top: calc(12rem + 5%);
