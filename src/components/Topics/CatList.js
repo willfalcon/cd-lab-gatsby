@@ -57,7 +57,7 @@ const CatList = ({ categories }) => {
 
 const StyledCategory = styled.li`
   font-size: 1.6rem;
-  font-family: synthese, sans-serif;
+  font-family: ${({ theme }) => theme.font.heading};
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;

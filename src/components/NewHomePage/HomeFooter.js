@@ -8,7 +8,6 @@ import { media, grid } from '../theme';
 
 const HomeFooter = () => {
   const { topics } = useSiteContext();
-  console.log(topics);
 
   const { file, sanityHomePage } = useStaticQuery(graphql`
     {

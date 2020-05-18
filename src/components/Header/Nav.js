@@ -189,7 +189,7 @@ const StyledNav = styled(animated.nav)`
       font-size: 3.8rem;
       border: 0;
       background: transparent;
-      font-family: ${({ theme }) => theme.fontFamilySans};
+      font-family: ${({ theme }) => theme.font.family};
       cursor: pointer;
     }
   }

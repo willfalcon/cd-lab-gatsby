@@ -11,9 +11,6 @@ import CarouselProject from './CarouselProject';
 import MobileProjectModal from './MobileProjectModal';
 
 const ProjectCarousel = ({ projects, project, service = false, slug }) => {
-  console.log({ project });
-  // console.log(filteredProjects);
-
   const [expandedProject, setExpandedProject] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 

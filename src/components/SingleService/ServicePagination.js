@@ -47,8 +47,9 @@ const PaginationLink = styled(Link)`
   text-decoration: none;
   span {
     color: ${({ theme }) => theme.orange};
-    font-family: ${({ theme }) => theme.fontFamily};
-    font-weight: ${({ theme }) => theme.boldWeight};
+    font-family: ${({ theme }) => theme.font.heading};
+    font-weight: ${({ theme }) => theme.font.bold};
+    letter-spacing: 0.5px;
     display: block;
     line-height: 1.2;
     &.direction {
@@ -59,6 +60,8 @@ const PaginationLink = styled(Link)`
     }
   }
   .caret {
+    letter-spacing: 0;
+    margin-right: 0;
   }
 `;
 

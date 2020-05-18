@@ -13,20 +13,18 @@ import CarouselControls from '../../CarouselControls';
 
 import useSiteContext from '../../SiteContext';
 
-const MobileProjectModal = props => {
-  console.log(props);
+const MobileProjectModal = ({
+  images,
+  title,
+  _rawDescription,
+  // setExpandedProject,
+  // setModalOpen,
+  style,
+  // categories,
+  // slug,
+  handleCloseProject,
+}) => {
   const { viewport } = useSiteContext();
-  const {
-    images,
-    title,
-    _rawDescription,
-    // setExpandedProject,
-    // setModalOpen,
-    style,
-    // categories,
-    // slug,
-    handleCloseProject,
-  } = props;
 
   // const canonicalService = categories ? categories[0] : false;
   // const origin = window.location.origin;
@@ -38,7 +36,6 @@ const MobileProjectModal = props => {
   const len = images.length;
   const prevSlide = () => setIndex((slideIndex + len - 1) % len);
   const nextSlide = () => setIndex((slideIndex + 1) % len);
-  // console.log({ slideIndex });
   const sliderHeight = images.reduce((prev, current) => {
     const prevAspect = prev.asset ? prev.asset.fluid.aspectRatio : false;
     const aspect = current.asset.fluid.aspectRatio;
@@ -51,7 +48,6 @@ const MobileProjectModal = props => {
     if (!prev) return height;
     return height > prevHeight ? height : prevHeight;
   });
-  console.log(sliderHeight);
   return (
     <StyledModal className="mobile-project-modal" style={style}>
       <Heading className="mobile-project-modal__title" h2>
@@ -166,8 +162,8 @@ const StyledModal = styled(animated.div)`
       color: ${({ theme }) => theme.offWhite};
       margin-bottom: 1rem;
       text-transform: uppercase;
-      font-weight: ${({ theme }) => theme.boldWeight};
-      font-family: ${({ theme }) => theme.fontFamily};
+      font-weight: ${({ theme }) => theme.font.bold};
+      font-family: ${({ theme }) => theme.font.heading};
       letter-spacing: 3px;
       ::after {
         /* content: ''; */

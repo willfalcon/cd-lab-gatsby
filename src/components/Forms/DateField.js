@@ -140,8 +140,9 @@ const DateTimeLabel = styled(Label)`
 
   .react-calendar  {
     &__tile {
-      font-family: ${({ theme }) => theme.fontFamily};
-      font-weight: ${({ theme }) => theme.boldWeight};
+      font-family: ${({ theme }) => theme.font.heading};
+      font-weight: ${({ theme }) => theme.font.bold};
+      font-size: 1.3rem;
       &--now {
         background: ${({ theme }) => theme.offWhite};
         :enabled:hover {
@@ -181,8 +182,9 @@ const DateTimeLabel = styled(Label)`
       }
       &__weekdays {
         &__weekday {
-          font-family: ${({ theme }) => theme.fontFamily};
-          font-weight: ${({ theme }) => theme.boldWeight};
+          font-family: ${({ theme }) => theme.font.heading};
+          font-weight: ${({ theme }) => theme.font.bold};
+          font-size: 1.3rem;
           text-transform: uppercase;
         }
       }
@@ -197,8 +199,9 @@ const DateTimeLabel = styled(Label)`
         }
       }
       &__label {
-        font-family: ${({ theme }) => theme.fontFamily};
-        font-weight: ${({ theme }) => theme.boldWeight};
+        font-family: ${({ theme }) => theme.font.heading};
+        font-weight: ${({ theme }) => theme.font.bold};
+        font-size: 1.3rem;
         text-transform: uppercase;
         color: ${({ theme }) => theme.offWhite};
         /* color: ${({ theme }) => theme.dark}; */

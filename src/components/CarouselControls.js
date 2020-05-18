@@ -57,13 +57,13 @@ const StyledControls = styled.div`
   .controls {
     &__numbers {
       color: ${({ theme }) => theme.offWhite};
-      font-family: ${({ theme }) => theme.fontFamily};
+      font-family: ${({ theme }) => theme.font.heading};
       letter-spacing: 1px;
       ${media.plus`
         letter-spacing: 1.5px;
       `}
-      font-weight: 700;
-      font-size: 1.2rem;
+      font-weight: ${({ theme }) => theme.font.bold};
+      font-size: 1.4rem;
       padding: 0 7px;
     }
 

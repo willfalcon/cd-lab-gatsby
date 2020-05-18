@@ -15,7 +15,7 @@ const theme = {
   maxWidth: '1000px',
   bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
   fontFamily: 'synthese, sans-serif',
-  fontFamilySans: 'granville, serif',
+  // fontFamilySans: 'granville, serif',
   bookWeight: '300',
   regularWeight: '400',
   boldWeight: '700',

@@ -53,9 +53,7 @@ const ButtonStyles = css`
   padding: ${({ big }) => (big ? '.75rem 5rem' : '.25rem 1.5rem')};
   color: white;
   border: 0;
-  /* font-family: granville, serif; */
   font-family: ${({ theme }) => theme.font.heading};
-  /* font-weight: 400; */
   font-weight: ${({ theme }) => theme.font.black};
   letter-spacing: 0.5px;
   font-style: normal;

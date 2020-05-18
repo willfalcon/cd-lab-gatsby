@@ -3,23 +3,20 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 import Img from 'gatsby-image';
 
-const CarouselProject = props => {
-  console.log(props);
-  const {
-    id,
-    images,
-    title,
-    _rawDescription,
-    setExpandedProject,
-    slug,
-    initialProject,
-    serviceOrCollection,
-    // expandedProject,
-    setModalOpen,
-    mainSlug,
-    categories,
-  } = props;
-
+const CarouselProject = ({
+  id,
+  images,
+  title,
+  _rawDescription,
+  setExpandedProject,
+  slug,
+  initialProject,
+  serviceOrCollection,
+  // expandedProject,
+  setModalOpen,
+  mainSlug,
+  categories,
+}) => {
   useEffect(() => {
     if (initialProject && initialProject.id === id) {
       // const location = ref.current.getBoundingClientRect();
@@ -112,7 +109,9 @@ const StyledProjectCell = styled.button`
       max-width: 60%;
       width: 55%;
       line-height: 1.15;
-      font-size: 1.6rem;
+      font-size: 1.8rem;
+      font-weight: ${({ theme }) => theme.font.bold};
+      letter-spacing: 1.5px;
     }
   }
 `;

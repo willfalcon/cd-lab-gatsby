@@ -84,8 +84,6 @@ const ProjectMasonry = ({
     window.history.pushState({}, '', `/${serviceOrCollection}/${slug}`);
   };
 
-  console.log({ projects });
-
   return (
     <StyledProjectMasonry
       className="masonry"

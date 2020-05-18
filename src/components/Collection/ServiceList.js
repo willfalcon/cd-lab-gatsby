@@ -97,17 +97,20 @@ const StyledServiceList = styled.ul`
     text-align: left;
     display: block;
     text-transform: uppercase;
-    font-family: ${({ theme }) => theme.fontFamily};
-    letter-spacing: 3px;
+    font-family: ${({ theme }) => theme.font.heading};
+    letter-spacing: 1.5px;
     font-weight: 700;
     padding: 1rem 0;
     border-bottom: 1px solid ${({ theme }) => theme.offWhite};
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     &:last-child {
       border-bottom: 0px;
+    }
+    .caret {
+      margin-right: 0;
     }
   }
   ${media.break`

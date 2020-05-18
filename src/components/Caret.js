@@ -5,23 +5,38 @@ import classNames from 'classnames';
 
 import theme from './theme';
 
-const Caret = ({ left = false, right = true, className, styles, color = theme.orange, pulse = false, spin = false, big = false, hover = false }) => {
+const Caret = ({
+  left = false,
+  right = true,
+  className,
+  styles,
+  color = theme.orange,
+  pulse = false,
+  spin = false,
+  big = false,
+  hover = false,
+}) => {
   if (left) {
     right = false;
   }
 
-  // console.log({hover})
-  
   const [caretBumped, bumpCaret] = useState(false);
-  
+
   const caretSpring = useSpring({
     from: {
-      transform: spin ? `rotate(2turn) translateX(0px)` : `rotate(0turn) translateX(0px)`
+      transform: spin
+        ? `rotate(2turn) translateX(0px)`
+        : `rotate(0turn) translateX(0px)`,
     },
     to: {
-      transform: (pulse || hover) ? (caretBumped || hover) ? `rotate(0turn) translateX(10px)` : `rotate(0turn) translateX(0px)` : 'rotate(0turn) translateX(0px)',
+      transform:
+        pulse || hover
+          ? caretBumped || hover
+            ? `rotate(0turn) translateX(10px)`
+            : `rotate(0turn) translateX(0px)`
+          : 'rotate(0turn) translateX(0px)',
     },
-    onRest: () => bumpCaret(false)
+    onRest: () => bumpCaret(false),
   });
 
   useEffect(() => {
@@ -34,7 +49,16 @@ const Caret = ({ left = false, right = true, className, styles, color = theme.or
   }, [pulse]);
 
   return (
-    <StyledCaret className={classNames('caret', className, { left, right })} color={color} style={{...styles, ...caretSpring, marginRight: '10px'}} big={big}>
+    <StyledCaret
+      className={classNames('caret', className, { left, right })}
+      color={color}
+      style={{
+        ...styles,
+        ...caretSpring,
+        //  marginRight: '10px'
+      }}
+      big={big}
+    >
       <span />
       <span />
     </StyledCaret>
@@ -45,16 +69,19 @@ const StyledCaret = styled(animated.div)`
   position: relative;
   width: 20px;
   height: 20px;
-  ${({ big }) => big && `
+  ${({ big }) =>
+    big &&
+    `
     width: 30px;
     height: 30px;
   `}
   display: block;
+  margin-right: 10px;
   span {
     position: absolute;
     background: ${({ color }) => color};
     height: 2px;
-    height: ${({ big }) => big ? '3px' : '2px'};
+    height: ${({ big }) => (big ? '3px' : '2px')};
     width: 50%;
     top: 50%;
     left: 0;

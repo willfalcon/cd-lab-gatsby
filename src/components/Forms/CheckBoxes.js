@@ -15,9 +15,7 @@ const CheckBoxes = ({ name, options, register, fieldOptions, error }) => {
     fieldOptions && fieldOptions.halfWidth ? fieldOptions.halfWidth : false;
 
   const toggleChecked = i => {
-    // console.log('toggleChecked', i, checked);
     if (!checked.includes(i)) {
-      // console.log('box is not checked');
       setChecked([...checked, i]);
     } else {
       setChecked(checked.filter(x => x !== i));

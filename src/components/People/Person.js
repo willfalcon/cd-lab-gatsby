@@ -177,8 +177,8 @@ const ExpandedPerson = styled(animated.div)`
     color: ${({ theme }) => theme.offWhite};
     margin-bottom: 1rem;
     text-transform: uppercase;
-    font-weight: ${({ theme }) => theme.boldWeight};
-    font-family: ${({ theme }) => theme.fontFamily};
+    font-weight: ${({ theme }) => theme.font.bold};
+    font-family: ${({ theme }) => theme.font.heading};
     letter-spacing: 3px;
     ${media.break`
       color: ${({ theme }) => theme.orange};

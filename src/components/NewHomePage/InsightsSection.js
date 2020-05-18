@@ -16,7 +16,6 @@ const InsightsSection = () => {
       }
     }
   `);
-  console.log(props);
   const {
     sanityHomePage: {
       _rawInsightsSection: {

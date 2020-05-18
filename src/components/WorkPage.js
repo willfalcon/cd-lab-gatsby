@@ -20,7 +20,6 @@ const ProjectMasonry = Loadable(() =>
 
 const WorkPage = ({ title, _rawBody, id, seoSettings, services }) => {
   const allStuff = useSiteContext();
-  // console.log(allStuff);
   const { viewport } = allStuff;
   const mobile = viewport.width < theme.sizes.break;
 
@@ -52,9 +51,6 @@ const WorkPage = ({ title, _rawBody, id, seoSettings, services }) => {
   `);
 
   const allProjects = allSanityProject.edges.map(edge => ({ ...edge.node }));
-  console.log({ projects: allProjects.length });
-  // console.log(services);
-  // console.log(allProjects);
 
   const projects = services
     .map(service => {
@@ -85,7 +81,6 @@ const WorkPage = ({ title, _rawBody, id, seoSettings, services }) => {
         return { title, slug, images, _id, id, firstProject, forceCoverImage };
       }
     );
-  console.log(projects);
 
   return (
     <PageLayout className="work-page">

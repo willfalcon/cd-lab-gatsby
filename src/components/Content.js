@@ -25,8 +25,6 @@ const serializers = {
 };
 
 const Content = ({ children, className }) => {
-  // console.log({children});
-
   return (
     <div className={classNames('block-content', className)}>
       <BlockContent

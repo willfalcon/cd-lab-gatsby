@@ -5,7 +5,6 @@ import Wrapper from '../components/Wrapper';
 import SingleCollection from '../components/Collection/SingleCollection';
 
 const latestCollection = ({ data, pageContext }) => {
-  console.log(data);
   const { project, slug } = pageContext;
   return (
     <Wrapper

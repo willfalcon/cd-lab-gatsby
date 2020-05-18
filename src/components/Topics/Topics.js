@@ -58,7 +58,6 @@ const Topics = ({ home = false, error = false }) => {
     leave: { opacity: 0 },
   });
 
-  // console.log({ expandedIndex });
   return allTopicTransition.map(
     ({ item, key, props: allProps }) =>
       item && (

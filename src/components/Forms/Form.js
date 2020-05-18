@@ -162,13 +162,15 @@ const StyledForm = styled(animated.form)`
     grid-column-gap: 1rem;
   }
   .complex-field-label {
-    font-family: synthese, sans-serif;
+    /* font-family: synthese, sans-serif; */
+    font-family: ${({ theme }) => theme.font.heading};
+    font-size: 1.8rem;
     font-weight: 700;
     font-style: normal;
     letter-spacing: 2px;
     line-height: 2.15;
     margin: 0 0 0.5rem;
-    font-size: 1.4rem;
+    /* font-size: 1.4rem; */
     text-transform: uppercase;
     display: block;
     grid-column: span 2;

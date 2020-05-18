@@ -21,7 +21,6 @@ const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
-    font-family: granville, serif;
     font-family: ${({ theme }) => theme.font.family};
     font-weight: 400;
     font-style: normal;
@@ -43,7 +42,6 @@ const GlobalStyle = createGlobalStyle`
     font-weight: ${({ theme }) => theme.font.black};
   }
   h2 {
-    /* font-family: granville, serif; */
     font-family: ${({ theme }) => theme.font.heading};
     font-weight: 400;
     font-style: normal;
@@ -52,17 +50,18 @@ const GlobalStyle = createGlobalStyle`
     font-size: 2.8rem;
   }
   h3, label, input, textarea {
-    font-family: synthese, sans-serif;
+    font-family: ${({ theme }) => theme.font.heading};
     font-weight: 700;
     font-style: normal;
     letter-spacing: 2px;
     line-height: 2.15;
     margin: 0 0 .5rem;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     text-transform: uppercase;
   }
   h4 {
-    font-family: synthese, sans-serif;
+    /* font-family: , sans-serif; */
+    font-family: ${({ theme }) => theme.font.heading};
     font-weight: 700;
     font-style: normal;
     letter-spacing: 2px;
@@ -73,7 +72,6 @@ const GlobalStyle = createGlobalStyle`
   }
   p {
     margin: 0 0 1rem;
-    /* font-family: granville, serif; */
     font-size: 1.6rem;
   }
   .text-center {
