@@ -173,7 +173,7 @@ const ProjectMasonry = ({
 
 const StyledProjectMasonry = styled.div`
   flex: 0 0 60%;
-  overflow: scroll;
+  /* overflow: scroll; */
 `;
 
 export default ProjectMasonry;

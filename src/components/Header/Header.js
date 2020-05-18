@@ -49,7 +49,7 @@ const Header = () => {
   const { menuOpen, home, expandedTopic } = useSiteContext();
   return (
     <>
-      {!home && (
+      {/* {!home && (
         <HomeLogoWrap to="/" className="home-wrap">
           <Img
             fixed={images.homeLogo.childImageSharp.fixed}
@@ -58,7 +58,7 @@ const Header = () => {
             fadeIn={false}
           />
         </HomeLogoWrap>
-      )}
+      )} */}
       <StyledHeader
         topicsOpen={expandedTopic}
         menuOpen={menuOpen}
@@ -112,24 +112,24 @@ const StyledHeader = styled.header`
   ${media.break`
     position: relative;
     flex-flow: column nowrap;
-    width: 75px;
+    /* width: 75px; */
     background: transparent;
     z-index: ${({ topicsOpen, menuOpen }) => (topicsOpen && !menuOpen ? 8 : 9)};
     z-index: ${({ topicsOpen, menuOpen }) => (topicsOpen ? 8 : 10)};
-    ${({ home }) =>
+    position: relative;
+    width: 100%;
+    .menu-toggle {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .header-social-list {
+      display: none;
+    }
+    /* ${({ home }) =>
       home &&
-      `
-      position: relative;
-      width: 100%;
-      .menu-toggle {
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-      .header-social-list {
-        display: none;
-      }
-    `}
+      ` */
+    /* `} */
   `}
 
   .header-subscribe {

@@ -85,11 +85,13 @@ const WorkPage = ({ title, _rawBody, id, seoSettings, services }) => {
   return (
     <PageLayout className="work-page">
       <div className="main">
-        <Heading>{title}</Heading>
-        {mobile && <ProjectCarousel projects={projects} />}
-        <div className="content">
-          {_rawBody && <Content>{_rawBody}</Content>}
-          <ContactFormButton />
+        <div className="main-container">
+          <Heading>{title}</Heading>
+          {mobile && <ProjectCarousel projects={projects} />}
+          <div className="content">
+            {_rawBody && <Content>{_rawBody}</Content>}
+            <ContactFormButton />
+          </div>
         </div>
       </div>
       <Topics />

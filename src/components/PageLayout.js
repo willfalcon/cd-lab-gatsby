@@ -21,7 +21,7 @@ const PageLayout = styled.div.attrs(() => ({
   ${media.break`
     display: ${({ mobile }) => (mobile ? 'block' : 'flex')};
     padding-left: 10rem;
-    height: 100vh;
+    /* height: 100vh; */
 
     .main {
       padding: 0;
@@ -30,12 +30,17 @@ const PageLayout = styled.div.attrs(() => ({
       display: flex;
       flex-flow: column;
       flex: 0 0 40%;
-      overflow: scroll;
+      /* overflow: scroll; */
       /* ${({ collection }) =>
         collection &&
         `
         position: relative;
       `} */
+
+      .main-container {
+        position: sticky;
+        top: 0;
+      }
 
       .heading {
         padding: 0;
@@ -58,11 +63,12 @@ const PageLayout = styled.div.attrs(() => ({
 
         ${media.break`
           ${grid.enabled`
-            flex-grow: 1;
+            // flex-grow: 1;
             display: grid;
             grid-template-columns: 1fr;
-            grid-template-rows: auto auto 1fr;
+            grid-template-rows: auto auto auto;
             justify-items: start;
+            align-items: start;
           `}
         `}
       }

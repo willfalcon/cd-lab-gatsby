@@ -41,19 +41,21 @@ const SingleService = ({
   return (
     <PageLayout className="single-service">
       <div className="main">
-        <Heading>{title}</Heading>
-        {mobile && (
-          <ProjectCarousel
-            projects={projects}
-            project={project}
-            slug={slug}
-            service
-          />
-        )}
-        <div className="content">
-          {_rawDescription && <Content>{_rawDescription}</Content>}
-          <ContactFormButton>Start a Project</ContactFormButton>
-          <ServicePagination prev={services[prev]} next={services[next]} />
+        <div className="main-container">
+          <Heading>{title}</Heading>
+          {mobile && (
+            <ProjectCarousel
+              projects={projects}
+              project={project}
+              slug={slug}
+              service
+            />
+          )}
+          <div className="content">
+            {_rawDescription && <Content>{_rawDescription}</Content>}
+            <ContactFormButton>Start a Project</ContactFormButton>
+            <ServicePagination prev={services[prev]} next={services[next]} />
+          </div>
         </div>
       </div>
       <Topics />

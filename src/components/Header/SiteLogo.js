@@ -28,14 +28,14 @@ const SiteLogo = ({ home }) => {
   `);
   return (
     <StyledLogoLink to="/" className="site-logo" home={home}>
-      {home && (
-        <Img
-          className="full-logo"
-          fixed={HomeLogo.file.childImageSharp.fixed}
-          alt="Creative Distillery logo"
-          style={{ maxWidth: 'calc(100vh - 75px)' }}
-        />
-      )}
+      {/* {home && ( */}
+      <Img
+        className="full-logo"
+        fixed={HomeLogo.file.childImageSharp.fixed}
+        alt="Creative Distillery logo"
+        style={{ maxWidth: 'calc(100vh - 75px)' }}
+      />
+      {/* )} */}
       <SquareLogo
         className="square"
         src={Square}
@@ -65,18 +65,18 @@ const StyledLogoLink = styled(Link)`
       left: 50%;
       transform: translateX(-50%);
     }
+    position: static;
+    width: 100%;
+    max-width: calc(100% - 150px);
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    .square {
+      display: none;
+    }
     ${({ home }) =>
       home &&
       `
-      position: static;
-      width: 100%;
-      max-width: calc(100% - 150px);
-      margin-left: auto;
-      margin-right: auto;
-      height: auto;
-      .square {
-        display: none;
-      }
     `}
   `}
   ${({ home }) =>

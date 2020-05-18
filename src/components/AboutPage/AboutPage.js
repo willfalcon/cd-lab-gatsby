@@ -33,7 +33,8 @@ const StyledAboutPage = styled.div`
   ${media.break`
     display: flex;
     padding: 0;
-    height: ${({ viewport }) => viewport.height}px;
+    height: calc(100vh - 78px);
+    height: ${({ viewport }) => viewport.height - 78}px;
   `}
 `;
 
@@ -64,16 +65,16 @@ const AboutAside = styled.aside`
     ${({ theme, viewport }) =>
       theme.grid &&
       `
-      flex: 0 0 ${viewport.height * 0.556}px; 
-        max-width: ${viewport.height * 0.556}px;
+      flex: 0 0 ${(viewport.height - 78) * 0.556}px; 
+        max-width: ${(viewport.height - 78) * 0.556}px;
     `}
   `}
   ${media.large`
     ${({ theme, viewport }) =>
       theme.grid &&
       `
-      flex: 0 0 ${viewport.height * 0.875}px;
-      max-width: ${viewport.height * 0.875}px;
+      flex: 0 0 ${(viewport.height - 78) * 0.875}px;
+      max-width: ${(viewport.height - 78) * 0.875}px;
     `}
   `}
 `;
