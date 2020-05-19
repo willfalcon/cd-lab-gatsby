@@ -1,15 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import Loadable from '@loadable/component';
 
 import Heading from '../Heading';
 import Content from '../Content';
 import ContactFormButton from '../ContactFormButton';
 
-import People from './People';
+// import People from './People';
 import Topics from '../Topics/Topics';
 
 import { media } from '../theme';
 import useSiteContext from '../SiteContext';
+
+const People = Loadable(() => import('./People'));
 
 const AboutPage = ({ title, _rawBody, people }) => {
   const { viewport } = useSiteContext();
