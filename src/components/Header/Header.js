@@ -66,11 +66,9 @@ const Header = () => {
         home={home}
       >
         <SiteLogo home={home} />
-        {home && (
-          <NewsletterButton className="header-subscribe" plain>
-            Subscribe
-          </NewsletterButton>
-        )}
+        <NewsletterButton className="header-subscribe" plain>
+          Subscribe
+        </NewsletterButton>
         <MenuToggle />
         <SocialList className="header-social-list" />
         <Nav home={home} />
