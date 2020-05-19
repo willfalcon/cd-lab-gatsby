@@ -19,10 +19,12 @@ const BlogPage = ({
 }) => {
   return (
     <StyledBlogPage className="blog-page">
-      <Heading>{title}</Heading>
-      {_rawBody && <Content>{_rawBody}</Content>}
-      <PostsList posts={posts} />
-      <Pagination numPages={numPages} currentPage={currentPage} />
+      <main className="main">
+        <Heading>{title}</Heading>
+        {_rawBody && <Content>{_rawBody}</Content>}
+        <PostsList posts={posts} />
+        <Pagination numPages={numPages} currentPage={currentPage} />
+      </main>
       <Topics />
     </StyledBlogPage>
   );
@@ -30,13 +32,17 @@ const BlogPage = ({
 
 const StyledBlogPage = styled.div`
   padding: 0.5rem 2rem;
-  min-height: ${({ viewheight }) => viewheight - 65}px;
+  /* min-height: ${({ viewheight }) => viewheight - 65}px; */
 
   ${media.break`
-    padding: 5% 11rem;
+    padding: 0 11rem 5%;
     padding-right: 0;
-    position: relative;
+    /* position: relative; */
     display: block;
+    height: 100%;
+    .main {
+      position: relative;
+    }
     .heading {
       position: sticky;
       top: 0;
