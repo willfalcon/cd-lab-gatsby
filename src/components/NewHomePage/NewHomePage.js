@@ -46,7 +46,6 @@ const NewHomePage = ({
         video={homeVideoId}
       />
       <InsightsSection />
-      <HomeFooter />
     </HomeContainer>
   );
 };
