@@ -134,6 +134,7 @@ const StyledHeader = styled.header`
     display: none;
     ${media.break`
       position: absolute;
+      z-index: 1;
       right: 0;
       top: 0;
       display: inline-flex;
