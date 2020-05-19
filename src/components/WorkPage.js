@@ -84,7 +84,7 @@ const WorkPage = ({ title, _rawBody, id, seoSettings, services }) => {
 
   return (
     <PageLayout className="work-page">
-      <div className="main">
+      <main className="main">
         <div className="main-container">
           <Heading>{title}</Heading>
           {mobile && <ProjectCarousel projects={projects} />}
@@ -93,7 +93,7 @@ const WorkPage = ({ title, _rawBody, id, seoSettings, services }) => {
             <ContactFormButton />
           </div>
         </div>
-      </div>
+      </main>
       <Topics />
       {!mobile && <ProjectMasonry projects={projects} workpage />}
     </PageLayout>

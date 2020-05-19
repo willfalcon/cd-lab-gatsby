@@ -33,7 +33,7 @@ const SingleCollection = ({
 
   return (
     <PageLayout collection className="single-collection">
-      <div className="main">
+      <main className="main">
         <div className="main-container">
           <Heading ref={titleRef}>{title}</Heading>
           <ServiceList projects={projects} titleRef={titleRef} />
@@ -49,7 +49,7 @@ const SingleCollection = ({
             <ContactFormButton>Start a Project</ContactFormButton>
           </div>
         </div>
-      </div>
+      </main>
       <Topics />
       {!mobile && (
         <ProjectMasonry projects={projects} project={project} slug={slug} />

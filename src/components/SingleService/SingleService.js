@@ -40,7 +40,7 @@ const SingleService = ({
 
   return (
     <PageLayout className="single-service">
-      <div className="main">
+      <main className="main">
         <div className="main-container">
           <Heading>{title}</Heading>
           {mobile && (
@@ -57,7 +57,7 @@ const SingleService = ({
             <ServicePagination prev={services[prev]} next={services[next]} />
           </div>
         </div>
-      </div>
+      </main>
       <Topics />
       {(forceCoverImage || !projects.length) && mainImage ? (
         <ServiceCoverImage className="service-cover-image" image={mainImage} />
