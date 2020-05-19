@@ -9,32 +9,42 @@ import CloseButton from '../CloseButton';
 import { media } from '../theme';
 import BackgroundOverlay from '../BackgroundOverlay';
 
-const VideoModal = ({ handleClose, expanded, videoRef, videoId, thumbnail,alt, aspect, styles, mobile }) => {
-  
+const VideoModal = ({
+  handleClose,
+  expanded,
+  videoRef,
+  videoId,
+  thumbnail,
+  alt,
+  aspect,
+  styles,
+  mobile,
+}) => {
   const { viewport } = useSiteContext();
 
-  // console.log(mobile);
-  
   const [videoLoaded, setVideoLoaded] = useState(false);
 
   const thumbnailTransition = useTransition(videoLoaded, null, {
     from: {
-      opacity: 1
+      opacity: 1,
     },
     enter: {
-      opacity: 1
+      opacity: 1,
     },
     leave: {
-      opacity: 0
-    }
+      opacity: 0,
+    },
   });
 
   const [playing, setPlaying] = useState(false);
 
-
   return (
     <>
-      <BackgroundOverlay onClick={handleClose} className="home-video-backdrop" style={{ opacity: styles.opacity }} />
+      <BackgroundOverlay
+        onClick={handleClose}
+        className="home-video-backdrop"
+        style={{ opacity: styles.opacity }}
+      />
       <StyledVideoModal
         className="video-modal"
         top={videoRef.current ? videoRef.current.offsetTop : 'inital'}
@@ -43,7 +53,19 @@ const VideoModal = ({ handleClose, expanded, videoRef, videoId, thumbnail,alt, a
         aspect={aspect}
         style={styles}
       >
-        {thumbnailTransition.map(({item, key, props}) => !item && !mobile && <animated.img key={key} className="video-modal-thumbnail" src={thumbnail} alt={alt} style={{ ...props }} />)}
+        {thumbnailTransition.map(
+          ({ item, key, props }) =>
+            !item &&
+            !mobile && (
+              <animated.img
+                key={key}
+                className="video-modal-thumbnail"
+                src={thumbnail}
+                alt={alt}
+                style={{ ...props }}
+              />
+            )
+        )}
         <ReactPlayer
           url={`https://vimeo.com/${videoId}`}
           controls
@@ -105,7 +127,6 @@ const StyledVideoModal = styled(animated.div)`
   `}
 `;
 
-
 // const VideoBackdrop = styled.div`
 //   display: none;
 //   position: absolute;
@@ -119,6 +140,5 @@ const StyledVideoModal = styled(animated.div)`
 //     display: block;
 //   `}
 // `;
-
 
 export default VideoModal;

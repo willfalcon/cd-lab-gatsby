@@ -10,8 +10,7 @@ import NewsletterButton from './NewsletterButton';
 
 import { media, grid } from './theme';
 
-const Post = ({ id, _rawBody, mainImage, title, author, publishedAt }) => {
-  console.log(author);
+const Post = ({ _rawBody, mainImage, title, author, publishedAt }) => {
   return (
     <Article className="single-post">
       {mainImage && (

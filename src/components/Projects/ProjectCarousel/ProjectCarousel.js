@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
-import { useTransition, animated } from 'react-spring';
+import { useTransition } from 'react-spring';
 
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
@@ -11,9 +11,6 @@ import CarouselProject from './CarouselProject';
 import MobileProjectModal from './MobileProjectModal';
 
 const ProjectCarousel = ({ projects, project, service = false, slug }) => {
-  console.log({ project });
-  // console.log(filteredProjects);
-
   const [expandedProject, setExpandedProject] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 

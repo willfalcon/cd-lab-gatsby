@@ -8,29 +8,31 @@ import Form from './Forms/Form';
 
 const serializers = {
   types: {
-    video: ({node}) => {
+    video: ({ node }) => {
       const { url } = node;
-      return <ReactPlayer url={url} controls />
+      return <ReactPlayer url={url} controls />;
     },
-    form: ({node}) => {
-      return <Form fields={node.formBuilder} {...node} />
-    }
+    form: ({ node }) => {
+      return <Form fields={node.formBuilder} {...node} />;
+    },
   },
   marks: {
-    note: (props) => {
-      const { marks, children } = props;
+    note: props => {
+      // const { marks, children } = props;
       return <InlineNote {...props} />;
-    }
-  }
-}
+    },
+  },
+};
 
 const Content = ({ children, className }) => {
-
-  // console.log({children});
-
   return (
     <div className={classNames('block-content', className)}>
-      <BlockContent blocks={children} projectId="sgba0i04" dataset="gatsby" serializers={serializers} />
+      <BlockContent
+        blocks={children}
+        projectId="sgba0i04"
+        dataset="gatsby"
+        serializers={serializers}
+      />
     </div>
   );
 };

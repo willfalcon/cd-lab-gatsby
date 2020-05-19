@@ -22,9 +22,8 @@ const Topic = ({
   home = false,
   styles,
   toggledFromMenu,
-  scrollY
+  scrollY,
 }) => {
-
   const { viewport } = useSiteContext();
 
   const calculatedStyles =
@@ -37,7 +36,9 @@ const Topic = ({
   );
 
   return (
-    <StyledTopic style={{ ...styleProps, ...styles }} className="topic"
+    <StyledTopic
+      style={{ ...styleProps, ...styles }}
+      className="topic"
       toggledFromMenu={toggledFromMenu}
       scrollY={scrollY}
       topicIndex={topicIndex}
@@ -64,10 +65,13 @@ const StyledTopic = styled(animated.div)`
   overflow: hidden;
   background-color: ${({ theme }) => theme.orange};
 
-  ${({ toggledFromMenu, scrollY, topicIndex }) => toggledFromMenu && scrollY !== false && `
+  ${({ toggledFromMenu, scrollY, topicIndex }) =>
+    toggledFromMenu &&
+    scrollY !== false &&
+    `
     position: absolute;
     top: ${scrollY}px;
-    left: ${ topicIndex * 33.33}%;
+    left: ${topicIndex * 33.33}%;
     z-index: 6;
   `}
 
@@ -79,7 +83,8 @@ const StyledTopic = styled(animated.div)`
     top: 50%;
     transform: translate(-50%, -50%);
     ${media.medium`
-      font-size: 1.3rem;
+      /* font-size: 1.3rem; */
+      font-size: 1.5rem;
     `}
   }
 

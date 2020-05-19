@@ -12,7 +12,7 @@ import Form from './Forms/Form';
 import useSiteContext from './SiteContext';
 import { media } from './theme';
 
-const ContactFormButton = ({ children = 'Start a Project' }) => {
+const FormModalButton = ({ children = 'Start a Project', form = null }) => {
   const buttonRef = useRef(null);
 
   const buttonRect = buttonRef.current
@@ -38,6 +38,7 @@ const ContactFormButton = ({ children = 'Start a Project' }) => {
       paddingLeft: '0%',
       paddingRight: '0%',
       o: 0,
+      y: y,
       position: 'absolute',
       zIndex: 10,
     },
@@ -47,7 +48,9 @@ const ContactFormButton = ({ children = 'Start a Project' }) => {
       left: `${viewport.width * 0.5}px`,
       transform: `translateX(-50%)`,
       top: `${
-        mobile ? scrollY : viewport.height / 2 - (viewport.height * 0.75) / 2
+        mobile
+          ? scrollY
+          : viewport.height / 2 - (viewport.height * 0.75) / 2 + scrollY
       }px`,
       paddingTop: '5rem',
       paddingBottom: '5rem',
@@ -55,6 +58,9 @@ const ContactFormButton = ({ children = 'Start a Project' }) => {
       paddingRight: mobile ? '0%' : '2rem',
       opacity: 1,
       o: 1,
+      y: mobile
+        ? scrollY
+        : viewport.height / 2 - (viewport.height * 0.75) / 2 + scrollY,
     },
     leave: {
       width: `${width}px`,
@@ -68,6 +74,7 @@ const ContactFormButton = ({ children = 'Start a Project' }) => {
       paddingRight: '0%',
       opacity: 0,
       o: 0,
+      y: y,
     },
   });
 
@@ -79,6 +86,9 @@ const ContactFormButton = ({ children = 'Start a Project' }) => {
     setOpen(!open);
   };
 
+  const fields = form ? form.formBuilder : formOptions.contactForm.formBuilder;
+
+  const options = form ? form : formOptions.contactForm;
   return (
     <>
       <Button handleClick={toggleForm} ref={buttonRef}>
@@ -92,6 +102,7 @@ const ContactFormButton = ({ children = 'Start a Project' }) => {
                 onClick={() => setOpen(false)}
                 style={{
                   opacity: props.o.interpolate(o => o),
+                  height: '100%',
                 }}
                 className="contact-form-bg-overlay"
               />
@@ -108,8 +119,8 @@ const ContactFormButton = ({ children = 'Start a Project' }) => {
                 toggleForm={() => setOpen(!open)}
                 className="modal-contact-form"
                 styles={props}
-                fields={formOptions.contactForm.formBuilder}
-                {...formOptions.contactForm}
+                fields={fields}
+                {...options}
               >
                 <CloseButton handleClick={() => setOpen(false)} />
               </ContactForm>
@@ -126,6 +137,8 @@ const ContactForm = styled(Form)`
   position: absolute;
   left: 0;
   bottom: 42px;
+
+  overflow: scroll;
   ${media.break`
     max-height: 100vh;
     position: static;
@@ -133,4 +146,4 @@ const ContactForm = styled(Form)`
   `}
 `;
 
-export default ContactFormButton;
+export default FormModalButton;

@@ -5,25 +5,11 @@ import isEqual from 'lodash.isequal';
 import { Link } from 'gatsby';
 
 import Caret from '../Caret';
+import ServiceListItem from './ServiceListItem';
 
 import theme, { media } from '../theme';
 import useSiteContext from '../SiteContext';
 import { roundToDecimal } from '../utils';
-
-const ServiceListItem = ({ id, slug, title }) => {
-  const [hover, setHover] = useState(false);
-
-  return (
-    <li
-      className="service-list__item link"
-      onMouseOver={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
-      <Link to={`/service/${slug.current}`}>{title}</Link>
-      <Caret color={theme.offWhite} hover={hover} />
-    </li>
-  );
-};
 
 const ServiceList = ({ projects, titleRef }) => {
   let services = [];
@@ -49,7 +35,8 @@ const ServiceList = ({ projects, titleRef }) => {
   const mobile = viewport.width < theme.sizes.break;
 
   const right = roundToDecimal(
-    (viewport.width - 100) * 0.6 - (viewport.width - 100) * 0.4 * 0.1,
+    // (viewport.width - 100) * 0.6 - (viewport.width - 100) * 0.4 * 0.1,
+    -(viewport.width - 100) * 0.4 * 0.1 - 10,
     2
   );
   const width = roundToDecimal(((viewport.width - 100) * 0.4) / 2, 2);
@@ -97,24 +84,28 @@ const StyledServiceList = styled.ul`
     text-align: left;
     display: block;
     text-transform: uppercase;
-    font-family: ${({ theme }) => theme.fontFamily};
-    letter-spacing: 3px;
+    font-family: ${({ theme }) => theme.font.heading};
+    letter-spacing: 1.5px;
     font-weight: 700;
     padding: 1rem 0;
     border-bottom: 1px solid ${({ theme }) => theme.offWhite};
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     &:last-child {
       border-bottom: 0px;
     }
+    .caret {
+      margin-right: 0;
+    }
   }
   ${media.break`
     order: 3;
     margin: 0;
     /* width: ${({ width }) => width}px; */
-    position: fixed;
+    /* position: fixed; */
+    position: absolute;
     /* right: ${({ right }) => right}px; */
     top: 16rem;
     top: calc(12rem + 5%);

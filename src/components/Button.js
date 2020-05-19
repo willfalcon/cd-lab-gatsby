@@ -53,14 +53,14 @@ const ButtonStyles = css`
   padding: ${({ big }) => (big ? '.75rem 5rem' : '.25rem 1.5rem')};
   color: white;
   border: 0;
-  font-family: granville, serif;
-  font-weight: 400;
+  font-family: ${({ theme }) => theme.font.heading};
+  font-weight: ${({ theme }) => theme.font.black};
+  letter-spacing: 0.5px;
   font-style: normal;
   font-size: 3rem;
   line-height: 1.5;
   cursor: pointer;
 `;
-
 
 const StyledButton = styled.button`
   ${ButtonStyles}

@@ -34,14 +34,20 @@ const SingleCollection = ({
   return (
     <PageLayout collection className="single-collection">
       <div className="main">
-        <Heading ref={titleRef}>{title}</Heading>
-        <ServiceList projects={projects} titleRef={titleRef} />
-        {mobile && (
-          <ProjectCarousel projects={projects} project={project} slug={slug} />
-        )}
-        <div className="content">
-          {_rawDescription && <Content>{_rawDescription}</Content>}
-          <ContactFormButton>Start a Project</ContactFormButton>
+        <div className="main-container">
+          <Heading ref={titleRef}>{title}</Heading>
+          <ServiceList projects={projects} titleRef={titleRef} />
+          {mobile && (
+            <ProjectCarousel
+              projects={projects}
+              project={project}
+              slug={slug}
+            />
+          )}
+          <div className="content">
+            {_rawDescription && <Content>{_rawDescription}</Content>}
+            <ContactFormButton>Start a Project</ContactFormButton>
+          </div>
         </div>
       </div>
       <Topics />

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useTransition, animated, interpolate } from 'react-spring';
 import { rgba } from 'polished';
+
 import Menu from './Menu';
 import Button from '../Button';
 import MobileFooter from '../MobileFooter';
@@ -9,7 +10,7 @@ import useSiteContext from '../SiteContext';
 import theme, { media } from '../theme';
 import Form from '../Forms/Form';
 
-const Nav = () => {
+const Nav = ({ home }) => {
   const { viewport, menuOpen, toggleMenu, formOptions } = useSiteContext();
   const [formOpen, toggleForm] = useState(false);
 
@@ -64,6 +65,7 @@ const Nav = () => {
             className="nav"
             viewheight={viewport.height}
             viewwidth={viewport.width}
+            home={home}
             style={{
               transform:
                 viewport.width >= parseInt(theme.break, 10)
@@ -187,7 +189,7 @@ const StyledNav = styled(animated.nav)`
       font-size: 3.8rem;
       border: 0;
       background: transparent;
-      font-family: ${({ theme }) => theme.fontFamilySans};
+      font-family: ${({ theme }) => theme.font.family};
       cursor: pointer;
     }
   }
@@ -207,7 +209,8 @@ const StyledNav = styled(animated.nav)`
     display: flex;
     flex-direction: row;
     position: fixed;
-    transform-origin: 0 100px;
+    /* transform-origin: 0 100px; */
+    transform-origin: 0 ${({ home }) => (home ? 0 : '100px')};
     ul {
       flex: 0 0 50%;
       height: 100%;

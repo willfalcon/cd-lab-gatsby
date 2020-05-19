@@ -23,7 +23,6 @@ const ProjectContent = ({
 
   const openSpaceRight = (viewport.width - dimensions.width - width) / 2;
   const closedSpaceRight = (viewport.width - dimensions.width) / 2;
-  // console.log({width, spaceRight});
 
   const contentSpring = useSpring({
     width: contentOpen ? `${width}px` : '40px',

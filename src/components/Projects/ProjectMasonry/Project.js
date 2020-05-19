@@ -28,8 +28,6 @@ const Project = ({
 
   const ref = useRef(null);
 
-  const [videoThumb, setVideoThumb] = useState(null);
-  // const [videoAspect, setVideoAspect] = useState(null);
   const [height, setHeight] = useState(0);
   const [titleHeight, setTitleHeight] = useState(0);
 
@@ -53,43 +51,34 @@ const Project = ({
     titleOpacity: hovering ? 1 : 0,
   });
 
-  // useEffect(() => {
-  //   async function getThumbnail() {
-  //     const thumb = await getThumb(video);
-  //     setVideoThumb(thumb);
-  //     const tempImg = new Image();
-  //     tempImg.src = thumb;
-  //     setVideoAspect(tempImg.width / tempImg.height);
-  //   }
-  //   if (video) {
-  //     getThumbnail();
-  //   }
-  // }, [video]);
-
-  useEffect(() => {
-    if (initialProject && initialProject.id === id) {
-      const location = ref.current.getBoundingClientRect();
-      setExpandedProject({
-        location,
-        ...project,
-        image,
-        videoAspect: aspect,
-        video,
-        videoThumb,
-        thumbnail,
-      });
-    }
-  }, [
-    videoThumb,
-    id,
-    image,
-    initialProject,
-    project,
-    setExpandedProject,
-    video,
-    // videoAspect,
-    thumbnail,
-  ]);
+  useEffect(
+    () => {
+      if (initialProject && initialProject.id === id) {
+        const location = ref.current.getBoundingClientRect();
+        setExpandedProject({
+          location,
+          ...project,
+          image,
+          videoAspect: aspect,
+          video,
+          thumbnail,
+        });
+      }
+    },
+    // Adding aspect to dependency array creates a weird flash when video projects are opened.
+    /* eslint-disable */
+    [
+      id,
+      image,
+      initialProject,
+      project,
+      setExpandedProject,
+      video,
+      thumbnail,
+      // aspect,
+    ]
+    /* eslint-enable */
+  );
 
   return (
     <StyledProject
@@ -109,7 +98,6 @@ const Project = ({
                 image,
                 video,
                 videoAspect: aspect,
-                videoThumb,
                 thumbnail,
               });
               if (!expandedProject) {
@@ -169,22 +157,5 @@ const StyledProject = styled.button`
 const ProjectImage = styled(Img)`
   width: 100% !important;
 `;
-
-// const overlayStyles = css`
-//   position: absolute;
-//   width: 100%;
-//   height: 100%;
-//   top: 0;
-//   left: 0;
-//   background: ${rgba('white', 0.65)};
-// `;
-
-// const Overlay = styled(animated.span)`
-//   ${overlayStyles}
-// `;
-
-// const OverlayLink = styled(Link)`
-//   ${overlayStyles}
-// `;
 
 export default Project;

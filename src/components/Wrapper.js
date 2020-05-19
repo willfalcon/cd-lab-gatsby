@@ -15,6 +15,7 @@ import { useWindowSize } from './utils';
 
 import Header from './Header/Header';
 import Head from './Head';
+import HomeFooter from './NewHomePage/HomeFooter';
 import MobileFooter from './MobileFooter';
 
 library.add(fab, faArrowRight, faAngleRight, faAngleDoubleLeft);
@@ -29,6 +30,7 @@ const Wrapper = ({ children, seo, pageTitle, home = false }) => {
         <PageWrapper className="page-wrapper" viewport={viewport} home={home}>
           {children}
         </PageWrapper>
+        <HomeFooter />
         {viewport.width < theme.sizes.break && <MobileFooter />}
         <GlobalStyle />
       </SiteContextProvider>
@@ -38,23 +40,23 @@ const Wrapper = ({ children, seo, pageTitle, home = false }) => {
 
 const PageWrapper = styled.div`
   min-height: ${({ viewport }) =>
-    viewport.width ? `${viewport.height - 65 - 42}px` : `calc(100vh - 107px)`};
+    viewport.height ? `${viewport.height - 65 - 42}px` : `calc(100vh - 107px)`};
   ${media.break`
     min-height: ${({ viewport }) =>
-      viewport.height ? `${viewport.height}px` : `100vh`};
+      viewport.height ? `${viewport.height - 78}px` : `calc(100vh - 78px)`};
     ${({ home, viewport }) =>
       home &&
       `
-      height: ${viewport.height ? `${viewport.height}px` : `100vh`};
+      // height: ${viewport.height ? `${viewport.height}px` : `100vh`};
     `}
     main {
-      padding-left:90px;
+      padding-left: 90px;
       min-height: ${({ viewport }) =>
-        viewport.height ? `${viewport.height}px` : `100vh`};
+        viewport.height ? `${viewport.height - 78}px` : `calc(100vh - 78px)`};
     }
     .container {
       min-height: ${({ viewport }) =>
-        viewport.height ? `${viewport.height}px` : `100vh`};
+        viewport.height ? `${viewport.height - 78}px` : `calc(100vh - 78px)`};
     }
   `}
 `;

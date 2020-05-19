@@ -7,7 +7,7 @@ import useSiteContext from '../SiteContext';
 const MenuToggle = () => {
   const { menuOpen, toggleMenu } = useSiteContext();
   return (
-    <StyledToggle open={menuOpen}>
+    <StyledToggle open={menuOpen} className="menu-toggle">
       <button onClick={() => toggleMenu()} aria-label="Toggle Menu">
         <span />
         <span />

@@ -2,18 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { fab } from '@fortawesome/free-brands-svg-icons';
+import classNames from 'classnames';
 
 import useSiteContext from './SiteContext';
 import { media } from './theme';
 
-const SocialList = () => {
+const SocialList = ({ className }) => {
   const {
     social: { facebook, instagram, linkedin, twitter },
     menuOpen,
   } = useSiteContext();
 
   return (
-    <StyledSocialList open={menuOpen} className="social-list">
+    <StyledSocialList
+      open={menuOpen}
+      className={classNames('social-list', className)}
+    >
       {twitter && (
         <li>
           <a
