@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import FluidImg from '../FluidImg';
 import Content from '../Content';
 import Button from '../Button';
@@ -8,6 +7,8 @@ import ContactFormButton from '../ContactFormButton';
 import WhatWeDo from './WhatWeDo';
 import AboutSection from './AboutSection';
 import InsightsSection from './InsightsSection';
+
+import Topics from '../Topics/Topics';
 
 const HomePage = ({
   _rawNewBody,
@@ -17,36 +18,42 @@ const HomePage = ({
   aboutUsImage,
 }) => {
   return (
-    <HomeContainer className="container">
-      <FluidImg
-        src="home-hero"
-        fluid={aboutUsImage.asset.fluid}
-        {...aboutUsImage}
-        assetId={aboutUsImage.asset.assetId}
-        alt="The Creative Distillery Team"
-      />
-      <main className="home-main">
-        <Content className="home-content">{_rawNewBody}</Content>
-        <Button className="home-work-button" href="/work">
-          View Work
-        </Button>
-        <ContactFormButton className="home-contact-button">
-          Get Started
-        </ContactFormButton>
-      </main>
-      <WhatWeDo />
-      <AboutSection
-        copy={_rawAboutCopy}
-        thumbnail={thumbnail}
-        video={homeVideoId}
-      />
-      <InsightsSection />
-    </HomeContainer>
+    <>
+      <HomeContainer className="container">
+        <div>
+          <FluidImg
+            src="home-hero"
+            fluid={aboutUsImage.asset.fluid}
+            {...aboutUsImage}
+            assetId={aboutUsImage.asset.assetId}
+            alt="The Creative Distillery Team"
+          />
+          <main className="home-main">
+            <Content className="home-content">{_rawNewBody}</Content>
+            <Button className="home-work-button" href="/work">
+              View Work
+            </Button>
+            <ContactFormButton className="home-contact-button">
+              Get Started
+            </ContactFormButton>
+          </main>
+        </div>
+        <WhatWeDo />
+        <AboutSection
+          copy={_rawAboutCopy}
+          thumbnail={thumbnail}
+          video={homeVideoId}
+        />
+        <InsightsSection />
+      </HomeContainer>
+      <Topics />
+    </>
   );
 };
 
 const HomeContainer = styled.div`
   position: relative;
+
   .home-main {
     padding: 1rem;
     width: ${({ theme }) => theme.sizes.content}px;
