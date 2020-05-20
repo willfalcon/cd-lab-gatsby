@@ -3,7 +3,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
 
 import Content from '../Content';
-import BlockTitle from './BlockTitle';
+import BlockTitle from '../BlockTitle';
 import HomeTopics from './HomeTopics';
 
 const WhatWeDo = () => {

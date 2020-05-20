@@ -14,13 +14,7 @@ const SiteLogo = ({ home }) => {
         id
         childImageSharp {
           fixed(height: 75) {
-            base64
-            width
-            height
-            src
-            srcSet
-            srcWebp
-            srcSetWebp
+            ...GatsbyImageSharpFixed_withWebp_tracedSVG
           }
         }
       }

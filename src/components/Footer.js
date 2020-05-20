@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { Link, useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
-import useSiteContext from '../SiteContext';
-import { media, grid } from '../theme';
+import useSiteContext from './SiteContext';
+import { media, grid } from './theme';
 
-const HomeFooter = () => {
+const Footer = () => {
   const { topics } = useSiteContext();
 
   const { file, sanityHomePage } = useStaticQuery(graphql`
@@ -60,7 +60,7 @@ const HomeFooter = () => {
     }
   `);
   return (
-    <Footer className="home-footer">
+    <StyledFooter className="home-footer">
       <Img
         className="home-footer__icon"
         fixed={file.childImageSharp.fixed}
@@ -123,11 +123,11 @@ const HomeFooter = () => {
           ))}
         </ul>
       </div>
-    </Footer>
+    </StyledFooter>
   );
 };
 
-const Footer = styled.footer`
+const StyledFooter = styled.footer`
   padding: 2rem;
   background: ${({ theme }) => theme.darkBlue};
   color: white;
@@ -207,4 +207,4 @@ const Footer = styled.footer`
   }
 `;
 
-export default HomeFooter;
+export default Footer;

@@ -1,124 +1,75 @@
 import React from 'react';
 import styled from 'styled-components';
-import loadable from '@loadable/component';
-import Img from 'gatsby-image';
 
+import FluidImg from '../FluidImg';
 import Content from '../Content';
-import Topics from '../Topics/Topics';
+import Button from '../Button';
 import ContactFormButton from '../ContactFormButton';
-import Loader from '../Loader';
-import NewsletterButton from '../NewsletterButton';
-
-import { media } from '../theme';
-import useSiteContext from '../SiteContext';
-
-const AsideLoader = styled(Loader)`
-  position: absolute;
-  background: ${({ theme }) => theme.offWhite};
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const HomeAside = loadable(() => import('./HomeAside'), {
-  fallback: <AsideLoader />,
-});
+import WhatWeDo from './WhatWeDo';
+import AboutSection from './AboutSection';
+import InsightsSection from './InsightsSection';
 
 const HomePage = ({
-  _rawBody,
-  mainImage,
+  _rawNewBody,
+  _rawAboutCopy,
   homeVideoId,
   thumbnail,
-  featuredProjects,
   aboutUsImage,
-  logoBadge,
 }) => {
-  const { viewport } = useSiteContext();
-
   return (
-    <StyledHomePage className="container homepage" viewport={viewport}>
-      <HomeMain
-        className="homepage-main"
-        viewport={viewport}
-        bg={mainImage ? mainImage.asset.url : null}
-      >
-        <Content>{_rawBody}</Content>
-        <ContactFormButton>Start a Project</ContactFormButton>
-        <NewsletterButton>Join our Newsletter</NewsletterButton>
-        {logoBadge && (
-          <Img
-            className="logo-badge"
-            fluid={logoBadge.asset.fluid}
-            alt={logoBadge.alt}
-          />
-        )}
-      </HomeMain>
-      <Topics home />
-      <StyledHomeAside>
-        <HomeAside
-          thumbnail={thumbnail}
-          homeVideoId={homeVideoId}
-          featuredProjects={featuredProjects}
-          aboutUsImage={aboutUsImage}
-        />
-      </StyledHomeAside>
-    </StyledHomePage>
+    <HomeContainer className="container">
+      <FluidImg
+        src="home-hero"
+        fluid={aboutUsImage.asset.fluid}
+        {...aboutUsImage}
+        assetId={aboutUsImage.asset.assetId}
+        alt="The Creative Distillery Team"
+      />
+      <main className="home-main">
+        <Content className="home-content">{_rawNewBody}</Content>
+        <Button className="home-work-button" href="/work">
+          View Work
+        </Button>
+        <ContactFormButton className="home-contact-button">
+          Get Started
+        </ContactFormButton>
+      </main>
+      <WhatWeDo />
+      <AboutSection
+        copy={_rawAboutCopy}
+        thumbnail={thumbnail}
+        video={homeVideoId}
+      />
+      <InsightsSection />
+    </HomeContainer>
   );
 };
-const StyledHomeAside = styled.aside`
-  ${media.break`
-    flex: 0 0 40%;
-    max-width: 40%;
-    max-height: 100%;
-    display: flex;
-    flex-direction: column;
-  `}
-`;
 
-const StyledHomePage = styled.div`
-  .logo-badge {
-    margin-top: 2rem;
+const HomeContainer = styled.div`
+  position: relative;
+  .home-main {
+    padding: 1rem;
+    width: ${({ theme }) => theme.sizes.content}px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-flow: row wrap;
+    min-height: auto;
+    justify-content: center;
+    .button {
+      margin: 0 1rem;
+    }
   }
-  ${media.break`
-    display: flex;
-    height: ${({ viewport }) => viewport.height}px;
-    .block-content {
-      padding-right: 185px;
+  .home-content {
+    text-align: center;
+    padding: 2rem 0;
+    flex: 0 0 100%;
+    p {
+      font-size: 2.8rem;
+      line-height: 1.5;
     }
-    .logo-badge {
-      /* margin-right: 185px; */
-      width: calc(100% - 185px);
-      /* width: ${({ viewport }) => viewport.width * 0.6 - 185}px; */
-    }
-  `}
-`;
-
-const HomeMain = styled.main`
-  ${({ bg }) =>
-    bg &&
-    `
-    background-image: ${`url(${bg})`};
-    background-size: cover;
-    background-position: center;
-  `}
-  color: ${({ theme }) => theme.orange};
-  padding: 1rem;
-  margin-bottom: ${({ topicHeight, viewport }) =>
-    `${viewport.width * 0.33 + topicHeight}px`};
-  ${media.break`
-    flex: 0 0 60%;
-    max-width: 60%;
-    height: 100%;
-    padding-top: 10rem;
-    margin-bottom: 0;
-    overflow: scroll;
-  `}
+  }
 `;
 
 export default HomePage;

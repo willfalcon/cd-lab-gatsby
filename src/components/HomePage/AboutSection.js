@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import BlockTitle from './BlockTitle';
+import BlockTitle from '../BlockTitle';
 import Content from '../Content';
 import AboutSectionVideo from './AboutSectionVideo';
 import Button from '../Button';

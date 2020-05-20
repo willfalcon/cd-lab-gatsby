@@ -15,7 +15,7 @@ import { useWindowSize } from './utils';
 
 import Header from './Header/Header';
 import Head from './Head';
-import HomeFooter from './NewHomePage/HomeFooter';
+import Footer from './Footer';
 import MobileFooter from './MobileFooter';
 
 library.add(fab, faArrowRight, faAngleRight, faAngleDoubleLeft);
@@ -30,7 +30,7 @@ const Wrapper = ({ children, seo, pageTitle, home = false }) => {
         <PageWrapper className="page-wrapper" viewport={viewport} home={home}>
           {children}
         </PageWrapper>
-        <HomeFooter />
+        <Footer />
         {viewport.width < theme.sizes.break && <MobileFooter />}
         <GlobalStyle />
       </SiteContextProvider>

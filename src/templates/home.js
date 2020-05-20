@@ -2,8 +2,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 
 import Wrapper from '../components/Wrapper';
-// import HomePage from '../components/HomePage/HomePage';
-import NewHomePage from '../components/NewHomePage/NewHomePage';
+import HomePage from '../components/HomePage/HomePage';
 
 const index = ({ data, pageContext }) => {
   return (
@@ -12,8 +11,7 @@ const index = ({ data, pageContext }) => {
       seo={data.sanityHomePage.seoSettings}
       pageTitle={data.sanityHomePage.title}
     >
-      {/* <HomePage {...data.sanityHomePage} thumbnail={pageContext.thumbnail} /> */}
-      <NewHomePage {...data.sanityHomePage} thumbnail={pageContext.thumbnail} />
+      <HomePage {...data.sanityHomePage} thumbnail={pageContext.thumbnail} />
     </Wrapper>
   );
 };
@@ -50,37 +48,7 @@ export const HomeQuery = graphql`
       _rawBody(resolveReferences: { maxDepth: 10 })
       _rawNewBody(resolveReferences: { maxDepth: 10 })
       _rawAboutCopy(resolveReferences: { maxDepth: 10 })
-      mainImage {
-        asset {
-          url
-        }
-      }
       homeVideoId
-      featuredProjects {
-        _key
-        project {
-          id
-          title
-          slug {
-            current
-          }
-          images {
-            asset {
-              fluid(maxWidth: 800) {
-                ...GatsbySanityImageFluid
-              }
-            }
-          }
-          _id
-        }
-        service {
-          title
-          slug {
-            current
-          }
-          _id
-        }
-      }
       logoBadge {
         alt
         asset {
