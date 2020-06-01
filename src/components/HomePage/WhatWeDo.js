@@ -6,6 +6,8 @@ import Content from '../Content';
 import BlockTitle from '../BlockTitle';
 import HomeTopics from './HomeTopics';
 
+import { media, grid } from '../theme';
+
 const WhatWeDo = () => {
   const {
     sanityHomePage: { _rawWhatWeDoCopy },
@@ -28,6 +30,18 @@ const WhatWeDo = () => {
 const StyledSection = styled.section`
   background: ${({ theme }) => theme.light};
   padding: 1rem 1rem 4rem;
+  ${media.break`
+    height: calc(100vh - 5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    ${grid.enabled`
+      display: grid;
+      grid-template-rows: repeat(3, auto);
+      align-content: center;
+      grid-row-gap: 3rem;
+    `}
+  `}
   .what-we-do {
     &__title {
     }

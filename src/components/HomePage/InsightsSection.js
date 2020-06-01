@@ -9,6 +9,8 @@ import NewsletterButton from '../NewsletterButton';
 import WebinarButton from '../WebinarButton';
 import Insight from './Insight';
 
+import { media, grid } from '../theme';
+
 const InsightsSection = () => {
   const props = useStaticQuery(graphql`
     {
@@ -76,6 +78,18 @@ const Columns = styled.div`
 `;
 const Insights = styled.section`
   padding: 1rem 0 4rem;
+  ${media.break`
+    height: calc(100vh - 5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    ${grid.enabled`
+      display: grid;
+      grid-template-rows: repeat(3, auto);
+      align-content: center;
+      grid-row-gap: 4rem;
+    `}
+  `}
   .insights {
     &__heading {
     }

@@ -6,6 +6,8 @@ import Content from '../Content';
 import AboutSectionVideo from './AboutSectionVideo';
 import Button from '../Button';
 
+import { media, grid } from '../theme';
+
 const AboutSection = ({ copy, thumbnail, video }) => {
   return (
     <StyledSection className="about-section">
@@ -29,6 +31,18 @@ const AboutSection = ({ copy, thumbnail, video }) => {
 const StyledSection = styled.section`
   background: ${({ theme }) => theme.dark};
   padding: 1rem 1rem 1rem;
+  ${media.break`
+    height: calc(100vh - 5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    ${grid.enabled`
+      display: grid;
+      grid-template-rows: repeat(4, auto);
+      align-content: center;
+      grid-row-gap: 1rem;
+    `}
+  `}
   .about-section__copy {
     color: white;
     text-align: center;
