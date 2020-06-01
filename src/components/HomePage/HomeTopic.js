@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { animated } from 'react-spring';
 
 import Content from '../Content';
 import Button from '../Button';
 
-const HomeTopic = ({ index, title, _rawShortContent, collection }) => {
+const HomeTopic = ({ index, title, _rawShortContent, collection, styles }) => {
   return (
-    <Topic>
+    <Topic style={styles}>
       <Label>
         <span className="topic__number">{('0' + (index + 1)).slice(-2)}</span>
         <h3 className="topic__title">{title}</h3>
@@ -22,8 +23,8 @@ const HomeTopic = ({ index, title, _rawShortContent, collection }) => {
   );
 };
 
-const Topic = styled.div`
-  flex: 0 1 400px;
+const Topic = styled(animated.div)`
+  flex: 0 1 370px;
   padding: 0.5rem 1.5rem;
   .topic__content {
     font-family: ${({ theme }) => theme.font.heading};

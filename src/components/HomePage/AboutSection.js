@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
+import { useSpring } from 'react-spring';
 
 import BlockTitle from '../BlockTitle';
 import Content from '../Content';
@@ -7,11 +8,23 @@ import AboutSectionVideo from './AboutSectionVideo';
 import Button from '../Button';
 
 import { media, grid } from '../theme';
+import { useOnScreen } from '../utils';
 
 const AboutSection = ({ copy, thumbnail, video }) => {
+  const titleRef = useRef();
+  const { hasEnteredScreen } = useOnScreen(titleRef, '-100px');
+  const titleSpring = useSpring({
+    transform: hasEnteredScreen ? 'translateY(0%)' : 'translateY(100%)',
+    opacity: hasEnteredScreen ? 1 : 0,
+  });
   return (
     <StyledSection className="about-section">
-      <BlockTitle className="about-section__title" white>
+      <BlockTitle
+        className="about-section__title"
+        white
+        ref={titleRef}
+        styles={titleSpring}
+      >
         About Us
       </BlockTitle>
       <Content className="about-section__copy">{copy}</Content>

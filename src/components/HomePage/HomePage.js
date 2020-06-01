@@ -12,7 +12,6 @@ import InsightsSection from './InsightsSection';
 import Topics from '../Topics/Topics';
 
 import { media, grid } from '../theme';
-import useSiteContext from '../SiteContext';
 
 const HomePage = ({
   _rawNewBody,
@@ -22,7 +21,6 @@ const HomePage = ({
   aboutUsImage,
 }) => {
   const container = useRef(null);
-  const { viewport } = useSiteContext();
 
   useLayoutEffect(() => {
     const gatsbyContainer = document.getElementById('___gatsby');
@@ -31,7 +29,7 @@ const HomePage = ({
       const children = container.current.children;
       Array.from(children).forEach((child, i) => {
         const rect = child.getBoundingClientRect();
-        console.log(rect);
+
         const header = i === 0 ? 78 : 0;
         const scrollChild = document.createElement('div');
         scrollChild.style.width = `${rect.width}px`;
@@ -42,17 +40,16 @@ const HomePage = ({
         scrollChild.classList.add('scroll-anchor');
         document.body.appendChild(scrollChild);
       });
+
       gatsbyContainer.style.position = 'absolute';
       gatsbyContainer.style.width = '100%';
+
       document.body.style.scrollSnapType = 'y proximity';
       document.body.style.height = '100vh';
       document.body.style.overflowY = 'scroll';
       document.body.style.position = 'relative';
-      // document.body.style.width = `${viewport.width}px`;
-      // document.body.style.maxWidth = `${viewport.width}px`;
+
       document.documentElement.style.height = '100vh';
-      // document.documentElement.style.width = `${viewport.width}px`;
-      // document.documentElement.style.maxWidth = `${viewport.width}px`;
       document.documentElement.style.overflow = 'hidden';
     }
     return () => {

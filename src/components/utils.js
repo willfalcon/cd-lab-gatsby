@@ -144,6 +144,34 @@ function useOnClickOutside(ref, handler) {
   );
 }
 
+function useOnScreen(ref, rootMargin = '0px') {
+  // State and setter for storing whether element is visible
+  const [isIntersecting, setIntersecting] = useState(false);
+  const [hasEnteredScreen, setEnteredScreen] = useState(false);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Update our state when observer callback fires
+        setIntersecting(entry.isIntersecting);
+        if (entry.isIntersecting) {
+          setEnteredScreen(true);
+        }
+      },
+      {
+        rootMargin,
+      }
+    );
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+    return () => {
+      observer.unobserve(ref.current);
+    };
+  }, []); // Empty array ensures that effect is only run on mount and unmount
+
+  return { isOnScreen: isIntersecting, hasEnteredScreen };
+}
+
 export {
   getViewport,
   getCurrentBreakpoint,
@@ -154,4 +182,5 @@ export {
   roundToDecimal,
   encode,
   useOnClickOutside,
+  useOnScreen,
 };

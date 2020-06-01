@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
+import { useSpring } from 'react-spring';
 
 import Content from '../Content';
 import BlockTitle from '../BlockTitle';
 import HomeTopics from './HomeTopics';
 
 import { media, grid } from '../theme';
+import useSiteContext from '../SiteContext';
+import { useOnScreen } from '../utils';
 
 const WhatWeDo = () => {
+  const { viewport } = useSiteContext();
+  const titleRef = useRef();
+  const { hasEnteredScreen } = useOnScreen(titleRef, '-100px');
+
   const {
     sanityHomePage: { _rawWhatWeDoCopy },
   } = useStaticQuery(graphql`
@@ -18,11 +25,23 @@ const WhatWeDo = () => {
       }
     }
   `);
+
+  const titleSpring = useSpring({
+    transform: hasEnteredScreen ? 'translateY(0%)' : 'translateY(100%)',
+    opacity: hasEnteredScreen ? 1 : 0,
+  });
+
   return (
-    <StyledSection className="what-we-do">
-      <BlockTitle className="what-we-do__title">What We Do</BlockTitle>
+    <StyledSection className="what-we-do" viewport={viewport}>
+      <BlockTitle
+        className="what-we-do__title"
+        ref={titleRef}
+        styles={titleSpring}
+      >
+        What We Do
+      </BlockTitle>
       <Content className="what-we-do__copy">{_rawWhatWeDoCopy}</Content>
-      <HomeTopics />
+      <HomeTopics hasEnteredScreen={hasEnteredScreen} />
     </StyledSection>
   );
 };
@@ -31,6 +50,8 @@ const StyledSection = styled.section`
   background: ${({ theme }) => theme.light};
   padding: 1rem 1rem 4rem;
   ${media.break`
+    max-width: ${({ viewport }) => viewport.width}px;
+    width: ${({ viewport }) => viewport.width}px;
     height: calc(100vh - 5rem);
     display: flex;
     flex-direction: column;
@@ -38,6 +59,7 @@ const StyledSection = styled.section`
     ${grid.enabled`
       display: grid;
       grid-template-rows: repeat(3, auto);
+      grid-template-columns: 100%;
       align-content: center;
       grid-row-gap: 3rem;
     `}
