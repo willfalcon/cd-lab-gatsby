@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { animated } from 'react-spring';
 
 import Content from '../Content';
-import Button from '../Button';
 
-const Insight = ({ heading, content, button }) => {
+const Insight = ({ heading, content, button, styles }) => {
   return (
-    <StyledInsight className="insight">
+    <StyledInsight className="insight" style={styles}>
       <h4 className="insight__heading">{heading}</h4>
       <Content className="insight__content">{content}</Content>
       {button()}
@@ -14,7 +14,7 @@ const Insight = ({ heading, content, button }) => {
   );
 };
 
-const StyledInsight = styled.div`
+const StyledInsight = styled(animated.div)`
   flex: 0 1 350px;
   padding: 0 1rem;
   font-family: ${({ theme }) => theme.font.heading};

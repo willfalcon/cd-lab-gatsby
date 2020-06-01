@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useStaticQuery, graphql } from 'gatsby';
+import { useSpring, useTrail } from 'react-spring';
 
 import BlockTitle from '../BlockTitle';
 import Content from '../Content';
@@ -8,6 +9,9 @@ import Button from '../Button';
 import NewsletterButton from '../NewsletterButton';
 import WebinarButton from '../WebinarButton';
 import Insight from './Insight';
+
+import { media, grid } from '../theme';
+import { useOnScreen } from '../utils';
 
 const InsightsSection = () => {
   const props = useStaticQuery(graphql`
@@ -31,39 +35,64 @@ const InsightsSection = () => {
       },
     },
   } = props;
-  const blogButton = () => (
-    <Button href="/blog" className="insight__button">
-      Read Articles
-    </Button>
-  );
-  const newsletterButton = () => (
-    <NewsletterButton className="insight__button">
-      Join the List
-    </NewsletterButton>
-  );
-  const webinarButton = () => (
-    <WebinarButton className="insight__button">Sign up FREE</WebinarButton>
-  );
+
+  const titleRef = useRef();
+
+  const { hasEnteredScreen } = useOnScreen(titleRef, '-100px');
+
+  const titleSpring = useSpring({
+    transform: hasEnteredScreen ? 'translateY(0%)' : 'translateY(100%)',
+    opacity: hasEnteredScreen ? 1 : 0,
+  });
+
+  const insights = [
+    {
+      heading: articlesHeading,
+      content: articlesContent,
+      button: () => (
+        <Button href="/blog" className="insight__button">
+          Read Articles
+        </Button>
+      ),
+    },
+    {
+      heading: newsletterHeading,
+      content: newsletterContent,
+      button: () => (
+        <WebinarButton className="insight__button">Sign up FREE</WebinarButton>
+      ),
+    },
+    {
+      heading: webinarHeading,
+      content: webinarContent,
+      button: () => (
+        <NewsletterButton className="insight__button">
+          Join the List
+        </NewsletterButton>
+      ),
+    },
+  ];
+
+  const insightTrail = useTrail(insights.length, {
+    opacity: hasEnteredScreen ? 1 : 0,
+  });
+
   return (
     <Insights className="insights">
-      <BlockTitle className="insights__heading">{heading}</BlockTitle>
+      <BlockTitle
+        className="insights__heading"
+        ref={titleRef}
+        styles={titleSpring}
+      >
+        {heading}
+      </BlockTitle>
       <Content className="insights__copy">{copy}</Content>
       <Columns className="insights__columns">
-        <Insight
-          heading={articlesHeading}
-          content={articlesContent}
-          button={blogButton}
-        />
-        <Insight
-          heading={newsletterHeading}
-          content={newsletterContent}
-          button={newsletterButton}
-        />
-        <Insight
-          heading={webinarHeading}
-          content={webinarContent}
-          button={webinarButton}
-        />
+        {insightTrail.map((props, index) => {
+          const insight = insights[index];
+
+          return <Insight {...insight} key={index} styles={props} />;
+        })}
       </Columns>
     </Insights>
   );
@@ -76,6 +105,18 @@ const Columns = styled.div`
 `;
 const Insights = styled.section`
   padding: 1rem 0 4rem;
+  ${media.break`
+    height: calc(100vh - 5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    ${grid.enabled`
+      display: grid;
+      grid-template-rows: repeat(3, auto);
+      align-content: center;
+      grid-row-gap: 4rem;
+    `}
+  `}
   .insights {
     &__heading {
     }

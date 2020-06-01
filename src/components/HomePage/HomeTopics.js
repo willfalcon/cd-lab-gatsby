@@ -1,18 +1,30 @@
 import React from 'react';
-// import { useStaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
+import { useTrail } from 'react-spring';
 
 import useSiteContext from '../SiteContext';
 import HomeTopic from './HomeTopic';
 
-const HomeTopics = () => {
+const HomeTopics = ({ hasEnteredScreen }) => {
   const { topics } = useSiteContext();
+
+  const topicsTrail = useTrail(topics.length, {
+    opacity: hasEnteredScreen ? 1 : 0,
+  });
 
   return (
     <TopicsContainer className="home-topics">
-      {topics.map((topic, index) => (
-        <HomeTopic {...topic.node} index={index} key={topic.node.id} />
-      ))}
+      {topicsTrail.map((props, index) => {
+        const topic = topics[index];
+        return (
+          <HomeTopic
+            {...topic.node}
+            index={index}
+            key={topic.node.id}
+            styles={props}
+          />
+        );
+      })}
     </TopicsContainer>
   );
 };
