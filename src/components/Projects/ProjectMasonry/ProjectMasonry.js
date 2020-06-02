@@ -60,17 +60,17 @@ const ProjectMasonry = ({
 
   useEffect(() => {
     if (expandedProject) {
+      const scrollY = expandedProject.scrollY || 0;
       setExitSizes({
         exitWidth: expandedProject.location.width,
         exitHeight: expandedProject.location.height,
-        exitTop: expandedProject.location.top,
+        exitTop: expandedProject.location.top + scrollY,
         exitLeft: expandedProject.location.left,
       });
     }
   }, [expandedProject]);
 
   const serviceOrCollection = service ? 'service' : 'collection';
-
   const modalTransition = useModalTransition(
     expandedProject,
     dimensions,

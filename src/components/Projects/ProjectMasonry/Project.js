@@ -99,6 +99,7 @@ const Project = ({
                 video,
                 videoAspect: aspect,
                 thumbnail,
+                scrollY: window.scrollY,
               });
               if (!expandedProject) {
                 window.history.pushState(

@@ -9,6 +9,7 @@ import BackgroundOverlay from '../../BackgroundOverlay';
 import ProjectTitle from './ProjectTitle';
 import CloseButton from '../../CloseButton';
 import ProjectContent from './ProjectContent';
+import { useScrollLock } from '../../utils';
 
 const ProjectModal = ({
   viewport,
@@ -18,6 +19,7 @@ const ProjectModal = ({
   dimensions,
   initialProject,
 }) => {
+  useScrollLock();
   const canonicalService = item ? item.categories[0] : null;
   const origin = window.location.origin;
   const canonicalUrl = canonicalService
@@ -31,11 +33,11 @@ const ProjectModal = ({
       toggleContent(true);
     }
   }, [initialProject, item.id]);
-
+  const scrollY = item && item.scrollY ? item.scrollY : 0;
   return (
     <>
       <BackgroundOverlay
-        style={{ opacity: styles.opacity }}
+        style={{ opacity: styles.opacity, top: scrollY ? `${scrollY}px` : 0 }}
         onClick={handleCloseProject}
       />
       <ExpandedProject
