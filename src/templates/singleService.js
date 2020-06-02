@@ -95,6 +95,10 @@ export const SingleServiceQuery = graphql`
           }
           id
           title
+          _rawDescription
+          mainImage {
+            _type
+          }
         }
       }
     }
