@@ -89,7 +89,9 @@ const StyledExpandedTopic = styled(animated.div)`
     max-width: ${({ theme }) => theme.topics.expandedWidth}px;
     left: 75px;
     top: 10%;
+    top: ${({ viewport }) => viewport.height * 0.1}px;
     height: 80%;
+    height: ${({ viewport }) => viewport.height * 0.8}px;
     z-index: 5;
     .topic-content.block-content {
       padding: ${({ viewport }) => 135 - viewport.height * 0.1}px 1rem 0; 
