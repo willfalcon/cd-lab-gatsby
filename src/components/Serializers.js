@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
+import { Link } from 'gatsby';
 
 import CloseButton from './CloseButton';
 import { useOnClickOutside } from './utils';
@@ -30,6 +31,66 @@ const InlineNote = props => {
       )}
     </NoteHighlight>
   );
+};
+
+const ContentLink = props => {
+  const {
+    mark: { pageLink, href },
+    children,
+  } = props;
+  if (pageLink) {
+    const type = pageLink._type;
+    const path = (() => {
+      switch (type) {
+        case 'homePage':
+          return '';
+        case 'aboutPage':
+          return '';
+        case 'blogPage':
+          return '';
+        case 'latestCollection':
+          return 'collection';
+        case 'servicesPage':
+          return '';
+        case 'workPage':
+          return '';
+        case 'category':
+          return 'service';
+        case 'post':
+          return 'post';
+        case 'collection':
+          return 'collection';
+        case 'project':
+          const service = pageLink.categories.length
+            ? pageLink.categories[0]
+            : false;
+          return `service/${service.slug.current}`;
+        default:
+          return '';
+      }
+    })();
+    const slug = (() => {
+      switch (type) {
+        case 'homePage':
+          return '';
+        case 'aboutPage':
+          return 'about';
+        case 'blogPage':
+          return 'blog';
+        case 'workPage':
+          return 'work';
+        default:
+          return pageLink.slug.current;
+      }
+    })();
+    console.log(path, slug);
+    return (
+      <Link to={`${path ? `/${path}` : ''}${slug ? `/${slug}` : ''}`}>
+        {children}
+      </Link>
+    );
+  }
+  return <a href={href}>{children}</a>;
 };
 
 const NoteHighlight = styled.span`
@@ -81,4 +142,4 @@ const NoteIcon = styled.span`
   font-size: 1.1rem;
 `;
 
-export { InlineNote };
+export { InlineNote, ContentLink };

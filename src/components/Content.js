@@ -3,7 +3,7 @@ import BlockContent from '@sanity/block-content-to-react';
 import classNames from 'classnames';
 import ReactPlayer from 'react-player';
 
-import { InlineNote } from './Serializers';
+import { InlineNote, ContentLink } from './Serializers';
 import Form from './Forms/Form';
 
 const serializers = {
@@ -21,10 +21,14 @@ const serializers = {
       // const { marks, children } = props;
       return <InlineNote {...props} />;
     },
+    link: props => {
+      return <ContentLink {...props} />;
+    },
   },
 };
 
 const Content = ({ children, className }) => {
+  console.log(children);
   return (
     <div className={classNames('block-content', className)}>
       <BlockContent

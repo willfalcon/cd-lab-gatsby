@@ -80,6 +80,7 @@ const StyledPostsList = styled.ul`
       &__info {
         flex: 0 0 50%;
         order: 1;
+        padding-right: 1rem;
       }
       &__image {
         /* display: initial; */
