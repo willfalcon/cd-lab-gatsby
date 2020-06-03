@@ -16,11 +16,12 @@ const BlogPage = ({
   perPage,
   numPages,
   currentPage,
+  catTitle = false,
 }) => {
   return (
     <StyledBlogPage className="blog-page">
       <main className="main">
-        <Heading>{title}</Heading>
+        <Heading>{catTitle || title}</Heading>
         {_rawBody && <Content>{_rawBody}</Content>}
         <PostsList posts={posts} />
         <Pagination numPages={numPages} currentPage={currentPage} />

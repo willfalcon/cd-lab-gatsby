@@ -296,6 +296,67 @@ exports.createPages = async ({
     });
   });
 
+  /**
+   * Get blog categories and create archives for each
+   */
+
+  const {
+    data: {
+      allSanityBlogCategory: { edges: categories },
+    },
+  } = await graphql(`
+    {
+      allSanityBlogCategory {
+        edges {
+          node {
+            id
+            slug {
+              current
+            }
+            title
+          }
+        }
+      }
+    }
+  `);
+
+  categories.forEach(async category => {
+    const {
+      data: {
+        allSanityPost: { edges: filteredPosts },
+      },
+    } = await graphql(`{
+      allSanityPost(filter: {categories: {elemMatch: {slug: {current: {eq: "${category.node.slug.current}"}}}}}) {
+        edges {
+          node {
+            id
+          }
+        }
+      }
+    }`);
+    const numPages = Math.ceil(filteredPosts.length / perPage);
+    Array.from({ length: numPages }).forEach((_, i) => {
+      createPage({
+        path:
+          i === 0
+            ? `/category/${category.node.slug.current}`
+            : `/category/${category.node.slug.current}/${i + 1}`,
+        component: require.resolve('./src/templates/category.js'),
+        context: {
+          limit: perPage,
+          skip: i * perPage,
+          numPages,
+          currentPage: i + 1,
+          category: category.node.slug.current,
+          catTitle: category.node.title,
+        },
+      });
+      console.log(
+        `Created category archive page for category ${category.node.title}.`
+      );
+    });
+  });
+
   const {
     data: {
       sanitySiteSettings: { redirects },
