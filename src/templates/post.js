@@ -46,6 +46,13 @@ export const PostQuery = graphql`
         title
         canonicalUrl
       }
+      categories {
+        slug {
+          current
+        }
+        title
+        id
+      }
     }
   }
 `;

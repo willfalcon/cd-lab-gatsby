@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import Img from 'gatsby-image';
+import { Link } from 'gatsby';
 
 import Heading from './Heading';
 import Content from './Content';
@@ -10,7 +11,14 @@ import NewsletterButton from './NewsletterButton';
 
 import { media, grid } from './theme';
 
-const Post = ({ _rawBody, mainImage, title, author, publishedAt }) => {
+const Post = ({
+  _rawBody,
+  mainImage,
+  title,
+  author,
+  publishedAt,
+  categories,
+}) => {
   return (
     <Article className="single-post">
       {mainImage && (
@@ -36,11 +44,46 @@ const Post = ({ _rawBody, mainImage, title, author, publishedAt }) => {
           <Content className="author__bio">{author._rawBio}</Content>
         )}
       </AuthorBio>
+      {categories.length > 0 && (
+        <Categories className="post-categories">
+          <h3 className="post-categories__heading">Filed under</h3>
+          {categories.map(cat => {
+            return (
+              <Link
+                className="category"
+                to={`/category/${cat.slug.current}`}
+                key={cat.id}
+              >
+                {cat.title}
+              </Link>
+            );
+          })}
+        </Categories>
+      )}
       <NewsletterButton>Join our Newsletter</NewsletterButton>
       <Topics />
     </Article>
   );
 };
+
+const Categories = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  margin-bottom: 5rem;
+  .post-categories__heading {
+    flex: 100%;
+  }
+  .category {
+    text-decoration: none;
+    background: ${({ theme }) => theme.orange};
+    color: ${({ theme }) => theme.offWhite};
+    padding: 0 1.5rem;
+    border-radius: 10rem;
+    /* font-family: ${({ theme }) => theme.font.heading}; */
+    font-weight: ${({ theme }) => theme.font.bold};
+    margin-right: 1rem;
+  }
+`;
 
 const Article = styled.article`
   padding: 1rem;
