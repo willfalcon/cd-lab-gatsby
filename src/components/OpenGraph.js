@@ -1,10 +1,14 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
-const OpenGraph = ({ title, url, description, image, type, seo }) => {
+import { useSiteMetadata } from './hooks';
+
+const OpenGraph = ({ title, url, image, type, seo, location }) => {
   console.log(seo);
   const openTitle = seo.title ? seo.title : title;
-  const openUrl = url ? url : window.location.href;
+  const { siteUrl } = useSiteMetadata();
+  const openUrl = url ? url : `${siteUrl}${location.pathname}`;
+
   return (
     <Helmet>
       <meta property="og:title" content={openTitle} />

@@ -5,7 +5,7 @@ import Wrapper from '../components/Wrapper';
 import HomePage from '../components/HomePage/HomePage';
 import OpenGraph from '../components/OpenGraph';
 
-const index = ({ data, pageContext }) => {
+const index = ({ data, pageContext, location }) => {
   console.log(data);
   return (
     <Wrapper
@@ -17,6 +17,7 @@ const index = ({ data, pageContext }) => {
         title="home"
         seo={data.sanityHomePage.seoSettings}
         image={data.sanityHomePage.aboutUsImage.asset.ogImage.src}
+        location={location}
       />
       <HomePage {...data.sanityHomePage} thumbnail={pageContext.thumbnail} />
     </Wrapper>
