@@ -153,7 +153,9 @@ const StyledFooter = styled.footer`
     }
     &__column {
       padding: 4rem 1rem;
-      flex: 0 0 30%;
+      ${media.break`
+        flex: 0 0 30%;
+      `}
     }
     &__contact-label {
       font-family: ${({ theme }) => theme.font.heading};
