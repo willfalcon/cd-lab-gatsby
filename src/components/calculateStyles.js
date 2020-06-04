@@ -31,7 +31,6 @@ export default function calculateStyles(options = {}) {
       align,
     }
   );
-  console.log({ containerAspect });
   const containerHeight = styleFormat(round(100 / containerAspect));
 
   return {
