@@ -67,7 +67,7 @@ const HomePage = ({
         <div className="home-first-section">
           <FluidImg
             src="home-hero"
-            fluid={aboutUsImage.asset.fluid}
+            fluid={aboutUsImage.asset.mainImage}
             {...aboutUsImage}
             assetId={aboutUsImage.asset.assetId}
             alt="The Creative Distillery Team"
