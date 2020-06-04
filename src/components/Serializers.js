@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'gatsby';
 
 import CloseButton from './CloseButton';
+import Button from './Button';
 import { useOnClickOutside } from './utils';
 import { media } from './theme';
 
@@ -35,7 +36,7 @@ const InlineNote = props => {
 
 const ContentLink = props => {
   const {
-    mark: { pageLink, href },
+    mark: { pageLink, href, buttonStyles },
     children,
   } = props;
   if (pageLink) {
@@ -84,13 +85,20 @@ const ContentLink = props => {
       }
     })();
     console.log(path, slug);
-    return (
-      <Link to={`${path ? `/${path}` : ''}${slug ? `/${slug}` : ''}`}>
+    const to = `${path ? `/${path}` : ''}${slug ? `/${slug}` : ''}`;
+    return buttonStyles ? (
+      <Button className="content-button" to={to}>
         {children}
-      </Link>
+      </Button>
+    ) : (
+      <Link to={to}>{children}</Link>
     );
   }
-  return <a href={href}>{children}</a>;
+  return buttonStyles ? (
+    <Button href={href}>{children}</Button>
+  ) : (
+    <a href={href}>{children}</a>
+  );
 };
 
 const NoteHighlight = styled.span`

@@ -5,7 +5,7 @@ import { Link } from 'gatsby';
 
 const Button = React.forwardRef(
   (
-    { title, href, handleClick, type, className, children, big = false },
+    { title, href, to, handleClick, type, className, children, big = false },
     ref
   ) => {
     if (handleClick) {
@@ -34,12 +34,25 @@ const Button = React.forwardRef(
         </StyledButton>
       );
     }
+    if (href && href.includes('http')) {
+      return (
+        <StyledLink
+          className={classNames('button button--link', className)}
+          as={'a'}
+          ref={ref}
+          href={href}
+        >
+          {title}
+          {children}
+        </StyledLink>
+      );
+    }
     return (
       <StyledLink
         className={classNames('button button--link', className)}
         big={big}
         ref={ref}
-        to={href}
+        to={href || to}
       >
         {title}
         {children}

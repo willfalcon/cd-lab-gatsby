@@ -2,6 +2,7 @@ import React from 'react';
 import BlockContent from '@sanity/block-content-to-react';
 import classNames from 'classnames';
 import ReactPlayer from 'react-player';
+import styled from 'styled-components';
 
 import { InlineNote, ContentLink } from './Serializers';
 import Form from './Forms/Form';
@@ -30,15 +31,21 @@ const serializers = {
 const Content = ({ children, className }) => {
   console.log(children);
   return (
-    <div className={classNames('block-content', className)}>
+    <ContentContainer className={classNames('block-content', className)}>
       <BlockContent
         blocks={children}
         projectId="sgba0i04"
         dataset="gatsby"
         serializers={serializers}
       />
-    </div>
+    </ContentContainer>
   );
 };
+
+const ContentContainer = styled.div`
+  .content-button {
+    display: inline-block;
+  }
+`;
 
 export default Content;
