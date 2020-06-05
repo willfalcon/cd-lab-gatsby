@@ -23,7 +23,7 @@ const Post = ({
     <Article className="single-post">
       {mainImage && (
         <Img
-          fluid={mainImage.asset.fluid}
+          fluid={mainImage.asset.mainImage}
           alt={mainImage.alt ? mainImage.alt : title}
           className="single-post__image"
         />

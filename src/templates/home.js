@@ -3,18 +3,17 @@ import { graphql } from 'gatsby';
 
 import Wrapper from '../components/Wrapper';
 import HomePage from '../components/HomePage/HomePage';
-import OpenGraph from '../components/OpenGraph';
+import Meta from '../components/Meta';
 
 const index = ({ data, pageContext, location }) => {
-  console.log(data);
   return (
     <Wrapper
       home
       seo={data.sanityHomePage.seoSettings}
       pageTitle={data.sanityHomePage.title}
     >
-      <OpenGraph
-        title="home"
+      <Meta
+        title="Home"
         seo={data.sanityHomePage.seoSettings}
         image={data.sanityHomePage.aboutUsImage.asset.ogImage.src}
         location={location}

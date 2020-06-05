@@ -3,17 +3,28 @@ import { graphql } from 'gatsby';
 
 import Wrapper from '../components/Wrapper';
 import SingleCollection from '../components/Collection/SingleCollection';
+import Meta from '../components/Meta';
 
-const latestCollection = ({ data, pageContext }) => {
+const latestCollection = ({ data, pageContext, location }) => {
   const { project, slug } = pageContext;
+  const { sanityLatestCollection, allSanityProject } = data;
   return (
     <Wrapper
-      seo={data.sanityLatestCollection.seoSettings}
-      pageTitle={data.sanityLatestCollection.title}
+      seo={sanityLatestCollection.seoSettings}
+      pageTitle={sanityLatestCollection.title}
     >
+      <Meta
+        title={sanityLatestCollection.title}
+        seo={sanityLatestCollection.seoSettings}
+        image={
+          sanityLatestCollection.mainImage &&
+          sanityLatestCollection.mainImage.asset.ogImage.src
+        }
+        location={location}
+      />
       <SingleCollection
-        projects={data.allSanityProject.edges.map(({ node }) => ({ ...node }))}
-        {...data.sanityLatestCollection}
+        projects={allSanityProject.edges.map(({ node }) => ({ ...node }))}
+        {...sanityLatestCollection}
         project={project}
         slug={slug}
       />
@@ -34,8 +45,11 @@ export const LatestCollectionQuery = graphql`
       }
       mainImage {
         asset {
-          fluid(maxWidth: 1000) {
+          mainImage: fluid(maxWidth: 1000) {
             ...GatsbySanityImageFluid
+          }
+          ogImage: fixed(width: 1000) {
+            ...GatsbySanityImageFixed
           }
         }
       }

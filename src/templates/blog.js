@@ -3,10 +3,20 @@ import { graphql } from 'gatsby';
 
 import Wrapper from '../components/Wrapper';
 import BlogPage from '../components/BlogPage/BlogPage';
+import Meta from '../components/Meta';
 
-const blog = ({ data, pageContext }) => {
+const blog = ({ data, pageContext, location }) => {
   return (
-    <Wrapper seo={data.sanityBlogPage.seoSettings} pageTitle={data.sanityBlogPage.title}>
+    <Wrapper
+      seo={data.sanityBlogPage.seoSettings}
+      pageTitle={data.sanityBlogPage.title}
+    >
+      <Meta
+        title="Blog"
+        seo={data.sanityBlogPage.seoSettings}
+        location={location}
+        url="/blog"
+      />
       <BlogPage
         posts={data.allSanityPost.edges.map(edge => ({ ...edge.node }))}
         {...data.sanityBlogPage}
@@ -27,7 +37,7 @@ export const BlogQuery = graphql`
         node {
           id
           title
-          _rawBody(resolveReferences: {maxDepth: 10})
+          _rawBody(resolveReferences: { maxDepth: 10 })
           mainImage {
             alt
             asset {
@@ -54,7 +64,7 @@ export const BlogQuery = graphql`
         title
       }
       title
-      _rawBody(resolveReferences: {maxDepth: 10})
+      _rawBody(resolveReferences: { maxDepth: 10 })
     }
   }
 `;

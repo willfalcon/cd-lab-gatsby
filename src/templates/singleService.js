@@ -3,19 +3,26 @@ import { graphql } from 'gatsby';
 
 import Wrapper from '../components/Wrapper';
 import SingleService from '../components/SingleService/SingleService';
+import Meta from '../components/Meta';
 
-const singleService = ({ data, pageContext }) => {
+const singleService = ({ data, pageContext, location }) => {
   const project = pageContext.project;
   const slug = pageContext.slug;
+  const { sanityCategory, allSanityProject, allSanityCategory } = data;
   return (
-    <Wrapper
-      seo={data.sanityCategory.seoSettings}
-      pageTitle={data.sanityCategory.title}
-    >
+    <Wrapper seo={sanityCategory.seoSettings} pageTitle={sanityCategory.title}>
+      <Meta
+        title={sanityCategory.title}
+        seo={sanityCategory.seoSettings}
+        image={
+          sanityCategory.mainImage && sanityCategory.mainImage.asset.ogImage.src
+        }
+        location={location}
+      />
       <SingleService
-        {...data.sanityCategory}
-        projects={data.allSanityProject.edges.map(edge => ({ ...edge.node }))}
-        services={data.allSanityCategory.edges.map(edge => ({ ...edge.node }))}
+        {...sanityCategory}
+        projects={allSanityProject.edges.map(edge => ({ ...edge.node }))}
+        services={allSanityCategory.edges.map(edge => ({ ...edge.node }))}
         project={project}
         slug={slug}
       />
@@ -36,8 +43,11 @@ export const SingleServiceQuery = graphql`
       forceCoverImage
       mainImage {
         asset {
-          fluid(maxWidth: 1000) {
+          mainImage: fluid(maxWidth: 1000) {
             ...GatsbySanityImageFluid
+          }
+          ogImage: fixed(width: 1200) {
+            ...GatsbySanityImageFixed
           }
         }
       }

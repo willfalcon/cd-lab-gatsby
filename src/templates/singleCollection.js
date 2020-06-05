@@ -3,19 +3,25 @@ import { graphql } from 'gatsby';
 
 import Wrapper from '../components/Wrapper';
 import SingleCollection from '../components/Collection/SingleCollection';
+import Meta from '../components/Meta';
 
-const singleCollection = ({ data, pageContext }) => {
+const singleCollection = ({ data, pageContext, location }) => {
   const { project, slug } = pageContext;
+  const { sanityCollection } = data;
   return (
     <Wrapper
-      seo={data.sanityCollection.seoSettings}
-      pageTitle={data.sanityCollection.title}
+      seo={sanityCollection.seoSettings}
+      pageTitle={sanityCollection.title}
     >
-      <SingleCollection
-        {...data.sanityCollection}
-        project={project}
-        slug={slug}
+      <Meta
+        title={sanityCollection.title}
+        seo={sanityCollection.seoSettings}
+        image={
+          sanityCollection.mainImage && sanityCollection.mainImage.asset.src
+        }
+        location={location}
       />
+      <SingleCollection {...sanityCollection} project={project} slug={slug} />
     </Wrapper>
   );
 };

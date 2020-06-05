@@ -3,14 +3,25 @@ import { graphql } from 'gatsby';
 
 import Wrapper from '../components/Wrapper';
 import Post from '../components/Post';
+import Meta from '../components/Meta';
 
-const post = ({ data }) => {
+const post = ({ data, location }) => {
   return (
     <Wrapper
       seo={data.sanityPost.seoSettings}
       pageTitle={data.sanityPost.title}
     >
       <Post {...data.sanityPost} />
+      <Meta
+        title={data.sanityPost.title}
+        seo={data.sanityPost.seoSettings}
+        image={
+          data.sanityPost.mainImage &&
+          data.sanityPost.mainImage.asset.ogImage.src
+        }
+        location={location}
+        type="article"
+      />
     </Wrapper>
   );
 };
@@ -24,8 +35,11 @@ export const PostQuery = graphql`
       mainImage {
         alt
         asset {
-          fluid(maxWidth: 800) {
+          mainImage: fluid(maxWidth: 800) {
             ...GatsbySanityImageFluid
+          }
+          ogImage: fixed(width: 1200) {
+            ...GatsbySanityImageFixed
           }
         }
       }

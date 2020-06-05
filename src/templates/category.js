@@ -3,13 +3,21 @@ import { graphql } from 'gatsby';
 
 import Wrapper from '../components/Wrapper';
 import BlogPage from '../components/BlogPage/BlogPage';
+import Meta from '../components/Meta';
 
-const category = ({ data, pageContext }) => {
+const category = ({ data, pageContext, location }) => {
   return (
     <Wrapper
       seo={data.sanityBlogPage.seoSettings}
       pageTitle={data.sanityBlogPage.title}
     >
+      <Meta
+        title={pageContext.catTitle}
+        seo={data.sanityBlogPage.seoSettings}
+        // image={data.sanityHomePage.aboutUsImage.asset.ogImage.src}
+        location={location}
+        url={`/category/${pageContext.category}`}
+      />
       <BlogPage
         posts={data.allSanityPost.edges.map(edge => ({ ...edge.node }))}
         {...data.sanityBlogPage}

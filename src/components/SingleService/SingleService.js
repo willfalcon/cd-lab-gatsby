@@ -90,7 +90,10 @@ const SingleService = ({
       </main>
       <Topics />
       {(forceCoverImage || !projects.length) && mainImage ? (
-        <ServiceCoverImage className="service-cover-image" image={mainImage} />
+        <ServiceCoverImage
+          className="service-cover-image"
+          image={mainImage.asset.mainImage}
+        />
       ) : (
         !mobile && (
           <ProjectMasonry

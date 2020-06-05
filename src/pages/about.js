@@ -3,10 +3,20 @@ import { graphql } from 'gatsby';
 
 import Wrapper from '../components/Wrapper';
 import AboutPage from '../components/AboutPage/AboutPage';
+import Meta from '../components/Meta';
 
-const index = ({ data }) => {
+const index = ({ data, location }) => {
   return (
-    <Wrapper seo={data.sanityAboutPage.seoSettings} pageTitle={data.sanityAboutPage.title}>
+    <Wrapper
+      seo={data.sanityAboutPage.seoSettings}
+      pageTitle={data.sanityAboutPage.title}
+    >
+      <Meta
+        title="About"
+        seo={data.sanityAboutPage.seoSettings}
+        // image={data.sanityHomePage.aboutUsImage.asset.ogImage.src}
+        location={location}
+      />
       <AboutPage
         {...data.sanityAboutPage}
         people={data.allSanityPerson.edges}
@@ -25,13 +35,13 @@ export const AboutQuery = graphql`
         metaDescription
         title
       }
-      _rawBody(resolveReferences: {maxDepth: 10})
+      _rawBody(resolveReferences: { maxDepth: 10 })
     }
     allSanityPerson(sort: { order: ASC, fields: _createdAt }) {
       edges {
         node {
           id
-          _rawBio(resolveReferences: {maxDepth: 10})
+          _rawBio(resolveReferences: { maxDepth: 10 })
           name
           primary
           position
