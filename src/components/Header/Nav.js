@@ -5,6 +5,7 @@ import { rgba } from 'polished';
 
 import Menu from './Menu';
 import Button from '../Button';
+import SocialList from '../SocialList';
 import MobileFooter from '../MobileFooter';
 import useSiteContext from '../SiteContext';
 import theme, { media } from '../theme';
@@ -53,13 +54,16 @@ const Nav = ({ home }) => {
       item && (
         <React.Fragment key={key}>
           {viewport.width >= theme.sizes.break && (
-            <NavBackdrop
-              className="nav-backdrop"
-              style={{ opacity: o }}
-              onClick={toggleMenu}
-              viewwidth={viewport.width}
-              viewheight={viewport.height}
-            />
+            <>
+              <NavBackdrop
+                className="nav-backdrop"
+                style={{ opacity: o }}
+                onClick={toggleMenu}
+                viewwidth={viewport.width}
+                viewheight={viewport.height}
+              />
+              <SocialList styles={{ opacity: o }} className="nav-social-list" />
+            </>
           )}
           <StyledNav
             className="nav"

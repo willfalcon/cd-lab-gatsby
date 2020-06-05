@@ -70,7 +70,6 @@ const Header = () => {
           Subscribe
         </NewsletterButton>
         <MenuToggle />
-        <SocialList className="header-social-list" />
         <Nav home={home} />
       </StyledHeader>
     </>
@@ -121,13 +120,6 @@ const StyledHeader = styled.header`
       top: 0;
       left: 0;
     }
-    .header-social-list {
-      display: none;
-    }
-    /* ${({ home }) =>
-      home &&
-      ` */
-    /* `} */
   `}
 
   .header-subscribe {

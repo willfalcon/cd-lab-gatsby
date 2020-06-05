@@ -11,7 +11,8 @@ import InsightsSection from './InsightsSection';
 
 import Topics from '../Topics/Topics';
 
-import { media, grid } from '../theme';
+import theme, { media, grid } from '../theme';
+import { getViewport } from '../utils';
 
 const HomePage = ({
   _rawNewBody,
@@ -24,8 +25,9 @@ const HomePage = ({
 
   useLayoutEffect(() => {
     const gatsbyContainer = document.getElementById('___gatsby');
+    const viewport = getViewport();
 
-    if (container.current) {
+    if (container.current && viewport.width >= theme.sizes.break) {
       const children = container.current.children;
       Array.from(children).forEach((child, i) => {
         const rect = child.getBoundingClientRect();

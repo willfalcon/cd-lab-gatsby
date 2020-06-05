@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Link, useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
+import SocialList from './SocialList';
+
 import useSiteContext from './SiteContext';
 import { media, grid } from './theme';
 
@@ -66,6 +68,7 @@ const Footer = () => {
         fixed={file.childImageSharp.fixed}
         alt="Creative Distillery Icon"
       />
+      <SocialList className="footer-social-list" />
       <div className="home-footer__column home-footer__contact">
         <h3 className="home-footer__contact-label">Contact</h3>
         <a className="home-footer__phone" href="tel:(601) 326-2388">
@@ -136,10 +139,32 @@ const StyledFooter = styled.footer`
 
   ${media.break`
     flex-flow: row nowrap;
+    .footer-social-list {
+      display: none;
+      position: static;
+      grid-row: 2 / 3;
+      grid-column: 1 / 2;
+      justify-self: center;
+    }
+    .home-footer {
+      &__icon {
+        grid-row: 1 / 2;
+        grid-column: 1 / 2;
+      }
+      &__column {
+        grid-row: 1 / 3;
+        grid-column: span 1;
+      }
+    }
     ${grid.enabled`
+      .footer-social-list { 
+        display: block;
+      }
       display: grid;
       grid-template-columns: 100px 1fr 1fr 1fr;
-      grid-column-gap: 3rem;
+      grid-template-rows: 100px 1fr;
+      grid-gap: 3rem;
+      }
     `}
   `}
   a {

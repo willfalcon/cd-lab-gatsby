@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { animated } from 'react-spring';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { fab } from '@fortawesome/free-brands-svg-icons';
 import classNames from 'classnames';
@@ -7,7 +8,7 @@ import classNames from 'classnames';
 import useSiteContext from './SiteContext';
 import { media } from './theme';
 
-const SocialList = ({ className }) => {
+const SocialList = ({ className, styles }) => {
   const {
     social: { facebook, instagram, linkedin, twitter },
     menuOpen,
@@ -17,6 +18,7 @@ const SocialList = ({ className }) => {
     <StyledSocialList
       open={menuOpen}
       className={classNames('social-list', className)}
+      style={styles}
     >
       {twitter && (
         <li>
@@ -70,7 +72,7 @@ const SocialList = ({ className }) => {
   );
 };
 
-const StyledSocialList = styled.ul`
+const StyledSocialList = styled(animated.ul)`
   display: none;
   padding: 1rem 0;
   margin: 0;
@@ -93,7 +95,7 @@ const StyledSocialList = styled.ul`
     display: block;
     z-index: 5;
     position: fixed;
-    top: 175px;
+    top: 95px;
     left: 0;
     width: 75px;
   `}
