@@ -7,7 +7,7 @@ import PlayButton from '../PlayButton';
 import { media } from '../theme';
 import useSiteContext from '../SiteContext';
 
-const AboutSectionVideo = ({ thumbnail, video }) => {
+const AboutSectionVideo = ({ thumbnail, video, maxHeight }) => {
   const alt = 'Creative Distillery Video Reel';
   const [videoOpen, setVideoOpen] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -36,15 +36,22 @@ const AboutSectionVideo = ({ thumbnail, video }) => {
     },
   });
 
+  const videoHeight =
+    viewport.width < 768 ? ((viewport.width - 20) * 9) / 16 : (900 * 9) / 16;
+
+  const videoWidth = maxHeight < videoHeight ? (16 * maxHeight) / 9 : 900;
   return (
-    <VideoContainer className="home-video">
+    <VideoContainer
+      className="home-video"
+      style={{ maxHeight: `${maxHeight}px`, maxWidth: `${videoWidth}px` }}
+    >
       {loadTransitions.map(
         ({ item, key, props }) =>
           !item && (
             <animated.img
               className="home-video__thumbnail"
               key={key}
-              style={props}
+              style={{ maxHeight, ...props }}
               src={thumbnail}
               alt={alt}
             />
@@ -59,14 +66,10 @@ const AboutSectionVideo = ({ thumbnail, video }) => {
               controls
               className="home-video__video"
               // width={viewport.width < 768 ? viewport.width : 640}
-              width={900}
+              width={videoWidth}
               // height={viewport.width < 768 ? (viewport.width * 9) / 16 : 360}
               // height={(900 * 9) / 16}
-              height={
-                viewport.width < 768
-                  ? ((viewport.width - 20) * 9) / 16
-                  : (900 * 9) / 16
-              }
+              height={videoHeight}
               // ref={videoRef}
               volume={0.5}
               onReady={() => {
@@ -75,7 +78,7 @@ const AboutSectionVideo = ({ thumbnail, video }) => {
               }}
               playing={playing}
               key={key}
-              style={props}
+              style={{ maxHeight, ...props }}
             />
           )
       )}

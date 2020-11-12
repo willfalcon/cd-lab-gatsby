@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useSpring } from 'react-spring';
+import useDimensions from 'react-use-dimensions';
 
 import BlockTitle from '../BlockTitle';
 import Content from '../Content';
@@ -17,8 +18,22 @@ const AboutSection = ({ copy, thumbnail, video }) => {
     transform: hasEnteredScreen ? 'translateY(0%)' : 'translateY(100%)',
     opacity: hasEnteredScreen ? 1 : 0,
   });
+  const [containerRef, containerSize] = useDimensions();
+  const titleHeight = 75; // doesn't change
+  const [descriptionRef, descriptionSize] = useDimensions();
+  const buttonHeight = 70 + 10;
+  const videoTopMargin = 30 + 30;
+  const topAndBottomPadding = 20;
+  const videoMaxHeight =
+    containerSize.height -
+    topAndBottomPadding -
+    titleHeight -
+    descriptionSize.height -
+    buttonHeight -
+    videoTopMargin;
+  console.log(videoMaxHeight);
   return (
-    <StyledSection className="about-section">
+    <StyledSection className="about-section" ref={containerRef}>
       <BlockTitle
         className="about-section__title"
         white
@@ -27,8 +42,14 @@ const AboutSection = ({ copy, thumbnail, video }) => {
       >
         About Us
       </BlockTitle>
-      <Content className="about-section__copy">{copy}</Content>
-      <AboutSectionVideo thumbnail={thumbnail} video={video} />
+      <Content className="about-section__copy" ref={descriptionRef}>
+        {copy}
+      </Content>
+      <AboutSectionVideo
+        thumbnail={thumbnail}
+        video={video}
+        maxHeight={videoMaxHeight}
+      />
       <div className="about-section__buttons">
         <Button className="about-section__button" href="/about">
           Our Team
@@ -52,6 +73,7 @@ const StyledSection = styled.section`
     ${grid.enabled`
       display: grid;
       grid-template-rows: repeat(4, auto);
+      grid-template-rows: 75px auto 1fr 80;
       align-content: center;
       grid-row-gap: 1rem;
     `}
