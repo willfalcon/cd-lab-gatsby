@@ -1,9 +1,9 @@
 import React, { useState, useLayoutEffect } from 'react';
 import styled from 'styled-components';
-import uniqWith from 'lodash.uniqwith';
-import isEqual from 'lodash.isequal';
 
-import ServiceListItem from './ServiceListItem';
+import { useTransition, animated } from 'react-spring';
+
+import ServiceListItem from '../Collection/ServiceListItem';
 
 import theme, { media } from '../theme';
 import useSiteContext from '../SiteContext';
@@ -40,6 +40,13 @@ const ServiceList = ({ projects, titleRef, services }) => {
   const width = roundToDecimal(((viewport.width - 100) * 0.4) / 2, 2);
 
   const baseTop = viewport.height * 0.05 + 120;
+  console.log(viewport);
+
+  const transition = useTransition(services, item => item.id, {
+    from: { opacity: 0, transform: 'scaleY(0)', transformOrigin: 'top' },
+    enter: { opacity: 1, transform: 'scaleY(1)' },
+    leave: { opacity: 0, position: 'absolute', transform: 'scaleY(0)' },
+  });
 
   return (
     <StyledServiceList
@@ -48,14 +55,17 @@ const ServiceList = ({ projects, titleRef, services }) => {
         mobile
           ? {}
           : {
-              right: `${right}px`,
+              // right: `50%`,
+              left: 100 + (viewport.width - 100) / 2,
+              transform: `translateX(-${width / 2 + 70}px)`,
               width: `${width}px`,
               top: titleHeight > 91 ? `${baseTop + titleHeight - 91}px` : `${baseTop}px`,
             }
       }
     >
-      {uniqWith(services, isEqual).map(service => {
-        return <ServiceListItem key={service.id} {...service} />;
+      {transition.map(({ item, key, props }) => {
+        console.log(item);
+        return <ServiceListItem key={key} styles={props} {...item} />;
       })}
     </StyledServiceList>
   );
@@ -69,7 +79,7 @@ const StyledServiceList = styled.ul`
   padding: 0 2rem;
   margin: 3rem 3rem 3rem;
   position: relative;
-  z-index: 1;
+  z-index: 2;
   a,
   span {
     text-decoration: none;

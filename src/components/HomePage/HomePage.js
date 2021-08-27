@@ -11,64 +11,18 @@ import InsightsSection from './InsightsSection';
 
 import Topics from '../Topics/Topics';
 
-import theme, { media, grid } from '../theme';
-import { getViewport } from '../utils';
+import { media, grid } from '../theme';
+import { useScrollSnap } from '../hooks';
 
-const HomePage = ({
-  _rawNewBody,
-  _rawAboutCopy,
-  homeVideoId,
-  thumbnail,
-  aboutUsImage,
-}) => {
-  const container = useRef(null);
-
-  useLayoutEffect(() => {
-    const gatsbyContainer = document.getElementById('___gatsby');
-    const viewport = getViewport();
-
-    if (container.current && viewport.width >= theme.sizes.break) {
-      const children = container.current.children;
-      Array.from(children).forEach((child, i) => {
-        const rect = child.getBoundingClientRect();
-
-        const header = i === 0 ? 78 : 0;
-        const scrollChild = document.createElement('div');
-        scrollChild.style.width = `${rect.width}px`;
-        scrollChild.style.height = `${rect.height + header}px`;
-        scrollChild.style.position = 'relative';
-        scrollChild.style.scrollSnapAlign = 'center';
-        scrollChild.style.pointerEvents = 'none';
-        scrollChild.classList.add('scroll-anchor');
-        document.body.appendChild(scrollChild);
-      });
-
-      gatsbyContainer.style.position = 'absolute';
-      gatsbyContainer.style.width = '100%';
-
-      document.body.style.scrollSnapType = 'y proximity';
-      document.body.style.height = '100vh';
-      document.body.style.overflowY = 'scroll';
-      document.body.style.position = 'relative';
-
-      document.documentElement.style.height = '100vh';
-      document.documentElement.style.overflow = 'hidden';
-    }
-    return () => {
-      const scrollAnchors = document.querySelectorAll('.scroll-anchor');
-      Array.from(scrollAnchors).forEach(el => el.parentNode.removeChild(el));
-      gatsbyContainer.removeAttribute('style');
-      document.body.removeAttribute('style');
-      document.documentElement.removeAttribute('style');
-    };
-  }, []);
+const HomePage = ({ _rawNewBody, _rawAboutCopy, homeVideoId, thumbnail, aboutUsImage }) => {
+  const container = useScrollSnap();
 
   return (
     <>
       <HomeContainer className="container" ref={container}>
         <div className="home-first-section">
           <FluidImg
-            src="home-hero"
+            className="home-hero"
             fluid={aboutUsImage.asset.mainImage}
             {...aboutUsImage}
             assetId={aboutUsImage.asset.assetId}
@@ -79,17 +33,11 @@ const HomePage = ({
             <Button className="home-work-button" href="/work">
               View Work
             </Button>
-            <ContactFormButton className="home-contact-button">
-              Get Started
-            </ContactFormButton>
+            <ContactFormButton className="home-contact-button">Get Started</ContactFormButton>
           </main>
         </div>
         <WhatWeDo />
-        <AboutSection
-          copy={_rawAboutCopy}
-          thumbnail={thumbnail}
-          video={homeVideoId}
-        />
+        <AboutSection copy={_rawAboutCopy} thumbnail={thumbnail} video={homeVideoId} />
         <InsightsSection />
       </HomeContainer>
       <Topics />

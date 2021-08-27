@@ -40,6 +40,7 @@ const theme = {
     break: 768,
     large: 1024,
     content: 1000,
+    header: 78,
   },
   topics: {
     expandedWidth: 900,

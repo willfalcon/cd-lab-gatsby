@@ -24,9 +24,7 @@ const Caret = ({
 
   const caretSpring = useSpring({
     from: {
-      transform: spin
-        ? `rotate(2turn) translateX(0px)`
-        : `rotate(0turn) translateX(0px)`,
+      transform: spin ? `rotate(2turn) translateX(0px)` : `rotate(0turn) translateX(0px)`,
     },
     to: {
       transform:
@@ -57,7 +55,7 @@ const Caret = ({
         ...caretSpring,
         //  marginRight: '10px'
       }}
-      big={big}
+      props={{ big }}
     >
       <span />
       <span />
@@ -69,7 +67,7 @@ const StyledCaret = styled(animated.div)`
   position: relative;
   width: 20px;
   height: 20px;
-  ${({ big }) =>
+  ${({ props: { big } }) =>
     big &&
     `
     width: 30px;

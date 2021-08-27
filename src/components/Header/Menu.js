@@ -1,26 +1,14 @@
 import React from 'react';
 import { Link } from 'gatsby';
 
-import useSiteContext from '../SiteContext';
-
 const Menu = () => {
-  const { topics, setExpandedTopic, toggleMenu, setTopicToggledFromMenu } = useSiteContext();
-  const firstTopic = topics[0].node.id;
   return (
     <ul className="main-menu">
       <li className="menu-item">
         <Link to="/about">About us</Link>
       </li>
-      <li className="menu-item button">
-        <button
-          onClick={() => {
-            setExpandedTopic(firstTopic);
-            setTopicToggledFromMenu(true);
-            toggleMenu(false);
-          }}
-        >
-          <span>What We Do</span>
-        </button>
+      <li className="menu-item">
+        <Link to="/what-we-do">What We Do</Link>
       </li>
       <li className="menu-item">
         <Link to="/work">Work</Link>

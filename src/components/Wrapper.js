@@ -1,11 +1,7 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-  faArrowRight,
-  faAngleRight,
-  faAngleDoubleLeft,
-} from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faAngleRight, faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 
 import theme, { media } from './theme';
@@ -20,14 +16,14 @@ import MobileFooter from './MobileFooter';
 
 library.add(fab, faArrowRight, faAngleRight, faAngleDoubleLeft);
 
-const Wrapper = ({ children, seo, pageTitle, home = false }) => {
+const Wrapper = ({ children, seo, pageTitle, home = false, whatWeDo = false }) => {
   const viewport = useWindowSize();
   return (
     <ThemeProvider theme={theme}>
       <SiteContextProvider home={home}>
         <Head {...seo} pageTitle={pageTitle} home={home} />
         <Header />
-        <PageWrapper className="page-wrapper" viewport={viewport} home={home}>
+        <PageWrapper className="page-wrapper" viewport={viewport} home={home} whatWeDo={whatWeDo}>
           {children}
         </PageWrapper>
         <Footer />
@@ -49,6 +45,11 @@ const PageWrapper = styled.div`
       `
       // height: ${viewport.height ? `${viewport.height}px` : `100vh`};
     `}
+    ${({ whatWeDo, viewport, theme }) =>
+      whatWeDo &&
+      `
+        height: ${viewport.height - theme.sizes.header}px;
+      `}
     main {
       padding-left: 90px;
       min-height: ${({ viewport }) =>

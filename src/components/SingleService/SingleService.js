@@ -73,14 +73,7 @@ const SingleService = ({
       <main className="main">
         <StickyBox className="main-container">
           <Heading>{title}</Heading>
-          {mobile && (
-            <ProjectCarousel
-              projects={projects}
-              project={project}
-              slug={slug}
-              service
-            />
-          )}
+          {mobile && <ProjectCarousel projects={projects} project={project} slug={slug} service />}
           <div className="content">
             {_rawDescription && <Content>{_rawDescription}</Content>}
             <ContactFormButton>Start a Project</ContactFormButton>
@@ -90,19 +83,9 @@ const SingleService = ({
       </main>
       <Topics />
       {(forceCoverImage || !projects.length) && mainImage ? (
-        <ServiceCoverImage
-          className="service-cover-image"
-          image={mainImage.asset.mainImage}
-        />
+        <ServiceCoverImage className="service-cover-image" image={mainImage.asset.mainImage} />
       ) : (
-        !mobile && (
-          <ProjectMasonry
-            projects={projects}
-            project={project}
-            slug={slug}
-            service
-          />
-        )
+        !mobile && <ProjectMasonry projects={projects} project={project} slug={slug} service />
       )}
     </PageLayout>
   );
