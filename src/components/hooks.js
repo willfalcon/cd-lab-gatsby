@@ -163,6 +163,28 @@ function useScrollSnap(plusHeight = 0) {
   return container;
 }
 
+const useElementSize = () => {
+  const [elementSize, setElementSize] = useState({
+    width: 0,
+    height: 0,
+  });
+
+  const elementRef = useRef();
+
+  useLayoutEffect(() => {
+    if (elementRef.current) {
+      trigger();
+    }
+  }, [elementRef.current]);
+
+  const trigger = () => {
+    const size = elementRef.current.getBoundingClientRect();
+    setElementSize(size);
+  };
+
+  return [elementRef, elementSize, trigger];
+};
+
 export {
   useSiteMetadata,
   useWindowSize,
@@ -170,4 +192,5 @@ export {
   useOnScreen,
   useScrollLock,
   useScrollSnap,
+  useElementSize,
 };

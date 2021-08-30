@@ -7,6 +7,7 @@ import uniqWith from 'lodash.uniqwith';
 import isEqual from 'lodash.isequal';
 
 import Heading from '../Heading';
+import Content from '../Content';
 
 import WhatWeDoTopic from './WhatWeDoTopic';
 
@@ -14,23 +15,9 @@ import useSiteContext from '../SiteContext';
 import theme, { media } from '../theme';
 import { useScrollSnap } from '../hooks';
 
-const ProjectCarousel = Loadable(() => import('../Projects/ProjectCarousel/ProjectCarousel'));
-const ProjectMasonry = Loadable(() => import('./ProjectMasonry'));
 const ServiceList = Loadable(() => import('./ServiceList'));
 
-function fullHeight(el) {
-  if (!el) {
-    return null;
-  }
-  const height = el.offsetHeight;
-  const elmMargin =
-    parseInt(document.defaultView.getComputedStyle(el, '').getPropertyValue('margin-top')) +
-    parseInt(document.defaultView.getComputedStyle(el, '').getPropertyValue('margin-bottom')) +
-    'px';
-  return height + elmMargin;
-}
-
-const WhatWeDo = ({ allSanityTopic }) => {
+const WhatWeDo = ({ allSanityTopic, sanityWhatWeDo }) => {
   const { viewport } = useSiteContext();
 
   const mobile = viewport.width < theme.sizes.break;
@@ -58,7 +45,7 @@ const WhatWeDo = ({ allSanityTopic }) => {
   // const ref = useScrollSnap(fullHeight(titleRef.current));
 
   return (
-    <PageLayout className="what-we-do width-50" collection style={{ height: '100%' }}>
+    <PageLayout className="what-we-do" whatWeDo style={{ height: '100%' }}>
       <Main className="main">
         <TopicsContainer
           className="main-container"
@@ -66,8 +53,12 @@ const WhatWeDo = ({ allSanityTopic }) => {
           ref={container}
           container={container}
         >
-          <Heading ref={titleRef}>What We Do</Heading>
-          {mobile && <ProjectCarousel projects={projects} />}
+          <div ref={titleRef}>
+            <Heading className="what-we-do__heading">{sanityWhatWeDo.title}</Heading>
+            {sanityWhatWeDo._rawBody && (
+              <Content className="what-we-do__content">{sanityWhatWeDo._rawBody}</Content>
+            )}
+          </div>
           <div className="content">
             {topics.map(topic => {
               return (
@@ -84,7 +75,6 @@ const WhatWeDo = ({ allSanityTopic }) => {
         </TopicsContainer>
       </Main>
       <ServiceList services={uniqWith(services, isEqual)} titleRef={titleRef} />
-      {!mobile && <ProjectMasonry projects={projects} whatWeDo />}
     </PageLayout>
   );
 };
@@ -103,7 +93,12 @@ const TopicsContainer = styled.div`
   top: 0;
   left: 0;
   bottom: 0;
-`}/* box-sizing: content-box; */
+`} /* box-sizing: content-box; */
+  .what-we-do {
+    &__content * {
+      font-size: 1.8rem;
+    }
+  }
 `;
 
 export default WhatWeDo;

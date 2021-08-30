@@ -26,6 +26,7 @@ const theme = {
     family: 'span, serif',
     book: 300,
     regular: 400,
+    semibold: 600,
     bold: 700,
     black: 900,
   },

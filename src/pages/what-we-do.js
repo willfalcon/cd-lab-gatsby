@@ -20,6 +20,10 @@ const whatWeDo = ({ data, location }) => {
 
 export const WhatWeDoQuery = graphql`
   query whatWeDoQuery {
+    sanityWhatWeDo {
+      title
+      _rawBody(resolveReferences: { maxDepth: 10 })
+    }
     allSanityTopic(sort: { fields: _updatedAt, order: DESC }) {
       edges {
         node {
@@ -32,6 +36,14 @@ export const WhatWeDoQuery = graphql`
             asset {
               fixed(width: 175, height: 175) {
                 ...GatsbySanityImageFixed
+              }
+            }
+          }
+          whatWeDoImage {
+            alt
+            asset {
+              fluid(maxWidth: 1000) {
+                ...GatsbySanityImageFluid
               }
             }
           }

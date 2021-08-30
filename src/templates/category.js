@@ -7,10 +7,7 @@ import Meta from '../components/Meta';
 
 const category = ({ data, pageContext, location }) => {
   return (
-    <Wrapper
-      seo={data.sanityBlogPage.seoSettings}
-      pageTitle={data.sanityBlogPage.title}
-    >
+    <Wrapper seo={data.sanityBlogPage.seoSettings} pageTitle={data.sanityBlogPage.title}>
       <Meta
         title={pageContext.catTitle}
         seo={data.sanityBlogPage.seoSettings}
@@ -33,9 +30,7 @@ export const ArchiveQuery = graphql`
       skip: $skip
       limit: $limit
       sort: { fields: publishedAt, order: DESC }
-      filter: {
-        categories: { elemMatch: { slug: { current: { eq: $category } } } }
-      }
+      filter: { categories: { elemMatch: { slug: { current: { eq: $category } } } } }
     ) {
       edges {
         node {
@@ -43,7 +38,7 @@ export const ArchiveQuery = graphql`
           title
           _rawBody(resolveReferences: { maxDepth: 10 })
           mainImage {
-            alt
+            # alt
             asset {
               fluid(maxWidth: 533) {
                 ...GatsbySanityImageFluid

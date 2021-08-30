@@ -86,6 +86,9 @@ const GlobalStyle = createGlobalStyle`
     opacity: 1;
     transition: opacity ${({ theme }) => theme.timeout}ms;
   }
+  .color-orange {
+    color: ${({ theme }) => theme.orange} !important;
+  }
 `;
 
 export { imgStyle };

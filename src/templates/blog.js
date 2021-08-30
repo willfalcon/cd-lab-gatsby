@@ -7,16 +7,8 @@ import Meta from '../components/Meta';
 
 const blog = ({ data, pageContext, location }) => {
   return (
-    <Wrapper
-      seo={data.sanityBlogPage.seoSettings}
-      pageTitle={data.sanityBlogPage.title}
-    >
-      <Meta
-        title="Blog"
-        seo={data.sanityBlogPage.seoSettings}
-        location={location}
-        url="/blog"
-      />
+    <Wrapper seo={data.sanityBlogPage.seoSettings} pageTitle={data.sanityBlogPage.title}>
+      <Meta title="Blog" seo={data.sanityBlogPage.seoSettings} location={location} url="/blog" />
       <BlogPage
         posts={data.allSanityPost.edges.map(edge => ({ ...edge.node }))}
         {...data.sanityBlogPage}
@@ -28,18 +20,14 @@ const blog = ({ data, pageContext, location }) => {
 
 export const BlogQuery = graphql`
   query BlogQuery($skip: Int!, $limit: Int!) {
-    allSanityPost(
-      skip: $skip
-      limit: $limit
-      sort: { fields: publishedAt, order: DESC }
-    ) {
+    allSanityPost(skip: $skip, limit: $limit, sort: { fields: publishedAt, order: DESC }) {
       edges {
         node {
           id
           title
           _rawBody(resolveReferences: { maxDepth: 10 })
           mainImage {
-            alt
+            # alt
             asset {
               fluid(maxWidth: 533) {
                 ...GatsbySanityImageFluid

@@ -40,7 +40,6 @@ const ServiceList = ({ projects, titleRef, services }) => {
   const width = roundToDecimal(((viewport.width - 100) * 0.4) / 2, 2);
 
   const baseTop = viewport.height * 0.05 + 120;
-  console.log(viewport);
 
   const transition = useTransition(services, item => item.id, {
     from: { opacity: 0, transform: 'scaleY(0)', transformOrigin: 'top' },
@@ -48,6 +47,7 @@ const ServiceList = ({ projects, titleRef, services }) => {
     leave: { opacity: 0, position: 'absolute', transform: 'scaleY(0)' },
   });
 
+  console.log(titleHeight);
   return (
     <StyledServiceList
       className="service-list"
@@ -59,12 +59,12 @@ const ServiceList = ({ projects, titleRef, services }) => {
               left: 100 + (viewport.width - 100) / 2,
               transform: `translateX(-${width / 2 + 70}px)`,
               width: `${width}px`,
-              top: titleHeight > 91 ? `${baseTop + titleHeight - 91}px` : `${baseTop}px`,
+              // top: titleHeight > 91 ? `${baseTop + titleHeight - 91}px` : `${baseTop}px`,
+              top: `${titleHeight + 78 + 30}px`,
             }
       }
     >
       {transition.map(({ item, key, props }) => {
-        console.log(item);
         return <ServiceListItem key={key} styles={props} {...item} />;
       })}
     </StyledServiceList>
