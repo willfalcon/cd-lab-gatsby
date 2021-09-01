@@ -60,7 +60,7 @@ const WhatWeDo = ({ allSanityTopic, sanityWhatWeDo }) => {
             )}
           </div>
           <div className="content">
-            {topics.map(topic => {
+            {topics.map((topic, i) => {
               return (
                 <WhatWeDoTopic
                   key={topic.id}
@@ -68,6 +68,7 @@ const WhatWeDo = ({ allSanityTopic, sanityWhatWeDo }) => {
                   title={titleRef}
                   {...topic}
                   setActiveTopic={setActiveTopic}
+                  index={i}
                 />
               );
             })}

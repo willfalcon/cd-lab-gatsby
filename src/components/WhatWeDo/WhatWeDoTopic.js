@@ -1,14 +1,15 @@
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Img from 'gatsby-image';
+import { Link } from 'gatsby';
 
 import useSiteContext from '../SiteContext';
 import Content from '../Content';
 import { media } from '../theme';
+import Image from '../Image';
 
 import { useOnScreen, useElementSize } from '../hooks';
 import BlockTitle from '../BlockTitle';
-import { Link } from 'gatsby';
 
 const WhatWeDoTopic = ({
   id,
@@ -20,16 +21,17 @@ const WhatWeDoTopic = ({
   _rawShortContent,
   setActiveTopic,
   collection,
+  index,
 }) => {
   const { viewport } = useSiteContext();
   // const ref = useRef();
   const [ref, size] = useElementSize();
+  const [imageWrapperRef, imageWrapperSize] = useElementSize();
   const { isOnScreen } = useOnScreen(ref, '0px', { threshold: 1 });
   // console.log(title, isOnScreen);
   useEffect(() => {
     if (!active && isOnScreen) {
       setActiveTopic(id);
-      console.log(title);
     }
   }, [isOnScreen]);
 
@@ -50,16 +52,23 @@ const WhatWeDoTopic = ({
       <Link className="topic__link" to={`/collection/${collection.slug.current}`}>
         View {title} Projects
       </Link>
-      <div className="topic__image-wrapper">
-        {whatWeDoImage && <Img className="topic__image" fluid={whatWeDoImage.asset.fluid} />}
+      <div className="topic__image-wrapper" ref={imageWrapperRef}>
+        {whatWeDoImage && (
+          <Image
+            className="topic__image"
+            image={whatWeDoImage}
+            containerWidth={imageWrapperSize.width}
+            index={index}
+          />
+        )}
       </div>
     </StyledTopic>
   );
 };
 
 const StyledTopic = styled.div`
-  position: relative;
-  padding-bottom: 10vh;
+  /* position: relative; */
+  /* padding-bottom: 10vh; */
   opacity: ${({ active }) => (active ? 1 : 0.5)};
   transition: 0.25s;
   .topic {
@@ -70,12 +79,14 @@ const StyledTopic = styled.div`
   ${media.break`
     display: grid;
     grid-template-columns: 2fr 3fr;
-    grid-template-rows: auto 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    align-items: center;
     grid-column-gap: 8rem;
     .topic {
       &__title {
         grid-row: 1 / 2;
         grid-column: 1 / 2;
+        padding-top: 5rem;
       }
       &__content {
         grid-row: 2 / 3;
@@ -90,15 +101,18 @@ const StyledTopic = styled.div`
         font-weight: bold;
         font-family: ${({ theme }) => theme.font.heading};
         font-size: 2rem;
+        padding-bottom: 5rem;
+        display: block;
       }
       &__image-wrapper {
         grid-row: 1 / 4;
         grid-column: 2 / 3;
         overflow: hidden;
-        position: absolute;
+        /* position: absolute; */
         width: 100%;
         height: ${({ size }) => size.height}px;
         /* top: -10vh; */
+        margin-bottom: 5rem;
       }
       &__image {
         width: 100%;

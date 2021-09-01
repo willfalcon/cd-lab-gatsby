@@ -16,6 +16,8 @@
     "@fortawesome/react-fontawesome": "^0.1.8",
     "@loadable/component": "^5.12.0",
     "@sanity/block-content-to-react": "^2.0.7",
+    "@sanity/client": "^2.16.0",
+    "@sanity/image-url": "^0.140.22",
     "babel-plugin-styled-components": "^1.10.6",
     "body-parser": "^1.19.0",
     "camelcase": "^5.3.1",

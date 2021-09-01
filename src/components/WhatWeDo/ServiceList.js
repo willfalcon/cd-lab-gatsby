@@ -45,9 +45,9 @@ const ServiceList = ({ projects, titleRef, services }) => {
     from: { opacity: 0, transform: 'scaleY(0)', transformOrigin: 'top' },
     enter: { opacity: 1, transform: 'scaleY(1)' },
     leave: { opacity: 0, position: 'absolute', transform: 'scaleY(0)' },
+    delay: 200,
   });
 
-  console.log(titleHeight);
   return (
     <StyledServiceList
       className="service-list"

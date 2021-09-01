@@ -45,6 +45,22 @@ export const WhatWeDoQuery = graphql`
               fluid(maxWidth: 1000) {
                 ...GatsbySanityImageFluid
               }
+              metadata {
+                lqip
+                dimensions {
+                  width
+                  height
+                  aspectRatio
+                }
+              }
+              url
+              assetId
+            }
+            crop {
+              top
+              left
+              bottom
+              right
             }
           }
           collection {
