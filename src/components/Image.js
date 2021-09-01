@@ -25,7 +25,7 @@ async function getImage(image, containerWidth) {
     body: JSON.stringify(body),
   });
   const result = await res.json();
-  console.log(result);
+
   return result;
 }
 

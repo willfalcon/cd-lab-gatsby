@@ -1,25 +1,26 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { useTransition, animated } from 'react-spring';
 
-import ServiceListItem from '../Collection/ServiceListItem';
+import ServiceListItem from './ServiceListItem';
 
 import theme, { media } from '../theme';
 import useSiteContext from '../SiteContext';
 import { roundToDecimal } from '../utils';
+import { useWhyDidYouUpdate } from '../hooks';
 
-const ServiceList = ({ projects, titleRef, services, backgroundColor }) => {
-  // let services = [];
-  // if (projects && projects.length > 0) {
-  //   projects.forEach(project => {
-  //     if (project.categories) {
-  //       project.categories.forEach(cat => {
-  //         services.push(cat);
-  //       });
-  //     }
-  //   });
-  // }
+function sortServices(a, b) {
+  if (a.service.title < b.service.title) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
+const ServiceList = props => {
+  // useWhyDidYouUpdate('ServiceList', props);
+  const { projects, titleRef, services, backgroundColor } = props;
 
   const [titleHeight, setTitleHeight] = useState(0);
 
@@ -40,11 +41,12 @@ const ServiceList = ({ projects, titleRef, services, backgroundColor }) => {
   const width = roundToDecimal(((viewport.width - 100) * 0.4) / 2, 2);
 
   const baseTop = viewport.height * 0.05 + 120;
+  // console.log(services);
 
-  const transition = useTransition(services, item => item.id, {
-    from: { opacity: 0, transform: 'scaleY(0)', transformOrigin: 'top' },
-    enter: { opacity: 1, transform: 'scaleY(1)' },
-    leave: { opacity: 0, position: 'absolute', transform: 'scaleY(0)' },
+  const transition = useTransition(services.sort(sortServices), item => item.service._id, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0, position: 'absolute' },
     delay: 200,
   });
 
@@ -66,6 +68,7 @@ const ServiceList = ({ projects, titleRef, services, backgroundColor }) => {
       data={{ backgroundColor }}
     >
       {transition.map(({ item, key, props }) => {
+        // console.log(item);
         return <ServiceListItem key={key} styles={props} {...item} />;
       })}
     </StyledServiceList>

@@ -25,25 +25,25 @@ const WhatWeDo = ({ allSanityTopic, sanityWhatWeDo }) => {
   // console.log(topics);
   const [activeTopic, setActiveTopic] = useState(topics[0].id);
   // console.log(activeTopic);
-  const dynamicProjects = topics.filter(topic => topic.id === activeTopic)[0].collection.projects;
-  const projects = topics[0].collection.projects;
-  // console.log(projects);
 
-  let services = [];
-  if (dynamicProjects && dynamicProjects.length > 0) {
-    dynamicProjects.forEach(project => {
-      if (project.categories) {
-        project.categories.forEach(cat => {
-          services.push(cat);
-        });
-      }
-    });
-  }
+  const activeTopicObject = topics.filter(topic => topic.id == activeTopic)[0];
+  const services = activeTopicObject.categories;
+  // console.log(services);
+  // let services = [];
+  // if (dynamicProjects && dynamicProjects.length > 0) {
+  //   dynamicProjects.forEach(project => {
+  //     if (project.categories) {
+  //       project.categories.forEach(cat => {
+  //         services.push(cat);
+  //       });
+  //     }
+  //   });
+  // }
   // console.log(services);
   const titleRef = useRef(null);
   const container = useRef(null);
   // const ref = useScrollSnap(fullHeight(titleRef.current));
-  console.log(topics);
+
   return (
     <PageLayout className="what-we-do" whatWeDo style={{ height: '100%' }}>
       <Main className="main">
@@ -76,11 +76,9 @@ const WhatWeDo = ({ allSanityTopic, sanityWhatWeDo }) => {
         </TopicsContainer>
       </Main>
       <ServiceList
-        services={uniqWith(services, isEqual)}
+        services={services}
         titleRef={titleRef}
-        backgroundColor={
-          topics.filter(topic => topic.id === activeTopic)[0].listBackgroundColor.hex
-        }
+        backgroundColor={activeTopicObject.listBackgroundColor.hex}
       />
     </PageLayout>
   );

@@ -70,38 +70,6 @@ export const WhatWeDoQuery = graphql`
             slug {
               current
             }
-            projects {
-              id
-              title
-              slug {
-                current
-              }
-              images {
-                _key
-                asset {
-                  extension
-                  fluid(maxWidth: 500) {
-                    ...GatsbySanityImageFluid
-                  }
-                }
-              }
-              videoID
-              videoThumbnail {
-                id
-                childImageSharp {
-                  fluid(maxWidth: 1000) {
-                    ...GatsbyImageSharpFluid
-                  }
-                }
-              }
-              categories {
-                id
-                title
-                slug {
-                  current
-                }
-              }
-            }
           }
           categories {
             service {
