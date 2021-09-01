@@ -63,6 +63,9 @@ export const WhatWeDoQuery = graphql`
               right
             }
           }
+          listBackgroundColor {
+            hex
+          }
           collection {
             slug {
               current

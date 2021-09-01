@@ -9,7 +9,7 @@ import theme, { media } from '../theme';
 import useSiteContext from '../SiteContext';
 import { roundToDecimal } from '../utils';
 
-const ServiceList = ({ projects, titleRef, services }) => {
+const ServiceList = ({ projects, titleRef, services, backgroundColor }) => {
   // let services = [];
   // if (projects && projects.length > 0) {
   //   projects.forEach(project => {
@@ -63,6 +63,7 @@ const ServiceList = ({ projects, titleRef, services }) => {
               top: `${titleHeight + 78 + 30}px`,
             }
       }
+      data={{ backgroundColor }}
     >
       {transition.map(({ item, key, props }) => {
         return <ServiceListItem key={key} styles={props} {...item} />;
@@ -75,6 +76,8 @@ const StyledServiceList = styled.ul`
   list-style: none;
   padding: 0;
   background: ${({ theme }) => theme.orange};
+  background: ${({ data: { backgroundColor } }) => backgroundColor};
+  transition: background 0.2s;
   display: block;
   padding: 0 2rem;
   margin: 3rem 3rem 3rem;

@@ -43,7 +43,7 @@ const WhatWeDo = ({ allSanityTopic, sanityWhatWeDo }) => {
   const titleRef = useRef(null);
   const container = useRef(null);
   // const ref = useScrollSnap(fullHeight(titleRef.current));
-
+  console.log(topics);
   return (
     <PageLayout className="what-we-do" whatWeDo style={{ height: '100%' }}>
       <Main className="main">
@@ -75,7 +75,13 @@ const WhatWeDo = ({ allSanityTopic, sanityWhatWeDo }) => {
           </div>
         </TopicsContainer>
       </Main>
-      <ServiceList services={uniqWith(services, isEqual)} titleRef={titleRef} />
+      <ServiceList
+        services={uniqWith(services, isEqual)}
+        titleRef={titleRef}
+        backgroundColor={
+          topics.filter(topic => topic.id === activeTopic)[0].listBackgroundColor.hex
+        }
+      />
     </PageLayout>
   );
 };
