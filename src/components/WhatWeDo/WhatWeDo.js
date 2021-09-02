@@ -75,11 +75,13 @@ const WhatWeDo = ({ allSanityTopic, sanityWhatWeDo }) => {
           </div>
         </TopicsContainer>
       </Main>
-      <ServiceList
-        services={services}
-        titleRef={titleRef}
-        backgroundColor={activeTopicObject.listBackgroundColor.hex}
-      />
+      {!mobile && (
+        <ServiceList
+          services={services}
+          titleRef={titleRef}
+          backgroundColor={activeTopicObject.listBackgroundColor.hex}
+        />
+      )}
     </PageLayout>
   );
 };
@@ -91,17 +93,23 @@ const Main = styled.main`
 
 const TopicsContainer = styled.div`
   ${media.break`
-  overflow-y: scroll;
-  position: absolute !important;
-  
-  right: -${({ container }) => container.current?.offsetWidth - container.current?.clientWidth}px;
-  top: 0;
-  left: 0;
-  bottom: 0;
-`} /* box-sizing: content-box; */
+    overflow-y: scroll;
+    position: absolute !important;
+    
+    right: -${({ container }) => container.current?.offsetWidth - container.current?.clientWidth}px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+  `} /* box-sizing: content-box; */
   .what-we-do {
-    &__content * {
-      font-size: 1.8rem;
+    &__content {
+      padding: 0 3rem;
+      ${media.break`
+        padding: 0;
+      `}
+      * {
+        font-size: 1.8rem;
+      }
     }
   }
 `;

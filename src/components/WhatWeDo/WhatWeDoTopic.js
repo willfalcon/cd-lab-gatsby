@@ -24,11 +24,12 @@ const WhatWeDoTopic = ({
   index,
 }) => {
   const { viewport } = useSiteContext();
-  // const ref = useRef();
   const [ref, size] = useElementSize();
   const [imageWrapperRef, imageWrapperSize] = useElementSize();
+  const aspectRatio = whatWeDoImage.asset.metadata.dimensions.aspectRatio;
+  console.log(size, aspectRatio);
   const { isOnScreen } = useOnScreen(ref, '0px', { threshold: 1 });
-  // console.log(title, isOnScreen);
+
   useEffect(() => {
     if (!active && isOnScreen) {
       setActiveTopic(id);
@@ -41,9 +42,9 @@ const WhatWeDoTopic = ({
       className="topic"
       viewport={viewport}
       title={titleRef}
-      active={active}
+      // active={active}
       ref={ref}
-      size={size}
+      data={{ size, aspectRatio, active }}
     >
       <BlockTitle className="topic__title color-orange" styles={{ textAlign: 'left' }}>
         {title}
@@ -69,11 +70,29 @@ const WhatWeDoTopic = ({
 const StyledTopic = styled.div`
   /* position: relative; */
   /* padding-bottom: 10vh; */
-  opacity: ${({ active }) => (active ? 1 : 0.5)};
+  opacity: ${({ data: { active } }) => (active ? 1 : 0.5)};
   transition: 0.25s;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(4, auto);
   .topic {
     &__title {
       font-size: 4rem;
+      grid-row: 1 / 2;
+      margin-bottom: 2rem;
+    }
+    &__link {
+      color: ${({ theme }) => theme.orange};
+      text-decoration: none;
+      font-weight: bold;
+      font-family: ${({ theme }) => theme.font.heading};
+      font-size: 2rem;
+      padding-bottom: 5rem;
+      display: block;
+    }
+    &__image-wrapper {
+      height: ${({ data: { aspectRatio, size } }) => size.width / aspectRatio}px;
+      grid-row: 2 / 3;
     }
   }
   ${media.break`
@@ -87,6 +106,7 @@ const StyledTopic = styled.div`
         grid-row: 1 / 2;
         grid-column: 1 / 2;
         padding-top: 5rem;
+        margin-bottom: 0;
       }
       &__content {
         grid-row: 2 / 3;
@@ -96,13 +116,7 @@ const StyledTopic = styled.div`
       &__link {
         grid-row: 3 / 4;
         grid-column: 1 / 2;
-        color: ${({ theme }) => theme.orange};
-        text-decoration: none;
-        font-weight: bold;
-        font-family: ${({ theme }) => theme.font.heading};
-        font-size: 2rem;
-        padding-bottom: 5rem;
-        display: block;
+        
       }
       &__image-wrapper {
         grid-row: 1 / 4;
@@ -110,7 +124,7 @@ const StyledTopic = styled.div`
         overflow: hidden;
         /* position: absolute; */
         width: 100%;
-        height: ${({ size }) => size.height}px;
+        height: ${({ data: { size } }) => size.height}px;
         /* top: -10vh; */
         margin-bottom: 5rem;
       }
@@ -122,10 +136,5 @@ const StyledTopic = styled.div`
     }
 
   `}
-  &:first-child {
-  }
-  .topic {
-    /* &__ */
-  }
 `;
 export default WhatWeDoTopic;
