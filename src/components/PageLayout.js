@@ -23,6 +23,15 @@ const PageLayout = styled.div.attrs(() => ({
     padding-left: 10rem;
     /* height: 100vh; */
 
+    &.width-50 {
+      .main {
+        flex: 0 0 50%;
+      }
+      .masonry {
+        flex: 0 0 50%;
+      }
+    }
+    
     .main {
       padding: 0;
       padding-right: 2rem;
@@ -30,6 +39,11 @@ const PageLayout = styled.div.attrs(() => ({
       display: flex;
       flex-flow: column;
       flex: 0 0 40%;
+      ${({ whatWeDo }) =>
+        whatWeDo &&
+        `
+        flex: 0 0 100%;
+      `}
       /* overflow: scroll; */
       /* ${({ collection }) =>
         collection &&

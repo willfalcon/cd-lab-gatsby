@@ -30,10 +30,7 @@ const serializers = {
 
 const Content = React.forwardRef(({ children, className }, ref) => {
   return (
-    <ContentContainer
-      className={classNames('block-content', className)}
-      ref={ref}
-    >
+    <ContentContainer className={classNames('block-content', className)} ref={ref}>
       <BlockContent
         blocks={children}
         projectId="sgba0i04"
@@ -47,6 +44,15 @@ const Content = React.forwardRef(({ children, className }, ref) => {
 const ContentContainer = styled.div`
   .content-button {
     display: inline-block;
+  }
+  strong {
+    font-weight: bold;
+    .what-we-do & {
+      font-weight: ${({ theme }) => theme.font.semibold};
+    }
+  }
+  .what-we-do & {
+    font-family: ${({ theme }) => theme.font.heading};
   }
 `;
 

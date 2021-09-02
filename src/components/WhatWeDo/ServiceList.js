@@ -1,25 +1,26 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect } from 'react';
 import styled from 'styled-components';
-import uniqWith from 'lodash.uniqwith';
-import isEqual from 'lodash.isequal';
+
+import { useTransition, animated } from 'react-spring';
 
 import ServiceListItem from './ServiceListItem';
 
 import theme, { media } from '../theme';
 import useSiteContext from '../SiteContext';
 import { roundToDecimal } from '../utils';
+import { useWhyDidYouUpdate } from '../hooks';
 
-const ServiceList = ({ projects, titleRef, services }) => {
-  // let services = [];
-  // if (projects && projects.length > 0) {
-  //   projects.forEach(project => {
-  //     if (project.categories) {
-  //       project.categories.forEach(cat => {
-  //         services.push(cat);
-  //       });
-  //     }
-  //   });
-  // }
+function sortServices(a, b) {
+  if (a.service.title < b.service.title) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
+const ServiceList = props => {
+  // useWhyDidYouUpdate('ServiceList', props);
+  const { projects, titleRef, services, backgroundColor } = props;
 
   const [titleHeight, setTitleHeight] = useState(0);
 
@@ -40,6 +41,14 @@ const ServiceList = ({ projects, titleRef, services }) => {
   const width = roundToDecimal(((viewport.width - 100) * 0.4) / 2, 2);
 
   const baseTop = viewport.height * 0.05 + 120;
+  // console.log(services);
+
+  const transition = useTransition(services.sort(sortServices), item => item.service._id, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0, position: 'absolute' },
+    delay: 200,
+  });
 
   return (
     <StyledServiceList
@@ -48,14 +57,19 @@ const ServiceList = ({ projects, titleRef, services }) => {
         mobile
           ? {}
           : {
-              right: `${right}px`,
+              // right: `50%`,
+              left: 100 + (viewport.width - 100) / 2,
+              transform: `translateX(-${width / 2 + 70}px)`,
               width: `${width}px`,
-              top: titleHeight > 91 ? `${baseTop + titleHeight - 91}px` : `${baseTop}px`,
+              // top: titleHeight > 91 ? `${baseTop + titleHeight - 91}px` : `${baseTop}px`,
+              top: `${titleHeight + 78 + 30}px`,
             }
       }
+      data={{ backgroundColor }}
     >
-      {uniqWith(services, isEqual).map(service => {
-        return <ServiceListItem key={service.id} {...service} />;
+      {transition.map(({ item, key, props }) => {
+        // console.log(item);
+        return <ServiceListItem key={key} styles={props} {...item} />;
       })}
     </StyledServiceList>
   );
@@ -65,11 +79,13 @@ const StyledServiceList = styled.ul`
   list-style: none;
   padding: 0;
   background: ${({ theme }) => theme.orange};
+  background: ${({ data: { backgroundColor } }) => backgroundColor};
+  transition: background 0.2s;
   display: block;
   padding: 0 2rem;
   margin: 3rem 3rem 3rem;
   position: relative;
-  z-index: 1;
+  z-index: 2;
   a,
   span {
     text-decoration: none;

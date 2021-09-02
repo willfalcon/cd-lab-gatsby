@@ -7,18 +7,12 @@ import Meta from '../components/Meta';
 
 const post = ({ data, location }) => {
   return (
-    <Wrapper
-      seo={data.sanityPost.seoSettings}
-      pageTitle={data.sanityPost.title}
-    >
+    <Wrapper seo={data.sanityPost.seoSettings} pageTitle={data.sanityPost.title}>
       <Post {...data.sanityPost} />
       <Meta
         title={data.sanityPost.title}
         seo={data.sanityPost.seoSettings}
-        image={
-          data.sanityPost.mainImage &&
-          data.sanityPost.mainImage.asset.ogImage.src
-        }
+        image={data.sanityPost.mainImage && data.sanityPost.mainImage.asset.ogImage.src}
         location={location}
         type="article"
       />
@@ -33,7 +27,7 @@ export const PostQuery = graphql`
       title
       _rawBody(resolveReferences: { maxDepth: 10 })
       mainImage {
-        alt
+        # alt
         asset {
           mainImage: fluid(maxWidth: 800) {
             ...GatsbySanityImageFluid

@@ -83,18 +83,14 @@ function useWindowSize() {
 }
 
 async function getThumb(id) {
-  const thumbnailsRes = await fetch(
-    `https://api.vimeo.com/videos/${id}/pictures`,
-    {
-      headers: {
-        Authorization: 'bearer cabd18ff9e594c5abe72ddbc5878aed1',
-      },
-    }
-  );
+  const thumbnailsRes = await fetch(`https://api.vimeo.com/videos/${id}/pictures`, {
+    headers: {
+      Authorization: 'bearer cabd18ff9e594c5abe72ddbc5878aed1',
+    },
+  });
   const thumbnails = await thumbnailsRes.json();
-  return thumbnails.data[0].sizes[
-    thumbnails.data[0].sizes.findIndex(size => size.width === 640)
-  ].link;
+  return thumbnails.data[0].sizes[thumbnails.data[0].sizes.findIndex(size => size.width === 640)]
+    .link;
 }
 
 function roundToDecimal(number, decimal) {
@@ -183,6 +179,10 @@ function useScrollLock() {
   }, []); // Empty array ensures effect is only run on mount and unmount
 }
 
+const roundToNearest = (num, multiple) => {
+  return Math.ceil(num / multiple) * multiple;
+};
+
 export {
   getViewport,
   getCurrentBreakpoint,
@@ -195,4 +195,5 @@ export {
   useOnClickOutside,
   useOnScreen,
   useScrollLock,
+  roundToNearest,
 };

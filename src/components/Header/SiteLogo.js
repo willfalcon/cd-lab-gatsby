@@ -21,7 +21,7 @@ const SiteLogo = ({ home }) => {
     }
   `);
   return (
-    <StyledLogoLink to="/" className="site-logo" home={home}>
+    <StyledLogoLink to="/" className="site-logo" props={{ home }}>
       {/* {home && ( */}
       <Img
         className="full-logo"
@@ -30,11 +30,7 @@ const SiteLogo = ({ home }) => {
         style={{ maxWidth: 'calc(100vh - 75px)' }}
       />
       {/* )} */}
-      <SquareLogo
-        className="square"
-        src={Square}
-        alt="Creative Distillery Icon"
-      />
+      <SquareLogo className="square" src={Square} alt="Creative Distillery Icon" />
       <FullLogo className="full" src={Logo} alt="Creative Distillery" />
     </StyledLogoLink>
   );
@@ -68,12 +64,12 @@ const StyledLogoLink = styled(Link)`
     .square {
       display: none;
     }
-    ${({ home }) =>
+    ${({ props: { home } }) =>
       home &&
       `
     `}
   `}
-  ${({ home }) =>
+  ${({ props: { home } }) =>
     home &&
     `
     .full {

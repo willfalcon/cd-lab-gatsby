@@ -5,7 +5,9 @@ import { animated } from 'react-spring';
 import Caret from '../Caret';
 import theme from '../theme';
 
-const ServiceListItem = ({ id, slug, title, styles }) => {
+const ServiceListItem = props => {
+  const { service, styles } = props;
+  const { id, slug, title } = service;
   const [hover, setHover] = useState(false);
 
   return (

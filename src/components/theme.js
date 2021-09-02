@@ -26,6 +26,7 @@ const theme = {
     family: 'span, serif',
     book: 300,
     regular: 400,
+    semibold: 600,
     bold: 700,
     black: 900,
   },
@@ -40,6 +41,7 @@ const theme = {
     break: 768,
     large: 1024,
     content: 1000,
+    header: 78,
   },
   topics: {
     expandedWidth: 900,

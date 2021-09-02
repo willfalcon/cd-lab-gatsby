@@ -4,7 +4,6 @@ import Helmet from 'react-helmet';
 import { useSiteMetadata } from './hooks';
 
 const Meta = ({ title, url, image, type, seo, location }) => {
-  console.log(seo);
   const openTitle = seo && seo.title ? seo.title : title;
   const { siteUrl } = useSiteMetadata();
   const openUrl = url ? `${siteUrl}${url}` : `${siteUrl}${location.pathname}`;

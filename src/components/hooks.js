@@ -1,5 +1,8 @@
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
+
+import { getViewport } from './utils';
+import theme from './theme';
 
 function useWindowSize() {
   const isClient = typeof window === 'object';
@@ -59,7 +62,7 @@ function useOnClickOutside(ref, handler) {
   );
 }
 
-function useOnScreen(ref, rootMargin = '0px') {
+function useOnScreen(ref, rootMargin = '0px', options) {
   // State and setter for storing whether element is visible
   const [isIntersecting, setIntersecting] = useState(false);
   const [hasEnteredScreen, setEnteredScreen] = useState(false);
@@ -74,6 +77,7 @@ function useOnScreen(ref, rootMargin = '0px') {
       },
       {
         rootMargin,
+        ...options,
       }
     );
     if (ref.current) {
@@ -113,10 +117,144 @@ const useSiteMetadata = () => {
   return site.siteMetadata;
 };
 
+function useScrollSnap(plusHeight = 0) {
+  const container = useRef(null);
+  useLayoutEffect(() => {
+    const gatsbyContainer = document.getElementById('___gatsby');
+    const viewport = getViewport();
+
+    if (container.current && viewport.width >= theme.sizes.break) {
+      const children = container.current.children;
+      Array.from(children).forEach((child, i) => {
+        const rect = child.getBoundingClientRect();
+        // console.log(rect);
+        const header = i === 0 ? 78 : 0;
+        const scrollChild = document.createElement('div');
+        scrollChild.style.width = `${rect.width}px`;
+        scrollChild.style.height = `${rect.height + plusHeight + header}px`;
+        // scrollChild.style.top = `${rect.top}px`;
+        // scrollChild.style.left = `${rect.left}px`;
+        scrollChild.style.position = 'relative';
+        scrollChild.style.scrollSnapAlign = 'center';
+        scrollChild.style.pointerEvents = 'none';
+        scrollChild.classList.add('scroll-anchor');
+        document.body.appendChild(scrollChild);
+      });
+      gatsbyContainer.style.position = 'absolute';
+      gatsbyContainer.style.width = '100%';
+
+      document.body.style.scrollSnapType = 'y proximity';
+      document.body.style.height = '100vh';
+      document.body.style.overflowY = 'scroll';
+      document.body.style.position = 'relative';
+
+      document.documentElement.style.height = '100vh';
+      document.documentElement.style.overflow = 'hidden';
+    }
+
+    return () => {
+      const scrollAnchors = document.querySelectorAll('.scroll-anchor');
+      Array.from(scrollAnchors).forEach(el => el.parentNode.removeChild(el));
+      gatsbyContainer.removeAttribute('style');
+      document.body.removeAttribute('style');
+      document.documentElement.removeAttribute('style');
+    };
+  }, []);
+  return container;
+}
+
+const useElementSize = () => {
+  const [elementSize, setElementSize] = useState({
+    width: 0,
+    height: 0,
+  });
+
+  const elementRef = useRef();
+
+  useLayoutEffect(() => {
+    if (elementRef.current) {
+      trigger();
+    }
+  }, [elementRef.current]);
+
+  const trigger = () => {
+    const size = elementRef.current.getBoundingClientRect();
+    setElementSize(size);
+  };
+
+  return [elementRef, elementSize, trigger];
+};
+
+function useHasEntered(ref, rootMargin = '0px') {
+  // State and setter for storing whether element is visible
+  const [hasEntered, setHasEntered] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Update our state when observer callback fires
+        if (entry.isIntersecting) {
+          setHasEntered(entry.isIntersecting);
+          observer.unobserve(ref.current);
+        }
+      },
+      {
+        // rootMargin,
+        threshold: 0.5,
+      }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      observer.unobserve(ref.current);
+    };
+  }, [ref, rootMargin]); // Empty array ensures that effect is only run on mount and unmount
+
+  return hasEntered;
+}
+
+function useWhyDidYouUpdate(name, props) {
+  // Get a mutable ref object where we can store props ...
+  // ... for comparison next time this hook runs.
+  const previousProps = useRef();
+  useEffect(() => {
+    if (previousProps.current) {
+      // Get all keys from previous and current props
+      const allKeys = Object.keys({ ...previousProps.current, ...props });
+      // Use this object to keep track of changed props
+      const changesObj = {};
+      // Iterate through keys
+      allKeys.forEach(key => {
+        // If previous is different from current
+        if (previousProps.current[key] !== props[key]) {
+          // Add to changesObj
+          changesObj[key] = {
+            from: previousProps.current[key],
+            to: props[key],
+          };
+        }
+      });
+      // If changesObj not empty then output to console
+      if (Object.keys(changesObj).length) {
+        console.log('[why-did-you-update]', name, changesObj);
+      }
+    }
+    // Finally update previousProps with current props for next hook call
+    previousProps.current = props;
+  });
+}
+
 export {
   useSiteMetadata,
   useWindowSize,
   useOnClickOutside,
   useOnScreen,
   useScrollLock,
+  useScrollSnap,
+  useElementSize,
+  useHasEntered,
+  useWhyDidYouUpdate,
 };

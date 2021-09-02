@@ -81,10 +81,7 @@ const Footer = () => {
           <br />
           Jackson, MS 39216
         </p>
-        <a
-          className="home-footer__email"
-          href="mailto:info@creativedistillery.com"
-        >
+        <a className="home-footer__email" href="mailto:info@creativedistillery.com">
           info@creativedistillery.com
         </a>
       </div>
@@ -93,26 +90,18 @@ const Footer = () => {
           {sanityHomePage.footerMenuHeading}
         </h4>
         <nav className="home-footer__nav">
-          {sanityHomePage.footerMenu.map(
-            ({ label, link: { _type, title, slug, id } }) => {
-              const path = _type === 'category' ? 'service' : _type;
-              return (
-                <Link
-                  className="home-footer__nav-item"
-                  key={id}
-                  to={`/${path}/${slug.current}`}
-                >
-                  {label || title}
-                </Link>
-              );
-            }
-          )}
+          {sanityHomePage.footerMenu.map(({ label, link: { _type, title, slug, id } }) => {
+            const path = _type === 'category' ? 'service' : _type;
+            return (
+              <Link className="home-footer__nav-item" key={id} to={`/${path}/${slug.current}`}>
+                {label || title}
+              </Link>
+            );
+          })}
         </nav>
       </div>
       <div className="home-footer__column home-footer__topics">
-        <h4 className="home-footer__small-heading home-footer__topics-heading">
-          What We Do
-        </h4>
+        <h4 className="home-footer__small-heading home-footer__topics-heading">What We Do</h4>
         <ul className="home-footer__topics-list">
           {topics.map(({ node: { title, collection, id } }) => (
             <li className="home-footer__topic" key={id}>
@@ -120,7 +109,7 @@ const Footer = () => {
                 className="home-footer__topic-link"
                 to={`/collection/${collection.slug.current}`}
               >
-                {title} >
+                {title}
               </Link>
             </li>
           ))}
