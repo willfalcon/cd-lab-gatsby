@@ -24,21 +24,14 @@ export const WhatWeDoQuery = graphql`
       title
       _rawBody(resolveReferences: { maxDepth: 10 })
     }
-    allSanityTopic(sort: { fields: _updatedAt, order: DESC }) {
+    allSanityTopic(sort: { order: ASC, fields: order }) {
       edges {
         node {
           id
           title
           _rawContent(resolveReferences: { maxDepth: 10 })
           _rawShortContent(resolveReferences: { maxDepth: 10 })
-          image {
-            alt
-            asset {
-              fixed(width: 175, height: 175) {
-                ...GatsbySanityImageFixed
-              }
-            }
-          }
+
           whatWeDoImage {
             alt
             asset {

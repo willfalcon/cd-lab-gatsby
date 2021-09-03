@@ -92,8 +92,9 @@ const ImageWrapper = styled.div`
   .cdhq-image {
     &__image {
       position: absolute;
-      top: 0;
-      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     &__placeholder {
       width: 100%;

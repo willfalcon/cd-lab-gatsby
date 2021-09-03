@@ -127,7 +127,7 @@ const SiteContextProvider = ({ children, home }) => {
           }
         }
       }
-      allSanityTopic(sort: { fields: _updatedAt, order: DESC }) {
+      allSanityTopic(sort: { order: ASC, fields: order }) {
         edges {
           node {
             id
@@ -137,14 +137,6 @@ const SiteContextProvider = ({ children, home }) => {
             collection {
               slug {
                 current
-              }
-            }
-            image {
-              alt
-              asset {
-                fixed(width: 175, height: 175) {
-                  ...GatsbySanityImageFixed
-                }
               }
             }
             slug {
