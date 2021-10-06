@@ -4,3 +4,5 @@ node_modules
 public
 tmp
 .env
+# Local Netlify folder
+.netlify

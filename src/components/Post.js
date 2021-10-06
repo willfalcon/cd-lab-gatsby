@@ -6,54 +6,29 @@ import { Link } from 'gatsby';
 
 import Heading from './Heading';
 import Content from './Content';
-import Topics from './Topics/Topics';
+
 import NewsletterButton from './NewsletterButton';
 
 import { media, grid } from './theme';
 
-const Post = ({
-  _rawBody,
-  mainImage,
-  title,
-  author,
-  publishedAt,
-  categories,
-}) => {
+const Post = ({ _rawBody, mainImage, title, author, publishedAt, categories }) => {
   return (
     <Article className="single-post">
-      {mainImage && (
-        <Img
-          fluid={mainImage.asset.mainImage}
-          alt={mainImage.alt ? mainImage.alt : title}
-          className="single-post__image"
-        />
-      )}
+      {mainImage && <Img fluid={mainImage.asset.mainImage} alt={mainImage.alt ? mainImage.alt : title} className="single-post__image" />}
       <span className="date">{publishedAt}</span>
       <Heading>{title}</Heading>
       <Content>{_rawBody}</Content>
       <AuthorBio className="author">
-        {author.image && (
-          <Img
-            className="author__image"
-            fixed={author.image.asset.fixed}
-            alt={author.name}
-          />
-        )}
+        {author.image && <Img className="author__image" fixed={author.image.asset.fixed} alt={author.name} />}
         <h3 className="author__name">{author.name}</h3>
-        {author._rawBio && (
-          <Content className="author__bio">{author._rawBio}</Content>
-        )}
+        {author._rawBio && <Content className="author__bio">{author._rawBio}</Content>}
       </AuthorBio>
       {categories.length > 0 && (
         <Categories className="post-categories">
           <h3 className="post-categories__heading">Filed under</h3>
           {categories.map(cat => {
             return (
-              <Link
-                className="category"
-                to={`/category/${cat.slug.current}`}
-                key={cat.id}
-              >
+              <Link className="category" to={`/category/${cat.slug.current}`} key={cat.id}>
                 {cat.title}
               </Link>
             );
@@ -61,7 +36,6 @@ const Post = ({
         </Categories>
       )}
       <NewsletterButton>Join our Newsletter</NewsletterButton>
-      <Topics />
     </Article>
   );
 };

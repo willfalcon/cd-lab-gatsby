@@ -9,8 +9,6 @@ import WhatWeDo from './WhatWeDo';
 import AboutSection from './AboutSection';
 import InsightsSection from './InsightsSection';
 
-import Topics from '../Topics/Topics';
-
 import { media, grid } from '../theme';
 import { useScrollSnap } from '../hooks';
 
@@ -18,30 +16,27 @@ const HomePage = ({ _rawNewBody, _rawAboutCopy, homeVideoId, thumbnail, aboutUsI
   const container = useScrollSnap();
 
   return (
-    <>
-      <HomeContainer className="container" ref={container}>
-        <div className="home-first-section">
-          <FluidImg
-            className="home-hero"
-            fluid={aboutUsImage.asset.mainImage}
-            {...aboutUsImage}
-            assetId={aboutUsImage.asset.assetId}
-            alt="The Creative Distillery Team"
-          />
-          <main className="home-main">
-            <Content className="home-content">{_rawNewBody}</Content>
-            <Button className="home-work-button" href="/work">
-              View Work
-            </Button>
-            <ContactFormButton className="home-contact-button">Get Started</ContactFormButton>
-          </main>
-        </div>
-        <WhatWeDo />
-        <AboutSection copy={_rawAboutCopy} thumbnail={thumbnail} video={homeVideoId} />
-        <InsightsSection />
-      </HomeContainer>
-      <Topics />
-    </>
+    <HomeContainer className="container" ref={container}>
+      <div className="home-first-section">
+        <FluidImg
+          className="home-hero"
+          fluid={aboutUsImage.asset.mainImage}
+          {...aboutUsImage}
+          assetId={aboutUsImage.asset.assetId}
+          alt="The Creative Distillery Team"
+        />
+        <main className="home-main">
+          <Content className="home-content">{_rawNewBody}</Content>
+          <Button className="home-work-button" href="/work">
+            View Work
+          </Button>
+          <ContactFormButton className="home-contact-button">Get Started</ContactFormButton>
+        </main>
+      </div>
+      <WhatWeDo />
+      <AboutSection copy={_rawAboutCopy} thumbnail={thumbnail} video={homeVideoId} />
+      <InsightsSection />
+    </HomeContainer>
   );
 };
 

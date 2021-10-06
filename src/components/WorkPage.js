@@ -5,18 +5,14 @@ import { useStaticQuery, graphql } from 'gatsby';
 import PageLayout from './PageLayout';
 import Heading from './Heading';
 import Content from './Content';
-import Topics from './Topics/Topics';
+
 import ContactFormButton from './ContactFormButton';
 
 import useSiteContext from './SiteContext';
 import theme from './theme';
 
-const ProjectCarousel = Loadable(() =>
-  import('./Projects/ProjectCarousel/ProjectCarousel')
-);
-const ProjectMasonry = Loadable(() =>
-  import('./Projects/ProjectMasonry/ProjectMasonry')
-);
+const ProjectCarousel = Loadable(() => import('./Projects/ProjectCarousel/ProjectCarousel'));
+const ProjectMasonry = Loadable(() => import('./Projects/ProjectMasonry/ProjectMasonry'));
 
 const WorkPage = ({ title, _rawBody, id, seoSettings, services }) => {
   const allStuff = useSiteContext();
@@ -54,33 +50,17 @@ const WorkPage = ({ title, _rawBody, id, seoSettings, services }) => {
 
   const projects = services
     .map(service => {
-      const serviceProjects = allProjects.filter(
-        project =>
-          project.categories.findIndex(cat => cat.id === service.id) !== -1
-      );
-      const firstProject = serviceProjects.filter(
-        project => project.images.length
-      )[0];
+      const serviceProjects = allProjects.filter(project => project.categories.findIndex(cat => cat.id === service.id) !== -1);
+      const firstProject = serviceProjects.filter(project => project.images.length)[0];
       return { ...service, firstProject };
     })
     .filter(service => {
-      return (
-        ((service.firstProject && service.firstProject.images) ||
-          service.mainImage) &&
-        !service._id.startsWith('drafts')
-      );
+      return ((service.firstProject && service.firstProject.images) || service.mainImage) && !service._id.startsWith('drafts');
     })
-    .map(
-      ({ id, _id, title, slug, firstProject, mainImage, forceCoverImage }) => {
-        const images =
-          forceCoverImage && mainImage
-            ? [mainImage]
-            : mainImage
-            ? [mainImage]
-            : firstProject.images;
-        return { title, slug, images, _id, id, firstProject, forceCoverImage };
-      }
-    );
+    .map(({ id, _id, title, slug, firstProject, mainImage, forceCoverImage }) => {
+      const images = forceCoverImage && mainImage ? [mainImage] : mainImage ? [mainImage] : firstProject.images;
+      return { title, slug, images, _id, id, firstProject, forceCoverImage };
+    });
 
   return (
     <PageLayout className="work-page">
@@ -94,7 +74,7 @@ const WorkPage = ({ title, _rawBody, id, seoSettings, services }) => {
           </div>
         </div>
       </main>
-      <Topics />
+
       {!mobile && <ProjectMasonry projects={projects} workpage />}
     </PageLayout>
   );

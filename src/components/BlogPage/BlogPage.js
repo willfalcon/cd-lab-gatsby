@@ -5,19 +5,10 @@ import Heading from '../Heading';
 import Content from '../Content';
 import PostsList from './PostsList';
 import Pagination from './Pagination';
-import Topics from '../Topics/Topics';
 
 import { media } from '../theme';
 
-const BlogPage = ({
-  posts,
-  title,
-  _rawBody,
-  perPage,
-  numPages,
-  currentPage,
-  catTitle = false,
-}) => {
+const BlogPage = ({ posts, title, _rawBody, perPage, numPages, currentPage, catTitle = false }) => {
   return (
     <StyledBlogPage className="blog-page">
       <main className="main">
@@ -26,7 +17,6 @@ const BlogPage = ({
         <PostsList posts={posts} />
         <Pagination numPages={numPages} currentPage={currentPage} />
       </main>
-      <Topics />
     </StyledBlogPage>
   );
 };

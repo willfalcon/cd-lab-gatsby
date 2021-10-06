@@ -5,7 +5,7 @@ import PageLayout from '../PageLayout';
 import Heading from '../Heading';
 import Content from '../Content';
 // import ServiceList from './ServiceList';
-import Topics from '../Topics/Topics';
+
 import ContactFormButton from '../ContactFormButton';
 
 import useSiteContext from '../SiteContext';
@@ -45,7 +45,7 @@ const SingleCollection = ({ title, _rawDescription, projects, project, slug }) =
           </div>
         </div>
       </main>
-      <Topics />
+
       {!mobile && <ProjectMasonry projects={projects} project={project} slug={slug} />}
     </PageLayout>
   );

@@ -13,35 +13,17 @@ import Topics from '../Topics/Topics';
 import useSiteContext from '../SiteContext';
 import theme from '../theme';
 
-const ProjectCarousel = Loadable(() =>
-  import('../Projects/ProjectCarousel/ProjectCarousel')
-);
-const ProjectMasonry = Loadable(() =>
-  import('../Projects/ProjectMasonry/ProjectMasonry')
-);
+const ProjectCarousel = Loadable(() => import('../Projects/ProjectCarousel/ProjectCarousel'));
+const ProjectMasonry = Loadable(() => import('../Projects/ProjectMasonry/ProjectMasonry'));
 
-const SingleService = ({
-  title,
-  _rawDescription,
-  services,
-  id,
-  slug,
-  projects,
-  project,
-  forceCoverImage,
-  mainImage,
-}) => {
+const SingleService = ({ title, _rawDescription, services, id, slug, projects, project, forceCoverImage, mainImage }) => {
   const { viewport } = useSiteContext();
   const mobile = viewport.width < theme.sizes.break;
 
   function getPrevAndNext() {
-    const filteredServices = services.filter(
-      service => service.mainImage || service._rawDescription
-    );
+    const filteredServices = services.filter(service => service.mainImage || service._rawDescription);
     const index = services.findIndex(service => service.id === id);
-    const filteredIndex = filteredServices.findIndex(
-      service => service.id === id
-    );
+    const filteredIndex = filteredServices.findIndex(service => service.id === id);
 
     if (filteredIndex < 0) {
       const len = services.length;
@@ -81,7 +63,6 @@ const SingleService = ({
           </div>
         </StickyBox>
       </main>
-      <Topics />
       {(forceCoverImage || !projects.length) && mainImage ? (
         <ServiceCoverImage className="service-cover-image" image={mainImage.asset.mainImage} />
       ) : (
