@@ -71,30 +71,16 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {
-        exclude: [
-          '/collection/random',
-          '/service/random',
-          '/post/random',
-          '/forms',
-        ],
+        exclude: ['/collection/random', '/service/random', '/post/random', '/forms'],
       },
     },
     `gatsby-plugin-netlify`,
-    // {
-    //   resolve: `gatsby-source-vimeo`,
-    //   options: {
-    //     clientID: 'c7e0fbc0240b1f917abd01b11abed7da834c331e',
-    //     clientSecret:
-    //       '8c0fq3B2JGQgAh/B8i2ncOuJVkanOvIbbhNfZiwigxJdiboRAjqbssYq6T8airQAAKibJKSQktsKinp1SyiuB4qjWVE0QDVo4nIEWyZUD4bpodUlZIhkuR2fQW12lBWz',
-    //     userID: 'cdhq',
-    //     // searchQuery: 'INSERT_SEARCH_QUERY [OPTIONAL]',
-    //     // transformer (video) {
-    //     //   // Transform the video data [OPTIONAL]
-    //     //   // i.e. Add extra fields or alter existing field
-    //     //   video.newField = 'value'
-    //     //   return video
-    //     // }
-    //   },
-    // },
+    {
+      resolve: '@sentry/gatsby',
+      options: {
+        dsn: 'https://0bf7894cdf294687a093249f41a95f92@o238383.ingest.sentry.io/1407550',
+        environment: process.env.NODE_ENV,
+      },
+    },
   ],
 };
