@@ -63,11 +63,7 @@ const Footer = () => {
   `);
   return (
     <StyledFooter className="home-footer">
-      <Img
-        className="home-footer__icon"
-        fixed={file.childImageSharp.fixed}
-        alt="Creative Distillery Icon"
-      />
+      <Img className="home-footer__icon" fixed={file.childImageSharp.fixed} alt="Creative Distillery Icon" />
       <SocialList className="footer-social-list" />
       <div className="home-footer__column home-footer__contact">
         <h3 className="home-footer__contact-label">Contact</h3>
@@ -75,20 +71,18 @@ const Footer = () => {
           601.326.2388
         </a>
         <p className="home-footer__address">
-          3000 Old Canton Rd.
+          133 Commerce Park Drive
           <br />
-          Suite 455
+          Suite 15
           <br />
-          Jackson, MS 39216
+          Jackson, MS 39213
         </p>
         <a className="home-footer__email" href="mailto:info@creativedistillery.com">
           info@creativedistillery.com
         </a>
       </div>
       <div className="home-footer__column home-footer__menu">
-        <h4 className="home-footer__small-heading home-footer__menu-heading">
-          {sanityHomePage.footerMenuHeading}
-        </h4>
+        <h4 className="home-footer__small-heading home-footer__menu-heading">{sanityHomePage.footerMenuHeading}</h4>
         <nav className="home-footer__nav">
           {sanityHomePage.footerMenu.map(({ label, link: { _type, title, slug, id } }) => {
             const path = _type === 'category' ? 'service' : _type;
@@ -105,10 +99,7 @@ const Footer = () => {
         <ul className="home-footer__topics-list">
           {topics.map(({ node: { title, collection, id } }) => (
             <li className="home-footer__topic" key={id}>
-              <Link
-                className="home-footer__topic-link"
-                to={`/collection/${collection.slug.current}`}
-              >
+              <Link className="home-footer__topic-link" to={`/collection/${collection.slug.current}`}>
                 {title}
               </Link>
             </li>
