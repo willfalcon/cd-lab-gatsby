@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "netlify build",
-    "dev": "netlify dev",
+    "build": "gatsby build",
+    "dev": "gatsby develop",
     "link": "netlify link",
     "login": "netlify login",
     "help": "netlify help"

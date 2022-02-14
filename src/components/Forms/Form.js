@@ -74,7 +74,7 @@ const Form = ({
     >
       {title && <Heading>{title}</Heading>}
       {success ? (
-        <p>{successMessage}</p>
+        <p className="form__success">{successMessage}</p>
       ) : (
         <>
           {_rawDescription && <Content>{_rawDescription}</Content>}
@@ -94,19 +94,10 @@ const Form = ({
             <fieldset disabled={loading}>
               <div className="fieldset-flex-fix">
                 {fields.map(field => {
-                  return (
-                    <FieldSwitcher
-                      key={field._key}
-                      field={field}
-                      register={register}
-                      errors={errors}
-                      control={control}
-                    />
-                  );
+                  return <FieldSwitcher key={field._key} field={field} register={register} errors={errors} control={control} />;
                 })}
                 <label className="honeypot">
-                  Don't fill this out if you're human:{' '}
-                  <input name="honeypotField" />
+                  Don't fill this out if you're human: <input name="honeypotField" />
                 </label>
                 <Submit type="submit" value={submitText} />
                 {cancel && (
@@ -209,6 +200,15 @@ const StyledForm = styled(animated.form)`
   `}
   .honeypot {
     display: none;
+  }
+  .form__success {
+    background: ${({ theme }) => theme.green};
+    margin-top: 2rem;
+    border-radius: 5px;
+    padding: 1rem 2rem;
+    color: white;
+    font-weight: bold;
+    font-size: 2rem;
   }
 `;
 

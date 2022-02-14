@@ -10,6 +10,7 @@ const theme = {
   light: '#F7F7F3',
   black: '#3C3837',
   darkBlue: '#31363B',
+  green: '#419D78',
   break: '768px',
   bigBreak: '1024px',
   maxWidth: '1000px',
