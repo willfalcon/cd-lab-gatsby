@@ -1,16 +1,9 @@
 import { useTransition } from 'react-spring';
 
-const useModalTransition = (
-  expandedProject,
-  dimensions,
-  exitSizes,
-  viewport,
-  setHoverState
-) => {
+const useModalTransition = (expandedProject, dimensions, exitSizes, viewport, setHoverState) => {
   const { exitWidth, exitHeight, exitTop, exitLeft } = exitSizes;
-  const scrollY =
-    expandedProject && expandedProject.scrollY ? expandedProject.scrollY : 0;
-  return useTransition(expandedProject, null, {
+  const scrollY = expandedProject && expandedProject.scrollY ? expandedProject.scrollY : 0;
+  return useTransition(expandedProject, {
     from: {
       opacity: 0,
       width: `${expandedProject ? expandedProject.location.width : 0}px`,
@@ -23,14 +16,8 @@ const useModalTransition = (
       opacity: 1,
       width: `${dimensions.width}px`,
       height: `${dimensions.height}px`,
-      top: `${
-        expandedProject
-          ? viewport.height / 2 - dimensions.height / 2 + scrollY
-          : 0
-      }px`,
-      left: `${
-        expandedProject ? viewport.width / 2 - dimensions.width / 2 : 0
-      }px`,
+      top: `${expandedProject ? viewport.height / 2 - dimensions.height / 2 + scrollY : 0}px`,
+      left: `${expandedProject ? viewport.width / 2 - dimensions.width / 2 : 0}px`,
       title: 1,
     },
     leave: {

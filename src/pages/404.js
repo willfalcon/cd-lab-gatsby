@@ -4,9 +4,9 @@ import { graphql } from 'gatsby';
 import Wrapper from '../components/Wrapper';
 import ErrorPage from '../components/ErrorPage';
 
-const error = ({ data }) => {
+const error = ({ data, location }) => {
   return (
-    <Wrapper error>
+    <Wrapper error location={location}>
       <ErrorPage {...data.sanityHomePage} />
     </Wrapper>
   );
@@ -15,7 +15,7 @@ const error = ({ data }) => {
 export const ErrorQuery = graphql`
   query ErrorQuery {
     sanityHomePage(_id: { eq: "homePage" }) {
-      _rawBody(resolveReferences: {maxDepth: 10})
+      _rawBody(resolveReferences: { maxDepth: 10 })
     }
   }
 `;

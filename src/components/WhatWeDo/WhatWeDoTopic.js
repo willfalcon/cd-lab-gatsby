@@ -1,6 +1,5 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import Img from 'gatsby-image';
 import { Link } from 'gatsby';
 
 import useSiteContext from '../SiteContext';
@@ -11,18 +10,7 @@ import Image from '../Image';
 import { useOnScreen, useElementSize } from '../hooks';
 import BlockTitle from '../BlockTitle';
 
-const WhatWeDoTopic = ({
-  id,
-  active,
-  titleRef,
-  image,
-  whatWeDoImage,
-  title,
-  _rawShortContent,
-  setActiveTopic,
-  collection,
-  index,
-}) => {
+const WhatWeDoTopic = ({ id, active, titleRef, whatWeDoImage, title, _rawShortContent, setActiveTopic, collection, index }) => {
   const { viewport } = useSiteContext();
   const [ref, size] = useElementSize();
   const [imageWrapperRef, imageWrapperSize] = useElementSize();
@@ -37,15 +25,7 @@ const WhatWeDoTopic = ({
   }, [isOnScreen]);
 
   return (
-    <StyledTopic
-      key={id}
-      className="topic"
-      viewport={viewport}
-      title={titleRef}
-      // active={active}
-      ref={ref}
-      data={{ size, aspectRatio, active }}
-    >
+    <StyledTopic key={id} className="topic" viewport={viewport} title={titleRef} ref={ref} data={{ size, aspectRatio, active }}>
       <BlockTitle className="topic__title color-orange" styles={{ textAlign: 'left' }}>
         {title}
       </BlockTitle>
@@ -54,22 +34,13 @@ const WhatWeDoTopic = ({
         View {title} Projects
       </Link>
       <div className="topic__image-wrapper" ref={imageWrapperRef}>
-        {whatWeDoImage && (
-          <Image
-            className="topic__image"
-            image={whatWeDoImage}
-            containerWidth={imageWrapperSize.width}
-            index={index}
-          />
-        )}
+        {whatWeDoImage && <Image className="topic__image" image={whatWeDoImage} containerWidth={imageWrapperSize.width} index={index} />}
       </div>
     </StyledTopic>
   );
 };
 
 const StyledTopic = styled.div`
-  /* position: relative; */
-  /* padding-bottom: 10vh; */
   opacity: ${({ data: { active } }) => (active ? 1 : 0.5)};
   transition: 0.25s;
   display: grid;
@@ -122,10 +93,8 @@ const StyledTopic = styled.div`
         grid-row: 1 / 4;
         grid-column: 2 / 3;
         overflow: hidden;
-        /* position: absolute; */
         width: 100%;
         height: ${({ data: { size } }) => size.height}px;
-        /* top: -10vh; */
         margin-bottom: 5rem;
       }
       &__image {

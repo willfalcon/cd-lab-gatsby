@@ -16,11 +16,11 @@ import MobileFooter from './MobileFooter';
 
 library.add(fab, faArrowRight, faAngleRight, faAngleDoubleLeft);
 
-const Wrapper = ({ children, seo, pageTitle, home = false, whatWeDo = false }) => {
+const Wrapper = ({ children, seo, pageTitle, home = false, whatWeDo = false, location }) => {
   const viewport = useWindowSize();
   return (
     <ThemeProvider theme={theme}>
-      <SiteContextProvider home={home}>
+      <SiteContextProvider home={home} location={location}>
         <Head {...seo} pageTitle={pageTitle} home={home} />
         <Header />
         <PageWrapper className="page-wrapper" viewport={viewport} home={home} whatWeDo={whatWeDo}>
@@ -35,11 +35,9 @@ const Wrapper = ({ children, seo, pageTitle, home = false, whatWeDo = false }) =
 };
 
 const PageWrapper = styled.div`
-  min-height: ${({ viewport }) =>
-    viewport.height ? `${viewport.height - 65 - 42}px` : `calc(100vh - 107px)`};
+  min-height: ${({ viewport }) => (viewport.height ? `${viewport.height - 65 - 42}px` : `calc(100vh - 107px)`)};
   ${media.break`
-    min-height: ${({ viewport }) =>
-      viewport.height ? `${viewport.height - 78}px` : `calc(100vh - 78px)`};
+    min-height: ${({ viewport }) => (viewport.height ? `${viewport.height - 78}px` : `calc(100vh - 78px)`)};
     ${({ home, viewport }) =>
       home &&
       `
@@ -52,12 +50,10 @@ const PageWrapper = styled.div`
       `}
     main {
       padding-left: 90px;
-      min-height: ${({ viewport }) =>
-        viewport.height ? `${viewport.height - 78}px` : `calc(100vh - 78px)`};
+      min-height: ${({ viewport }) => (viewport.height ? `${viewport.height - 78}px` : `calc(100vh - 78px)`)};
     }
     .container {
-      min-height: ${({ viewport }) =>
-        viewport.height ? `${viewport.height - 78}px` : `calc(100vh - 78px)`};
+      min-height: ${({ viewport }) => (viewport.height ? `${viewport.height - 78}px` : `calc(100vh - 78px)`)};
     }
   `}
 `;

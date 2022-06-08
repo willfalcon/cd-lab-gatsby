@@ -6,7 +6,7 @@ import theme from './theme';
 
 const SiteContext = React.createContext();
 
-const SiteContextProvider = ({ children, home }) => {
+const SiteContextProvider = ({ children, home, location }) => {
   const [ready, makeReady] = useState(false);
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -29,12 +29,7 @@ const SiteContextProvider = ({ children, home }) => {
   const [expandedTopic, setExpandedTopic] = useState(null);
   const [topicToggledFromMenu, setTopicToggledFromMenu] = useState(false);
 
-  const {
-    sanitySiteSettings,
-    sanityWhatWeDo,
-    allSanityProject,
-    allSanityTopic,
-  } = useStaticQuery(graphql`
+  const { sanitySiteSettings, sanityWhatWeDo, allSanityProject, allSanityTopic } = useStaticQuery(graphql`
     query {
       sanitySiteSettings(_id: { eq: "cdSiteSettings" }) {
         collectionsCount
@@ -178,6 +173,7 @@ const SiteContextProvider = ({ children, home }) => {
         setExpandedTopic,
         topicToggledFromMenu,
         setTopicToggledFromMenu,
+        location,
       }}
     >
       {children}

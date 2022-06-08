@@ -1,2 +1,4 @@
 [build]
-  functions = "./functions"
+  command = "npm run dev"
+  publish = "public"
+  functions = "functions/"

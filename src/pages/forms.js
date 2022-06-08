@@ -4,9 +4,9 @@ import { graphql } from 'gatsby';
 import Wrapper from '../components/Wrapper';
 import FormPage from '../components/Forms/FormPage';
 
-const Forms = ({ data: { sanityForm } }) => {
+const Forms = ({ data: { sanityForm }, location }) => {
   return (
-    <Wrapper>
+    <Wrapper location={location}>
       <FormPage {...sanityForm} />
     </Wrapper>
   );

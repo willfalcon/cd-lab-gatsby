@@ -1,14 +1,13 @@
-import React, { useState, useLayoutEffect, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 
-import { useTransition, animated } from 'react-spring';
+import { useTransition } from 'react-spring';
 
 import ServiceListItem from './ServiceListItem';
 
 import theme, { media } from '../theme';
 import useSiteContext from '../SiteContext';
 import { roundToDecimal } from '../utils';
-import { useWhyDidYouUpdate } from '../hooks';
 
 function sortServices(a, b) {
   if (a.service.title < b.service.title) {
@@ -19,8 +18,7 @@ function sortServices(a, b) {
 }
 
 const ServiceList = props => {
-  // useWhyDidYouUpdate('ServiceList', props);
-  const { projects, titleRef, services, backgroundColor } = props;
+  const { titleRef, services, backgroundColor } = props;
 
   const [titleHeight, setTitleHeight] = useState(0);
 
@@ -33,17 +31,9 @@ const ServiceList = props => {
   const { viewport } = useSiteContext();
   const mobile = viewport.width < theme.sizes.break;
 
-  const right = roundToDecimal(
-    // (viewport.width - 100) * 0.6 - (viewport.width - 100) * 0.4 * 0.1,
-    -(viewport.width - 100) * 0.4 * 0.1 - 10,
-    2
-  );
   const width = roundToDecimal(((viewport.width - 100) * 0.4) / 2, 2);
 
-  const baseTop = viewport.height * 0.05 + 120;
-  // console.log(services);
-
-  const transition = useTransition(services.sort(sortServices), item => item.service._id, {
+  const transition = useTransition(services.sort(sortServices), {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0, position: 'absolute' },
@@ -57,19 +47,17 @@ const ServiceList = props => {
         mobile
           ? {}
           : {
-              // right: `50%`,
               left: 100 + (viewport.width - 100) / 2,
               transform: `translateX(-${width / 2 + 70}px)`,
               width: `${width}px`,
-              // top: titleHeight > 91 ? `${baseTop + titleHeight - 91}px` : `${baseTop}px`,
               top: `${titleHeight + 78 + 30}px`,
             }
       }
       data={{ backgroundColor }}
     >
-      {transition.map(({ item, key, props }) => {
+      {transition((props, item) => {
         // console.log(item);
-        return <ServiceListItem key={key} styles={props} {...item} />;
+        return <ServiceListItem key={item.service._id} styles={props} {...item} />;
       })}
     </StyledServiceList>
   );
@@ -114,10 +102,7 @@ const StyledServiceList = styled.ul`
   ${media.break`
     order: 3;
     margin: 0;
-    /* width: ${({ width }) => width}px; */
-    /* position: fixed; */
     position: absolute;
-    /* right: ${({ right }) => right}px; */
     top: 16rem;
     top: calc(12rem + 5%);
     li {

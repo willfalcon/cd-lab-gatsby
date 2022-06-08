@@ -15,9 +15,7 @@ import { media } from './theme';
 const FormModalButton = ({ children = 'Start a Project', form = null }) => {
   const buttonRef = useRef(null);
 
-  const buttonRect = buttonRef.current
-    ? buttonRef.current.getBoundingClientRect()
-    : { width: 0, height: 0, x: 0, y: 0 };
+  const buttonRect = buttonRef.current ? buttonRef.current.getBoundingClientRect() : { width: 0, height: 0, x: 0, y: 0 };
   const { width, height, y, x } = buttonRect;
 
   const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
@@ -26,7 +24,7 @@ const FormModalButton = ({ children = 'Start a Project', form = null }) => {
 
   const [open, setOpen] = useState(false);
 
-  const transitions = useTransition(open, null, {
+  const transitions = useTransition(open, {
     from: {
       width: `${width}px`,
       height: `${height}px`,
@@ -47,20 +45,14 @@ const FormModalButton = ({ children = 'Start a Project', form = null }) => {
       height: `${mobile ? viewport.height : viewport.height * 0.75}px`,
       left: `${viewport.width * 0.5}px`,
       transform: `translateX(-50%)`,
-      top: `${
-        mobile
-          ? scrollY
-          : viewport.height / 2 - (viewport.height * 0.75) / 2 + scrollY
-      }px`,
+      top: `${mobile ? scrollY : viewport.height / 2 - (viewport.height * 0.75) / 2 + scrollY}px`,
       paddingTop: '5rem',
       paddingBottom: '5rem',
       paddingLeft: mobile ? '0%' : '2rem',
       paddingRight: mobile ? '0%' : '2rem',
       opacity: 1,
       o: 1,
-      y: mobile
-        ? scrollY
-        : viewport.height / 2 - (viewport.height * 0.75) / 2 + scrollY,
+      y: mobile ? scrollY : viewport.height / 2 - (viewport.height * 0.75) / 2 + scrollY,
     },
     leave: {
       width: `${width}px`,
@@ -94,10 +86,10 @@ const FormModalButton = ({ children = 'Start a Project', form = null }) => {
       <Button handleClick={toggleForm} ref={buttonRef}>
         {children}
       </Button>
-      {transitions.map(
-        ({ item, key, props }) =>
+      {transitions(
+        (props, item) =>
           item && (
-            <React.Fragment key={key}>
+            <React.Fragment>
               <BackgroundOverlay
                 onClick={() => setOpen(false)}
                 style={{

@@ -7,7 +7,7 @@ import Meta from '../components/Meta';
 
 const category = ({ data, pageContext, location }) => {
   return (
-    <Wrapper seo={data.sanityBlogPage.seoSettings} pageTitle={data.sanityBlogPage.title}>
+    <Wrapper seo={data.sanityBlogPage.seoSettings} pageTitle={data.sanityBlogPage.title} location={location}>
       <Meta
         title={pageContext.catTitle}
         seo={data.sanityBlogPage.seoSettings}
@@ -15,11 +15,7 @@ const category = ({ data, pageContext, location }) => {
         location={location}
         url={`/category/${pageContext.category}`}
       />
-      <BlogPage
-        posts={data.allSanityPost.edges.map(edge => ({ ...edge.node }))}
-        {...data.sanityBlogPage}
-        {...pageContext}
-      />
+      <BlogPage posts={data.allSanityPost.edges.map(edge => ({ ...edge.node }))} {...data.sanityBlogPage} {...pageContext} />
     </Wrapper>
   );
 };

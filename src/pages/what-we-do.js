@@ -6,7 +6,7 @@ import Meta from '../components/Meta';
 
 const whatWeDo = ({ data, location }) => {
   return (
-    <Wrapper whatWeDo>
+    <Wrapper whatWeDo location={location}>
       <Meta
         title="What We Do"
         // seo={data.sanityAboutPage.seoSettings}

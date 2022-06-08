@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "gatsby build",
-    "dev": "gatsby develop",
+    "develop": "gatsby develop",
+    "dev": "netlify dev",
     "link": "netlify link",
     "login": "netlify login",
     "help": "netlify help"
@@ -55,7 +56,7 @@
     "react-input-mask": "^2.0.4",
     "react-masonry-component": "^6.2.1",
     "react-player": "^1.14.2",
-    "react-spring": "^8.0.27",
+    "react-spring": "^9.4.2",
     "react-sticky-box": "^0.9.3",
     "react-time-picker": "^4.0.1",
     "react-use-dimensions": "^1.2.1",

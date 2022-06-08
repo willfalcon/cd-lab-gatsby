@@ -10,13 +10,11 @@ const singleService = ({ data, pageContext, location }) => {
   const slug = pageContext.slug;
   const { sanityCategory, allSanityProject, allSanityCategory } = data;
   return (
-    <Wrapper seo={sanityCategory.seoSettings} pageTitle={sanityCategory.title}>
+    <Wrapper seo={sanityCategory.seoSettings} pageTitle={sanityCategory.title} location={location}>
       <Meta
         title={sanityCategory.title}
         seo={sanityCategory.seoSettings}
-        image={
-          sanityCategory.mainImage && sanityCategory.mainImage.asset.ogImage.src
-        }
+        image={sanityCategory.mainImage && sanityCategory.mainImage.asset.ogImage.src}
         location={location}
       />
       <SingleService
@@ -54,9 +52,7 @@ export const SingleServiceQuery = graphql`
       title
     }
     allSanityProject(
-      filter: {
-        categories: { elemMatch: { slug: { current: { eq: $slug } } } }
-      }
+      filter: { categories: { elemMatch: { slug: { current: { eq: $slug } } } } }
       sort: { fields: publishedAt, order: ASC }
     ) {
       edges {

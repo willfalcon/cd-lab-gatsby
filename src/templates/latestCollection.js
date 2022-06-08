@@ -9,17 +9,11 @@ const latestCollection = ({ data, pageContext, location }) => {
   const { project, slug } = pageContext;
   const { sanityLatestCollection, allSanityProject } = data;
   return (
-    <Wrapper
-      seo={sanityLatestCollection.seoSettings}
-      pageTitle={sanityLatestCollection.title}
-    >
+    <Wrapper seo={sanityLatestCollection.seoSettings} pageTitle={sanityLatestCollection.title} location={location}>
       <Meta
         title={sanityLatestCollection.title}
         seo={sanityLatestCollection.seoSettings}
-        image={
-          sanityLatestCollection.mainImage &&
-          sanityLatestCollection.mainImage.asset.ogImage.src
-        }
+        image={sanityLatestCollection.mainImage && sanityLatestCollection.mainImage.asset.ogImage.src}
         location={location}
       />
       <SingleCollection
@@ -57,10 +51,7 @@ export const LatestCollectionQuery = graphql`
         current
       }
     }
-    allSanityProject(
-      limit: $numProjects
-      sort: { fields: _createdAt, order: DESC }
-    ) {
+    allSanityProject(limit: $numProjects, sort: { fields: _createdAt, order: DESC }) {
       edges {
         node {
           id

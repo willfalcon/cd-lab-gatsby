@@ -31,9 +31,7 @@ const Project = ({
   const [height, setHeight] = useState(0);
   const [titleHeight, setTitleHeight] = useState(0);
 
-  const aspect = thumbnail
-    ? thumbnail.childImageSharp.fluid.aspectRatio
-    : false;
+  const aspect = thumbnail ? thumbnail.childImageSharp.fluid.aspectRatio : false;
 
   useEffect(() => {
     if (ref.current) {
@@ -66,7 +64,7 @@ const Project = ({
       }
     },
     // Adding aspect to dependency array creates a weird flash when video projects are opened.
-    /* eslint-disable */
+
     [
       id,
       image,
@@ -75,9 +73,8 @@ const Project = ({
       setExpandedProject,
       video,
       thumbnail,
-      // aspect,
+      // aspect
     ]
-    /* eslint-enable */
   );
 
   return (
@@ -102,41 +99,22 @@ const Project = ({
                 scrollY: window.scrollY,
               });
               if (!expandedProject) {
-                window.history.pushState(
-                  {},
-                  '',
-                  `/${serviceOrCollection}/${slug}/${project.slug.current}`
-                );
+                window.history.pushState({}, '', `/${serviceOrCollection}/${slug}/${project.slug.current}`);
               }
             }
       }
     >
       {thumbnail && (
         <>
-          <ProjectImage
-            fluid={thumbnail.childImageSharp.fluid}
-            alt={project.title}
-          />
+          <ProjectImage fluid={thumbnail.childImageSharp.fluid} alt={project.title} />
           <PlayButton as="div" />
         </>
       )}
       {image && image.asset.extension === 'gif' && (
-        <img
-          src={image.asset.fluid.src}
-          sizes={image.asset.fluid.sizes}
-          srcSet={image.asset.fluid.srcSet}
-          alt={project.title}
-        />
+        <img src={image.asset.fluid.src} sizes={image.asset.fluid.sizes} srcSet={image.asset.fluid.srcSet} alt={project.title} />
       )}
-      {image && image.asset.extension !== 'gif' && (
-        <ProjectImage fluid={image.asset.fluid} alt={project.title} />
-      )}
-      <ProjectTitle
-        className="project__title"
-        styles={titleSpring}
-        titleStyles={{ opacity: titleSpring.titleOpacity }}
-        hovering={hovering}
-      >
+      {image && image.asset.extension !== 'gif' && <ProjectImage fluid={image.asset.fluid} alt={project.title} />}
+      <ProjectTitle className="project__title" styles={titleSpring} titleStyles={{ opacity: titleSpring.titleOpacity }} hovering={hovering}>
         {project.title}
       </ProjectTitle>
     </StyledProject>

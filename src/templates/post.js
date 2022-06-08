@@ -7,7 +7,7 @@ import Meta from '../components/Meta';
 
 const post = ({ data, location }) => {
   return (
-    <Wrapper seo={data.sanityPost.seoSettings} pageTitle={data.sanityPost.title}>
+    <Wrapper seo={data.sanityPost.seoSettings} pageTitle={data.sanityPost.title} location={location}>
       <Post {...data.sanityPost} />
       <Meta
         title={data.sanityPost.title}
