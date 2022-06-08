@@ -31,17 +31,10 @@ const People = ({ people: rawPeople }) => {
 
   const size = viewport.width / 2;
 
-  const height =
-    people.length % 2 === 0
-      ? size & ((people.length / 2) * size)
-      : ((people.length + 1) / 2) * size;
+  const height = people.length % 2 === 0 ? size & ((people.length / 2) * size) : ((people.length + 1) / 2) * size;
 
   return (
-    <StyledPeopleWrapper
-      className="people"
-      expanded={expandedPerson !== null}
-      height={height}
-    >
+    <StyledPeopleWrapper className="people" expanded={expandedPerson !== null} height={height}>
       <StyledPeople expanded={expandedPerson} className="people-list">
         {indexedPeople
           .filter(person => person.primary)
@@ -109,17 +102,22 @@ const StyledPeople = styled.ul`
     }
     ${grid.enabled`
       grid-template-columns: repeat(5, 1fr);
-      grid-template-rows: repeat(9, 1fr);
+      grid-template-rows: repeat(14, 1fr);
       grid-template-areas:
-        "    .   person1 person1    .       .   " 
-        "    .   person1 person1 person2 person2" 
-        "primar1 primar1 primar1 person2 person2" 
-        "primar1 primar1 primar1 primar2 primar2" 
-        "primar1 primar1 primar1 primar2 primar2" 
-        "    .      .    person4 person4    .   " 
-        "person5 person5 person4 person4    .   " 
-        "person5 person5    .    person3 person3" 
-        "    .       .      .    person3 person3"; 
+        "    .   primar1 primar1    .       .   " 
+        "    .   primar1 primar1 person1 person1" 
+        "    .   primar1 primar1 person1 person1" 
+        "person2 person2    .    person1 person1" 
+        "person2 person2 person6 person6    .   " 
+        "person2 person2 person6 person6    .   " 
+        "   .       .    person6 person6    .   " 
+        "person5 person5    .    person4 person4 " 
+        "person5 person5    .    person4 person4" 
+        "person5 person5    .    person4 person4" 
+        "   .       .    person3 person3    .   " 
+        "person7 person7 person3 person3    .   " 
+        "person7 person7 person3 person3    .   " 
+        "person7 person7    .       .       .   "; 
 
       background: transparent;
     
@@ -129,6 +127,7 @@ const StyledPeople = styled.ul`
         height: 100%;
         width: 100%;
         background: ${({ theme }) => theme.orange};
+        background: #FFF0EA;
         z-index: 0;
         grid-column: 2 / -1;
         grid-row : 1 / -1;
@@ -143,18 +142,18 @@ const StyledPeople = styled.ul`
         grid-area: primar2;
         justify-self: start;
       }
-    `}
+    `} 
   `}
   ${media.large`
     ${grid.enabled`
       grid-template-columns: repeat(7, 1fr);
       grid-template-rows: repeat(8, 1fr);
       grid-template-areas: 
-        "   .       .       .    person1 person1    .       .   "
-        "primar1 primar1 primar1 person1 person1    .       .   "
-        "primar1 primar1 primar1 primar2 primar2 primar2    .   "
-        "primar1 primar1 primar1 primar2 primar2 primar2    .   "
-        "   .    person2 person2 primar2 primar2 primar2    .   "
+        "primar1 primar1 primar1    .       .    person1 person1"
+        "primar1 primar1 primar1    .       .    person1 person1"
+        "primar1 primar1 primar1 person6 person6    .       .   "
+        "   .       .       .    person6 person6 person7 person7"
+        "   .    person2 person2    .       .    person7 person7"
         "   .    person2 person2 person4 person4    .       .   "
         "person5 person5    .    person4 person4 person3 person3"
         "person5 person5    .       .       .    person3 person3";
