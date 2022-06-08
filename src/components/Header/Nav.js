@@ -35,9 +35,9 @@ const Nav = ({ home }) => {
 
   const mobile = viewport.width < theme.sizes.break;
 
-  const navTransition = useTransition(menuOpen, null, navTransitionObject);
+  const navTransition = useTransition(menuOpen, navTransitionObject);
 
-  const formTransition = useTransition(formOpen, null, {
+  const formTransition = useTransition(formOpen, {
     from: {
       maxHeight: '0%',
     },
@@ -49,10 +49,10 @@ const Nav = ({ home }) => {
     },
   });
 
-  return navTransition.map(
-    ({ item, key, props: { scale, translate, o } }) =>
+  return navTransition(
+    ({ scale, translate, o }, item) =>
       item && (
-        <React.Fragment key={key}>
+        <React.Fragment>
           {viewport.width >= theme.sizes.break && (
             <>
               <NavBackdrop
@@ -73,36 +73,19 @@ const Nav = ({ home }) => {
             style={{
               transform:
                 viewport.width >= parseInt(theme.break, 10)
-                  ? interpolate(
-                      [scale, translate],
-                      (scale, translate) =>
-                        `translate(${translate}px, -50%) scale(${scale})`
-                    )
-                  : interpolate(
-                      [scale, translate],
-                      (scale, translate) =>
-                        `translateY(${translate}px) scale(${scale})`
-                    ),
+                  ? interpolate([scale, translate], (scale, translate) => `translate(${translate}px, -50%) scale(${scale})`)
+                  : interpolate([scale, translate], (scale, translate) => `translateY(${translate}px) scale(${scale})`),
             }}
           >
             <Menu />
-            <Button
-              className="form-contact-button"
-              handleClick={() => toggleForm(!formOpen)}
-              big
-            >
+            <Button className="form-contact-button" handleClick={() => toggleForm(!formOpen)} big>
               Contact Us
             </Button>
             {mobile && <MobileFooter />}
-            {formTransition.map(
-              ({ item, key, props }) =>
+            {formTransition(
+              (props, item) =>
                 (item || !mobile) && (
-                  <NavFormWrap
-                    key={key}
-                    className="nav-form-wrap"
-                    style={props}
-                    open={formOpen}
-                  >
+                  <NavFormWrap className="nav-form-wrap" style={props} open={formOpen}>
                     <ContactForm
                       formOpen={formOpen}
                       toggleForm={toggleForm}

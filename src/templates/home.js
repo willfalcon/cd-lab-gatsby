@@ -7,11 +7,7 @@ import Meta from '../components/Meta';
 
 const index = ({ data, pageContext, location }) => {
   return (
-    <Wrapper
-      home
-      seo={data.sanityHomePage.seoSettings}
-      pageTitle={data.sanityHomePage.title}
-    >
+    <Wrapper home seo={data.sanityHomePage.seoSettings} pageTitle={data.sanityHomePage.title} location={location}>
       <Meta
         title="Home"
         seo={data.sanityHomePage.seoSettings}

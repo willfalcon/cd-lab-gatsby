@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import Caret from '../../Caret';
 
 const ProjectTitle = ({ className, styles, titleStyles, children, modal = false, hovering }) => {
-  const caretTrans = useTransition(hovering, null, {
+  const caretTrans = useTransition(hovering, {
     from: {
       opacity: 0,
     },
@@ -20,16 +20,9 @@ const ProjectTitle = ({ className, styles, titleStyles, children, modal = false,
   });
 
   return (
-    <StyledTitle
-      className={classNames(className, 'project-title')}
-      style={styles}
-      props={{ modal }}
-    >
+    <StyledTitle className={classNames(className, 'project-title')} style={styles} props={{ modal }}>
       <animated.h3 style={titleStyles}>{children}</animated.h3>
-      {caretTrans.map(
-        ({ item, key, props }) =>
-          !modal && item && <Caret key={key} color="white" styles={props} pulse spin big />
-      )}
+      {caretTrans((props, item) => !modal && item && <Caret color="white" styles={props} pulse spin big />)}
     </StyledTitle>
   );
 };

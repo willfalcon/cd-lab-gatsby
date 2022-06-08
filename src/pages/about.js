@@ -7,20 +7,14 @@ import Meta from '../components/Meta';
 
 const index = ({ data, location }) => {
   return (
-    <Wrapper
-      seo={data.sanityAboutPage.seoSettings}
-      pageTitle={data.sanityAboutPage.title}
-    >
+    <Wrapper seo={data.sanityAboutPage.seoSettings} pageTitle={data.sanityAboutPage.title} location={location}>
       <Meta
         title="About"
         seo={data.sanityAboutPage.seoSettings}
         // image={data.sanityHomePage.aboutUsImage.asset.ogImage.src}
         location={location}
       />
-      <AboutPage
-        {...data.sanityAboutPage}
-        people={data.allSanityPerson.edges}
-      />
+      <AboutPage {...data.sanityAboutPage} people={data.allSanityPerson.edges} />
     </Wrapper>
   );
 };

@@ -9,16 +9,11 @@ const singleCollection = ({ data, pageContext, location }) => {
   const { project, slug } = pageContext;
   const { sanityCollection } = data;
   return (
-    <Wrapper
-      seo={sanityCollection.seoSettings}
-      pageTitle={sanityCollection.title}
-    >
+    <Wrapper seo={sanityCollection.seoSettings} pageTitle={sanityCollection.title} location={location}>
       <Meta
         title={sanityCollection.title}
         seo={sanityCollection.seoSettings}
-        image={
-          sanityCollection.mainImage && sanityCollection.mainImage.asset.src
-        }
+        image={sanityCollection.mainImage && sanityCollection.mainImage.asset.src}
         location={location}
       />
       <SingleCollection {...sanityCollection} project={project} slug={slug} />

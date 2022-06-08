@@ -10,13 +10,7 @@ import useSiteContext from '../../SiteContext';
 import getDimensions from './getDimensions';
 import useModalTransition from './modalTransition';
 
-const ProjectMasonry = ({
-  projects,
-  project,
-  slug,
-  service = false,
-  workpage = false,
-}) => {
+const ProjectMasonry = ({ projects, project, slug, service = false, workpage = false }) => {
   // TODO: Feature: Carousel Controls to switch between images within the same project.
 
   const masonryOptions = {
@@ -35,10 +29,11 @@ const ProjectMasonry = ({
 
   const containerRef = useRef(null);
 
-  const { viewport } = useSiteContext();
+  const { viewport, location } = useSiteContext();
 
-  const initialProject =
-    projects[projects.findIndex(proj => proj.slug.current === project)];
+  const imageParam = new URLSearchParams(location.search).get('image');
+
+  const initialProject = projects[projects.findIndex(proj => proj.slug.current === project)];
 
   const [expandedProject, setExpandedProject] = useState(null);
 
@@ -50,12 +45,7 @@ const ProjectMasonry = ({
   });
 
   const dimensions = expandedProject
-    ? getDimensions(
-        expandedProject.videoAspect
-          ? expandedProject.videoAspect
-          : expandedProject.image.asset.fluid.aspectRatio,
-        viewport
-      )
+    ? getDimensions(expandedProject.videoAspect ? expandedProject.videoAspect : expandedProject.image.asset.fluid.aspectRatio, viewport)
     : { width: 0, height: 0 };
 
   useEffect(() => {
@@ -71,13 +61,7 @@ const ProjectMasonry = ({
   }, [expandedProject]);
 
   const serviceOrCollection = service ? 'service' : 'collection';
-  const modalTransition = useModalTransition(
-    expandedProject,
-    dimensions,
-    exitSizes,
-    viewport,
-    setHoverState
-  );
+  const modalTransition = useModalTransition(expandedProject, dimensions, exitSizes, viewport, setHoverState);
 
   const handleCloseProject = () => {
     setExpandedProject(null);
@@ -85,11 +69,7 @@ const ProjectMasonry = ({
   };
 
   return (
-    <StyledProjectMasonry
-      className="masonry"
-      onMouseLeave={() => setHoverState(null)}
-      ref={containerRef}
-    >
+    <StyledProjectMasonry className="masonry" onMouseLeave={() => setHoverState(null)} ref={containerRef}>
       <Masonry options={masonryOptions}>
         {projects.map((project, index) => {
           if (workpage) {
@@ -152,11 +132,10 @@ const ProjectMasonry = ({
         })}
       </Masonry>
       <DownArrow containerRef={containerRef} viewport={viewport} />
-      {modalTransition.map(({ item, key, props }) => {
+      {modalTransition((props, item) => {
         return (
           item && (
             <ProjectModal
-              key={key}
               viewport={viewport}
               item={item}
               styles={props}

@@ -7,7 +7,7 @@ import theme from '../theme';
 
 const ServiceListItem = props => {
   const { service, styles } = props;
-  const { id, slug, title } = service;
+  const { slug, title } = service;
   const [hover, setHover] = useState(false);
 
   return (

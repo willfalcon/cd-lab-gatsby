@@ -14,9 +14,7 @@ const ProjectCarousel = ({ projects, project, service = false, slug }) => {
   const [expandedProject, setExpandedProject] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const initialProjectIndex = project
-    ? projects.findIndex(proj => proj.slug.current === project)
-    : 0;
+  const initialProjectIndex = project ? projects.findIndex(proj => proj.slug.current === project) : 0;
   const initialProject = project ? projects[initialProjectIndex] : false;
   const [index, setIndex] = useState(initialProjectIndex);
 
@@ -25,7 +23,7 @@ const ProjectCarousel = ({ projects, project, service = false, slug }) => {
   const prevSlide = () => setIndex((index + len - 1) % len);
   const nextSlide = () => setIndex((index + 1) % len);
 
-  const modalTransition = useTransition(modalOpen, null, {
+  const modalTransition = useTransition(modalOpen, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
@@ -51,11 +49,7 @@ const ProjectCarousel = ({ projects, project, service = false, slug }) => {
           <Slider className="projects-carousel__slider">
             {filteredProjects.map((project, i) => {
               return (
-                <Slide
-                  className="projects-carousel__slide"
-                  key={project.id}
-                  index={i}
-                >
+                <Slide className="projects-carousel__slide" key={project.id} index={i}>
                   <CarouselProject
                     {...project}
                     setExpandedProject={setExpandedProject}
@@ -69,20 +63,12 @@ const ProjectCarousel = ({ projects, project, service = false, slug }) => {
               );
             })}
           </Slider>
-          <CarouselControls
-            prev={prevSlide}
-            next={nextSlide}
-            index={index}
-            length={len}
-            setIndex={setIndex}
-            className="controls"
-          />
+          <CarouselControls prev={prevSlide} next={nextSlide} index={index} length={len} setIndex={setIndex} className="controls" />
         </CarouselProvider>
-        {modalTransition.map(
-          ({ item, key, props }) =>
+        {modalTransition(
+          (props, item) =>
             item && (
               <MobileProjectModal
-                key={key}
                 style={props}
                 {...expandedProject}
                 setExpandedProject={setExpandedProject}

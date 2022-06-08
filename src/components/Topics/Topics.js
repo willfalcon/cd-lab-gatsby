@@ -10,18 +10,11 @@ import theme from '../theme';
 import useSiteContext from '../SiteContext';
 
 const Topics = ({ home = false, error = false }) => {
-  const {
-    viewport,
-    ready,
-    topics,
-    setExpandedTopic,
-    expandedTopic,
-    topicToggledFromMenu,
-  } = useSiteContext();
+  const { viewport, ready, topics, setExpandedTopic, expandedTopic, topicToggledFromMenu } = useSiteContext();
 
   const mobile = viewport.width < theme.sizes.break;
 
-  const expandedTopicTransition = useTransition(expandedTopic, item => item, {
+  const expandedTopicTransition = useTransition(expandedTopic, {
     from: {
       opacity: 0,
       position: 'absolute',
@@ -38,9 +31,7 @@ const Topics = ({ home = false, error = false }) => {
     },
   });
 
-  const expandedIndex = topics.findIndex(
-    topic => topic.node.id === expandedTopic
-  );
+  const expandedIndex = topics.findIndex(topic => topic.node.id === expandedTopic);
 
   const [topicsOpen, setTopicsOpen] = useState(home || error);
   const [scrollY, setScrollY] = useState(false);
@@ -52,19 +43,17 @@ const Topics = ({ home = false, error = false }) => {
     setTopicsOpen(home || error || expandedTopic ? true : false);
   }, [expandedTopic, mobile, home, error, topicToggledFromMenu]);
 
-  const allTopicTransition = useTransition(topicsOpen, null, {
+  const allTopicTransition = useTransition(topicsOpen, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
   });
 
-  return allTopicTransition.map(
-    ({ item, key, props: allProps }) =>
+  return allTopicTransition(
+    (allProps, item) =>
       item && (
-        <React.Fragment key={key}>
-          {ready && (home || error) && (
-            <TopicsHeading viewport={viewport} error={error} />
-          )}
+        <React.Fragment>
+          {ready && (home || error) && <TopicsHeading viewport={viewport} error={error} />}
           {topics.map(({ node }, index) => (
             <Topic
               key={node.id}
@@ -80,10 +69,10 @@ const Topics = ({ home = false, error = false }) => {
               scrollY={scrollY}
             />
           ))}
-          {expandedTopicTransition.map(({ item, key, props }) => {
+          {expandedTopicTransition((props, item) => {
             return (
               item && (
-                <React.Fragment key={key}>
+                <React.Fragment key={item.id}>
                   {!mobile && (
                     <BackgroundOverlay
                       style={{

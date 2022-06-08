@@ -13,7 +13,7 @@ const AboutSectionVideo = ({ thumbnail, video, maxHeight }) => {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [playing, setPlaying] = useState(false);
   const { viewport } = useSiteContext();
-  const videoTransitions = useTransition(videoOpen, null, {
+  const videoTransitions = useTransition(videoOpen, {
     from: {
       opacity: 0,
     },
@@ -24,7 +24,7 @@ const AboutSectionVideo = ({ thumbnail, video, maxHeight }) => {
       opacity: 0,
     },
   });
-  const loadTransitions = useTransition(videoLoaded, null, {
+  const loadTransitions = useTransition(videoLoaded, {
     from: {
       opacity: 0,
     },
@@ -36,30 +36,18 @@ const AboutSectionVideo = ({ thumbnail, video, maxHeight }) => {
     },
   });
 
-  const videoHeight =
-    viewport.width < 768 ? ((viewport.width - 20) * 9) / 16 : (900 * 9) / 16;
+  const videoHeight = viewport.width < 768 ? ((viewport.width - 20) * 9) / 16 : (900 * 9) / 16;
 
   const videoWidth = maxHeight < videoHeight ? (16 * maxHeight) / 9 : 900;
   return (
-    <VideoContainer
-      className="home-video"
-      style={{ maxHeight: `${maxHeight}px`, maxWidth: `${videoWidth}px` }}
-    >
-      {loadTransitions.map(
-        ({ item, key, props }) =>
-          !item && (
-            <animated.img
-              className="home-video__thumbnail"
-              key={key}
-              style={{ maxHeight, ...props }}
-              src={thumbnail}
-              alt={alt}
-            />
-          )
+    <VideoContainer className="home-video" style={{ maxHeight: `${maxHeight}px`, maxWidth: `${videoWidth}px` }}>
+      {loadTransitions(
+        (props, item) =>
+          !item && <animated.img className="home-video__thumbnail" style={{ maxHeight, ...props }} src={thumbnail} alt={alt} />
       )}
       {!videoOpen && <PlayButton handleClick={() => setVideoOpen(true)} />}
-      {videoTransitions.map(
-        ({ item, key, props }) =>
+      {videoTransitions(
+        (props, item) =>
           item && (
             <Video
               url={`https://vimeo.com/${video}`}
@@ -77,7 +65,6 @@ const AboutSectionVideo = ({ thumbnail, video, maxHeight }) => {
                 setPlaying(true);
               }}
               playing={playing}
-              key={key}
               style={{ maxHeight, ...props }}
             />
           )

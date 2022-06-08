@@ -7,13 +7,9 @@ import Meta from '../components/Meta';
 
 const blog = ({ data, pageContext, location }) => {
   return (
-    <Wrapper seo={data.sanityBlogPage.seoSettings} pageTitle={data.sanityBlogPage.title}>
+    <Wrapper seo={data.sanityBlogPage.seoSettings} pageTitle={data.sanityBlogPage.title} location={location}>
       <Meta title="Blog" seo={data.sanityBlogPage.seoSettings} location={location} url="/blog" />
-      <BlogPage
-        posts={data.allSanityPost.edges.map(edge => ({ ...edge.node }))}
-        {...data.sanityBlogPage}
-        {...pageContext}
-      />
+      <BlogPage posts={data.allSanityPost.edges.map(edge => ({ ...edge.node }))} {...data.sanityBlogPage} {...pageContext} />
     </Wrapper>
   );
 };
