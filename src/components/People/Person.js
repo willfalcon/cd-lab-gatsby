@@ -25,12 +25,12 @@ const Person = ({ id, _rawBio, name, primary = false, position, image, expanded,
 
   const ref = useRef(null);
   useLayoutEffect(() => {
-    console.log('useLayoutEffect is running now');
+    // console.log('useLayoutEffect is running now');
     setPosition(ref.current.getBoundingClientRect());
   }, []);
   // debugger;
 
-  console.log(ref.current, refPosition);
+  // console.log(ref.current, refPosition);
   const expandButtonTransition = useExpandButtonTransition(expanded);
 
   const imageSpring = useImageSpring(expanded, viewport, top, left, size, refPosition);

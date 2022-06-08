@@ -14,8 +14,7 @@ const StyledPerson = styled(animated.li)`
   z-index: ${({ expanded }) => (expanded ? 3 : 0)};
   line-height: 1;
   display: block;
-  /* background: ${({ expanded, theme }) =>
-    expanded ? theme.dark : 'transparent'}; */
+  /* background: ${({ expanded, theme }) => (expanded ? theme.dark : 'transparent')}; */
   /* transition: all 0.25s;
   padding: ${({ expanded }) => (expanded ? '1rem 1.5rem' : '0')}; */
   .person-image {
@@ -65,6 +64,12 @@ const StyledPerson = styled(animated.li)`
         }
         &-8 {
           grid-area: person8;
+        }
+        &-9 {
+          grid-area: person9;
+        }
+        &-10 {
+          grid-area: person10;
         }
       }
       ${({ pos }) =>

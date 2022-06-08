@@ -31,7 +31,7 @@ const People = ({ people: rawPeople }) => {
 
   const size = viewport.width / 2;
 
-  const height = people.length % 2 === 0 ? size & ((people.length / 2) * size) : ((people.length + 1) / 2) * size;
+  const height = people.length % 2 === 0 ? (people.length / 2) * size : ((people.length + 1) / 2) * size;
 
   return (
     <StyledPeopleWrapper className="people" expanded={expandedPerson !== null} height={height}>

@@ -35,8 +35,8 @@ const StyledAboutPage = styled.div`
   ${media.break`
     display: flex;
     padding: 0;
-    height: calc(100vh - 78px);
-    height: ${({ viewport }) => viewport.height - 78}px;
+    /* height: calc(100vh - 78px); 
+    height: ${({ viewport }) => viewport.height - 78}px; */ 
   `}
 `;
 
@@ -47,8 +47,6 @@ const AboutMain = styled.main`
     max-width: 50%;
     height: 100%;
     padding: 5% 11rem;
-    overflow: scroll;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
     ${({ theme }) =>
       theme.grid &&
       `
@@ -63,7 +61,9 @@ const AboutAside = styled.aside`
   ${media.break`
     flex: 0 0 50%;
     max-width: 50%;
-    height: 100%;
+    height: calc(100vh - 78px); 
+    height: ${({ viewport }) => viewport.height - 78}px;
+
     ${({ theme, viewport }) =>
       theme.grid &&
       `
@@ -71,6 +71,7 @@ const AboutAside = styled.aside`
         max-width: ${(viewport.height - 78) * 0.556}px;
     `}
   `}
+
   ${media.large`
     ${({ theme, viewport }) =>
       theme.grid &&
