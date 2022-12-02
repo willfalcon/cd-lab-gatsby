@@ -44,7 +44,7 @@
     "gatsby-transformer-sharp": "^2.3.9",
     "lodash.isequal": "^4.5.0",
     "lodash.uniqwith": "^4.5.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.2.10",
     "polished": "^3.4.2",
     "pure-react-carousel": "^1.27.0",
     "react": "^16.12.0",
