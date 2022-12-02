@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useStaticQuery, graphql } from 'gatsby';
-import { useSpring, useTrail } from 'react-spring';
+import { useSpring, useTrail, config } from 'react-spring';
 
 import BlockTitle from '../BlockTitle';
 import Content from '../Content';
@@ -58,32 +58,23 @@ const InsightsSection = () => {
     {
       heading: newsletterHeading,
       content: newsletterContent,
-      button: () => (
-        <WebinarButton className="insight__button">Sign up FREE</WebinarButton>
-      ),
+      button: () => <WebinarButton className="insight__button">Sign up FREE</WebinarButton>,
     },
     {
       heading: webinarHeading,
       content: webinarContent,
-      button: () => (
-        <NewsletterButton className="insight__button">
-          Join the List
-        </NewsletterButton>
-      ),
+      button: () => <NewsletterButton className="insight__button">Join the List</NewsletterButton>,
     },
   ];
 
   const insightTrail = useTrail(insights.length, {
     opacity: hasEnteredScreen ? 1 : 0,
+    config: config.molasses,
   });
 
   return (
     <Insights className="insights">
-      <BlockTitle
-        className="insights__heading"
-        ref={titleRef}
-        styles={titleSpring}
-      >
+      <BlockTitle className="insights__heading" ref={titleRef} styles={titleSpring}>
         {heading}
       </BlockTitle>
       <Content className="insights__copy">{copy}</Content>
