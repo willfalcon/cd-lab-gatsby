@@ -17,10 +17,7 @@ const InlineNote = props => {
 
   return (
     <NoteHighlight className="note-highlight">
-      <button
-        className="note-highlight__button"
-        onClick={() => toggleNote(!noteOpen)}
-      >
+      <button className="note-highlight__button" onClick={() => toggleNote(!noteOpen)}>
         {children}
         <NoteIcon aria-label="Read note">i</NoteIcon>
       </button>
@@ -62,9 +59,7 @@ const ContentLink = props => {
         case 'collection':
           return 'collection';
         case 'project':
-          const service = pageLink.categories.length
-            ? pageLink.categories[0]
-            : false;
+          const service = pageLink.categories.length ? pageLink.categories[0] : false;
           return `service/${service.slug.current}`;
         default:
           return '';
@@ -84,7 +79,7 @@ const ContentLink = props => {
           return pageLink.slug.current;
       }
     })();
-    console.log(path, slug);
+
     const to = `${path ? `/${path}` : ''}${slug ? `/${slug}` : ''}`;
     return buttonStyles ? (
       <Button className="content-button" to={to}>
@@ -94,11 +89,7 @@ const ContentLink = props => {
       <Link to={to}>{children}</Link>
     );
   }
-  return buttonStyles ? (
-    <Button href={href}>{children}</Button>
-  ) : (
-    <a href={href}>{children}</a>
-  );
+  return buttonStyles ? <Button href={href}>{children}</Button> : <a href={href}>{children}</a>;
 };
 
 const NoteHighlight = styled.span`

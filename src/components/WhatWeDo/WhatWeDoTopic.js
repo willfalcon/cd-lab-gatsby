@@ -15,7 +15,7 @@ const WhatWeDoTopic = ({ id, active, titleRef, whatWeDoImage, title, _rawShortCo
   const [ref, size] = useElementSize();
   const [imageWrapperRef, imageWrapperSize] = useElementSize();
   const aspectRatio = whatWeDoImage.asset.metadata.dimensions.aspectRatio;
-  console.log(size, aspectRatio);
+
   const { isOnScreen } = useOnScreen(ref, '0px', { threshold: 1 });
 
   useEffect(() => {

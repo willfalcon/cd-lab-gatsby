@@ -24,32 +24,17 @@ const AboutSection = ({ copy, thumbnail, video }) => {
   const buttonHeight = 70 + 10;
   const videoTopMargin = 30 + 30;
   const topAndBottomPadding = 20;
-  const videoMaxHeight =
-    containerSize.height -
-    topAndBottomPadding -
-    titleHeight -
-    descriptionSize.height -
-    buttonHeight -
-    videoTopMargin;
-  console.log(videoMaxHeight);
+  const videoMaxHeight = containerSize.height - topAndBottomPadding - titleHeight - descriptionSize.height - buttonHeight - videoTopMargin;
+
   return (
     <StyledSection className="about-section" ref={containerRef}>
-      <BlockTitle
-        className="about-section__title"
-        white
-        ref={titleRef}
-        styles={titleSpring}
-      >
+      <BlockTitle className="about-section__title" white ref={titleRef} styles={titleSpring}>
         About Us
       </BlockTitle>
       <Content className="about-section__copy" ref={descriptionRef}>
         {copy}
       </Content>
-      <AboutSectionVideo
-        thumbnail={thumbnail}
-        video={video}
-        maxHeight={videoMaxHeight}
-      />
+      <AboutSectionVideo thumbnail={thumbnail} video={video} maxHeight={videoMaxHeight} />
       <div className="about-section__buttons">
         <Button className="about-section__button" href="/about">
           Our Team

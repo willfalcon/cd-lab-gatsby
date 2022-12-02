@@ -4,15 +4,9 @@ import classNames from 'classnames';
 
 import calculateStyles from './calculateStyles';
 
-const FluidImg = ({
-  assetId,
-  fluidOptions,
-  fluid,
-  hotspot,
-  crop,
-  className,
-  alt,
-}) => {
+const FluidImg = props => {
+  const { assetId, fluidOptions, fluid, hotspot, crop, className, alt } = props;
+  // console.log(props);
   if (!assetId || !fluid) {
     return null;
   }
@@ -21,13 +15,7 @@ const FluidImg = ({
 
   // If no hotspot or crop, we're good to go with regular GatsbyImage
   if (!hotspot && !crop) {
-    return (
-      <Img
-        alt={alt}
-        fluid={fluid}
-        className={classNames(className, 'cropped-gatsby-img-fluid')}
-      />
-    );
+    return <Img alt={alt} fluid={fluid} className={classNames(className, 'cropped-gatsby-img-fluid')} />;
   }
 
   // If we do, however, let's get each element's styles to replicate the hotspot and crop
@@ -41,7 +29,7 @@ const FluidImg = ({
     hotspot,
     crop,
   });
-
+  // console.log({ targetStyles });
   // Unfortunately, as we need an extra wrapper for the image to apply the crop styles, we recreate a padding div and add it all to a new container div
   return (
     <div style={targetStyles.container}>

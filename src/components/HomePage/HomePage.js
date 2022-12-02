@@ -14,7 +14,6 @@ import { useScrollSnap } from '../hooks';
 
 const HomePage = ({ _rawNewBody, _rawAboutCopy, homeVideoId, thumbnail, aboutUsImage }) => {
   const container = useScrollSnap();
-
   return (
     <HomeContainer className="container" ref={container}>
       <div className="home-first-section">
@@ -45,7 +44,10 @@ const HomeContainer = styled.div`
 
   .home-first-section {
     ${media.break`
-      height: calc(100vh - 78px);
+    height: calc(100vh - 78px);
+    > div {
+      max-height: 100%;
+    }
       ${grid.enabled`
         display: grid;
         grid-template-rows: auto 1fr;
